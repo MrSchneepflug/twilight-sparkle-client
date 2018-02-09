@@ -5,6 +5,8 @@ import MobileApp from "./MobileApp/MobileApp";
 import "typeface-roboto";
 
 ReactDOM.render(
-  <MobileApp />,
+  window.device === "mobile"
+    ? <MobileApp/>
+    : <TVApp/>,
   document.getElementById('root')
 );
