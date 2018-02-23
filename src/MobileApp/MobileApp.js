@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import remove from "lodash";
 
 import {
   hasConnected,
@@ -9,7 +8,6 @@ import {
   hasSelectedDeveloper,
   hasResetDeveloperSelection,
   hasSelectedEstimation,
-  hasSelectedDevelopers,
   hasUpdated,
   hasReset
 } from "./actions";
@@ -25,10 +23,7 @@ class MobileApp extends Component {
 
     this.client = new MobileClient(this.props.hasConnected);
 
-    this.client.on("update", payload => {
-      this.props.hasUpdated(payload)
-    });
-
+    this.client.on("update", payload => this.props.hasUpdated(payload.state));
     this.client.on("reset", this.props.hasReset);
 
     this.teamSelectionHandler = this.teamSelectionHandler.bind(this);
@@ -54,15 +49,7 @@ class MobileApp extends Component {
 
   resetDeveloperSelectionHandler() {
     this.client.resetDeveloperSelection(this.props.developer);
-
-    let selectedDevelopers = [...this.props.selectedDevelopers];
-    remove(selectedDevelopers, selectedDeveloper => selectedDeveloper === this.props.developer);
-
-    this.setState({
-      developer: null,
-      estimation: null,
-      selectedDevelopers: selectedDevelopers
-    });
+    this.props.hasResetDeveloperSelection(this.props.developer);
   }
 
   estimationSelectionHandler(estimation) {
@@ -122,15 +109,14 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  hasConnected: dispatch(hasConnected()),
+  hasConnected: () => dispatch(hasConnected()),
   hasSelectedTeam: team => dispatch(hasSelectedTeam(team)),
-  hasResetTeamSelection: dispatch(hasResetTeamSelection()),
+  hasResetTeamSelection: () => dispatch(hasResetTeamSelection()),
   hasSelectedDeveloper: developer => dispatch(hasSelectedDeveloper(developer)),
-  hasResetDeveloperSelection: dispatch(hasResetDeveloperSelection()),
+  hasResetDeveloperSelection: previousDeveloper => dispatch(hasResetDeveloperSelection(previousDeveloper)),
   hasSelectedEstimation: estimation => dispatch(hasSelectedEstimation(estimation)),
-  hasSelectedDevelopers: developers => dispatch(hasSelectedDevelopers(developers)),
   hasUpdated: state => dispatch(hasUpdated(state)),
-  hasReset: dispatch(hasReset())
+  hasReset: () => dispatch(hasReset())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MobileApp);
