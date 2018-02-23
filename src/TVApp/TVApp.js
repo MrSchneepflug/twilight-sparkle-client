@@ -10,12 +10,7 @@ class TVApp extends Component {
     super(props);
 
     this.client = new TVClient(() => this.props.hasConnected());
-
-    this.client.on("update", (payload) => {
-      const estimationsByDeveloper = payload.state;
-      this.props.hasUpdated(estimationsByDeveloper);
-    });
-
+    this.client.on("update", payload => this.props.hasUpdated(payload.state));
     this.client.on("reset", () => this.props.hasReset());
   }
 
