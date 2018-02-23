@@ -98,33 +98,33 @@ class MobileApp extends Component {
     this.client.reset();
   }
 
-  renderLoadingScreen() {
-    return (
-      <div>
-        <strong>Connecting to server ...</strong>
-      </div>
-    );
-  }
+  render() {
+    if (!this.state.connected) {
+      return (
+        <div>
+          <strong>Connecting to server ...</strong>
+        </div>
+      );
+    }
 
-  renderTeamSelection() {
-    return (
-      <TeamSelection teamSelectionHandler={this.teamSelectionHandler}/>
-    );
-  }
+    if (!this.state.team) {
+      return (
+        <TeamSelection teamSelectionHandler={this.teamSelectionHandler}/>
+      );
+    }
 
-  renderDeveloperSelection() {
-    return (
-      <DeveloperSelection
-        selectedTeam={this.state.team}
-        selectedDeveloper={this.state.developer}
-        selectedDevelopers={this.state.selectedDevelopers}
-        developerSelectionHandler={this.developerSelectionHandler}
-        resetTeamSelectionHandler={this.resetTeamSelectionHandler}
-      />
-    );
-  }
+    if (!this.state.developer) {
+      return (
+        <DeveloperSelection
+          selectedTeam={this.state.team}
+          selectedDeveloper={this.state.developer}
+          selectedDevelopers={this.state.selectedDevelopers}
+          developerSelectionHandler={this.developerSelectionHandler}
+          resetTeamSelectionHandler={this.resetTeamSelectionHandler}
+        />
+      );
+    }
 
-  renderEstimationSelection() {
     return (
       <EstimationSelection
         selectedEstimation={this.state.estimation}
@@ -133,22 +133,6 @@ class MobileApp extends Component {
         resetDeveloperSelectionHandler={this.resetDeveloperSelectionHandler}
       />
     );
-  }
-
-  render() {
-    if (!this.state.connected) {
-      return this.renderLoadingScreen();
-    }
-
-    if (!this.state.team) {
-      return this.renderTeamSelection();
-    }
-
-    if (!this.state.developer) {
-      return this.renderDeveloperSelection();
-    }
-
-    return this.renderEstimationSelection();
   }
 }
 
