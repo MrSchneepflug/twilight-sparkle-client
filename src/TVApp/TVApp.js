@@ -9,9 +9,9 @@ class TVApp extends Component {
   constructor(props) {
     super(props);
 
-    this.client = new TVClient(() => this.props.hasConnected());
+    this.client = new TVClient(this.props.hasConnected);
     this.client.on("update", payload => this.props.hasUpdated(payload.state));
-    this.client.on("reset", () => this.props.hasReset());
+    this.client.on("reset", this.props.hasReset);
   }
 
   render() {
