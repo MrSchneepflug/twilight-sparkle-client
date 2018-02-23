@@ -23,39 +23,15 @@ class Client {
     this.actionHandlers[action] = callback;
   }
 
-  selectDeveloper(developerName) {
-    this.connection.send(this.createMessage({
-      action: "selectDeveloper",
-      name: developerName
-    }));
-  }
-
-  resetDeveloperSelection(developerName) {
-    this.connection.send(this.createMessage({
-      action: "resetDeveloperSelection",
-      name: developerName
-    }));
-  }
-
-  selectEstimation(developerName, estimation) {
-    this.connection.send(this.createMessage({
-      action: "selectEstimation",
-      name: developerName,
-      estimation
-    }));
-  }
-
-  reset() {
-    this.connection.send(this.createMessage({
-      action: "reset"
-    }));
-  }
-
   createMessage(payload) {
     return JSON.stringify({
-      origin: "mobile-device",
+      origin: this.getOrigin(),
       payload
     });
+  }
+
+  getOrigin() {
+    throw new Error("Please specify an origin for the current implementation");
   }
 }
 

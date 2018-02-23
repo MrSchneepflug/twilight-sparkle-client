@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import remove from "lodash";
 
-import Client from "../Websocket/Client";
+import MobileClient from "../Websocket/MobileClient";
 import TeamSelection from "./TeamSelection";
 import DeveloperSelection from "./DeveloperSelection";
 import EstimationSelection from "./EstimationSelection"
@@ -18,7 +18,7 @@ class MobileApp extends Component {
       selectedDevelopers: []
     };
 
-    this.client = new Client(() => {
+    this.client = new MobileClient(() => {
       this.setState({
         connected: true
       });

@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 
-import Client from "../Websocket/Client";
+import TVClient from "../Websocket/TVClient";
 import Developer from "./Developer";
 
 class TVApp extends Component {
@@ -12,7 +12,7 @@ class TVApp extends Component {
       estimationsByDeveloper: {}
     };
 
-    this.client = new Client(() => {
+    this.client = new TVClient(() => {
       this.setState({
         connected: true
       });
