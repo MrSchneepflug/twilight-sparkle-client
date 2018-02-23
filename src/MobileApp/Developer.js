@@ -1,23 +1,34 @@
 import React, {Component} from "react";
+import {connect} from "react-redux";
+import {hasSelectedDeveloper} from "./actions/index";
 
-const Developer = ({name, isSelf, isDeveloperSelected, developerSelectionHandler}) => {
-  const clickHandler = () => {
-    developerSelectionHandler(name);
-  };
+class Developer extends Component {
+  render() {
+    const style = {
+      textAlign: "center",
+      padding: "20px"
+    };
 
-  const nullHandler = () => {
-  };
+    const clickHandler = this.props.isDeveloperSelected
+      ? () => {}
+      : () => this.props.hasSelectedDeveloper(this.props.name);
 
-  const style = {
-    textAlign: "center",
-    padding: "20px"
-  };
+    return (
+      <div style={style} onClick={clickHandler}>
+        <strong>
+          {this.props.name}
+          {this.props.isDeveloperSelected && !this.props.isSelf ? " (selected)" : ""}
+        </strong>
+      </div>
+    );
+  }
+}
 
-  return (
-    <div style={style} onClick={isDeveloperSelected ? nullHandler : clickHandler}>
-      <strong>{name}{isDeveloperSelected && !isSelf ? " (selected)" : ""}</strong>
-    </div>
-  );
-};
+const mapStateToProps = state => ({
+});
 
-export default Developer;
+const mapDispatchToProps = dispatch => ({
+  hasSelectedDeveloper: developer => dispatch(hasSelectedDeveloper(developer))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(Developer);

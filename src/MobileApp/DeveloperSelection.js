@@ -1,7 +1,7 @@
 import React from "react";
 import Developer from "./Developer";
 
-const DeveloperSelection = ({selectedTeam, selectedDeveloper, selectedDevelopers, developerSelectionHandler, resetTeamSelectionHandler}) => {
+const DeveloperSelection = ({selectedTeam, selectedDeveloper, selectedDevelopers, resetTeamSelectionHandler}) => {
   const developersByTeam = {
     Alpakka: ["PD", "TH", "BP"],
     Einhorn: ["TK", "TW", "MS", "JJ"],
@@ -19,7 +19,6 @@ const DeveloperSelection = ({selectedTeam, selectedDeveloper, selectedDevelopers
       <Developer
         isSelf={isSelf}
         isDeveloperSelected={isDeveloperSelected}
-        developerSelectionHandler={developerSelectionHandler}
         name={developer}
         key={developer}
       />

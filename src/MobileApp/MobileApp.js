@@ -28,10 +28,15 @@ class MobileApp extends Component {
 
     this.teamSelectionHandler = this.teamSelectionHandler.bind(this);
     this.resetTeamSelectionHandler = this.resetTeamSelectionHandler.bind(this);
-    this.developerSelectionHandler = this.developerSelectionHandler.bind(this);
     this.resetDeveloperSelectionHandler = this.resetDeveloperSelectionHandler.bind(this);
     this.estimationSelectionHandler = this.estimationSelectionHandler.bind(this);
     this.resetHandler = this.resetHandler.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.props.developer !== nextProps.developer) {
+      this.client.selectDeveloper(nextProps.developer);
+    }
   }
 
   teamSelectionHandler(team) {
@@ -40,11 +45,6 @@ class MobileApp extends Component {
 
   resetTeamSelectionHandler() {
     this.props.hasResetTeamSelection();
-  }
-
-  developerSelectionHandler(name) {
-    this.props.hasSelectedDeveloper(name);
-    this.client.selectDeveloper(name);
   }
 
   resetDeveloperSelectionHandler() {
@@ -83,7 +83,6 @@ class MobileApp extends Component {
           selectedTeam={this.props.team}
           selectedDeveloper={this.props.developer}
           selectedDevelopers={this.props.selectedDevelopers}
-          developerSelectionHandler={this.developerSelectionHandler}
           resetTeamSelectionHandler={this.resetTeamSelectionHandler}
         />
       );
@@ -112,7 +111,6 @@ const mapDispatchToProps = dispatch => ({
   hasConnected: () => dispatch(hasConnected()),
   hasSelectedTeam: team => dispatch(hasSelectedTeam(team)),
   hasResetTeamSelection: () => dispatch(hasResetTeamSelection()),
-  hasSelectedDeveloper: developer => dispatch(hasSelectedDeveloper(developer)),
   hasResetDeveloperSelection: previousDeveloper => dispatch(hasResetDeveloperSelection(previousDeveloper)),
   hasSelectedEstimation: estimation => dispatch(hasSelectedEstimation(estimation)),
   hasUpdated: state => dispatch(hasUpdated(state)),
