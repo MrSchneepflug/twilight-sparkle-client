@@ -1,4 +1,6 @@
 import React, {Component} from 'react';
+import {connect} from "react-redux";
+import {hasConnected, hasUpdated, hasReset} from "./actions/index";
 
 import TVClient from "../Websocket/TVClient";
 import Developer from "./Developer";
@@ -7,36 +9,27 @@ class TVApp extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      connected: false,
-      estimationsByDeveloper: {}
-    };
-
-    this.client = new TVClient(() => {
-      this.setState({
-        connected: true
-      });
-    });
-
-    this.client.on("update", (payload) => {
-      const estimationsByDeveloper = payload.state;
-
-      this.setState({
-        estimationsByDeveloper
-      });
-    });
-
-    this.client.on("reset", () => {
-      this.setState({
-        estimationsByDeveloper: {}
-      });
-    });
+    this.client = new TVClient(this.props.hasConnected);
+    this.client.on("update", payload => this.props.hasUpdated(payload.state));
+    this.client.on("reset", this.props.hasReset);
   }
 
   render() {
-    let developerRows = Object.keys(this.state.estimationsByDeveloper).map(developerName => {
+    if (!this.props.connected) {
       return (
-        <Developer name={developerName} estimation={this.state.estimationsByDeveloper[developerName]} key={developerName}/>
+        <div>
+          Connecting ...
+        </div>
+      );
+    }
+
+    let developerRows = Object.keys(this.props.estimationsByDeveloper).map(developerName => {
+      return (
+        <Developer
+          name={developerName}
+          estimation={this.props.estimationsByDeveloper[developerName]}
+          key={developerName}
+        />
       );
     });
 
@@ -54,4 +47,15 @@ class TVApp extends Component {
   }
 }
 
-export default TVApp;
+const mapStateToProps = state => ({
+  connected: state.connected,
+  estimationsByDeveloper: state.estimationsByDeveloper
+});
+
+const mapDispatchToProps = dispatch => ({
+  hasConnected: () => dispatch(hasConnected()),
+  hasUpdated: state => dispatch(hasUpdated(state)),
+  hasReset: () => dispatch(hasReset())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TVApp);

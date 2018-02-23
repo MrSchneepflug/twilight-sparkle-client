@@ -6,9 +6,15 @@
     "lodash": "^4.17.4",
     "material-ui": "^0.20.0",
     "material-ui-icons": "^1.0.0-beta.17",
+    "history": "^4.7.2",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
+    "react-redux": "^5.0.7",
+    "react-router-dom": "^4.2.2",
+    "react-router-redux": "^5.0.0-alpha.9",
     "react-scripts": "1.1.1",
+    "redux": "^3.7.2",
+    "redux-thunk": "^2.2.0",
     "typeface-roboto": "0.0.54"
   },
   "scripts": {

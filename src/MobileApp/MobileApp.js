@@ -1,5 +1,16 @@
 import React, {Component} from 'react';
-import remove from "lodash";
+import {connect} from "react-redux";
+
+import {
+  hasConnected,
+  hasSelectedTeam,
+  hasResetTeamSelection,
+  hasSelectedDeveloper,
+  hasResetDeveloperSelection,
+  hasSelectedEstimation,
+  hasUpdated,
+  hasReset
+} from "./actions";
 
 import MobileClient from "../Websocket/MobileClient";
 import TeamSelection from "./TeamSelection";
@@ -10,34 +21,10 @@ class MobileApp extends Component {
   constructor(props) {
     super(props);
 
-    this.state = {
-      connected: false,
-      team: null,
-      developer: null,
-      estimation: null,
-      selectedDevelopers: []
-    };
+    this.client = new MobileClient(this.props.hasConnected);
 
-    this.client = new MobileClient(() => {
-      this.setState({
-        connected: true
-      });
-    });
-
-    this.client.on("update", payload => {
-      this.setState({
-        selectedDevelopers: Object.keys(payload.state)
-      });
-    });
-
-    this.client.on("reset", payload => {
-      this.setState({
-        team: null,
-        developer: null,
-        estimation: null,
-        selectedDevelopers: []
-      });
-    });
+    this.client.on("update", payload => this.props.hasUpdated(payload.state));
+    this.client.on("reset", this.props.hasReset);
 
     this.teamSelectionHandler = this.teamSelectionHandler.bind(this);
     this.resetTeamSelectionHandler = this.resetTeamSelectionHandler.bind(this);
@@ -48,58 +35,35 @@ class MobileApp extends Component {
   }
 
   teamSelectionHandler(team) {
-    this.setState({
-      team: team
-    });
+    this.props.hasSelectedTeam(team);
   }
 
   resetTeamSelectionHandler() {
-    this.setState({
-      team: null
-    });
+    this.props.hasResetTeamSelection();
   }
 
   developerSelectionHandler(name) {
-    this.setState({
-      developer: name
-    });
-
+    this.props.hasSelectedDeveloper(name);
     this.client.selectDeveloper(name);
   }
 
   resetDeveloperSelectionHandler() {
-    this.client.resetDeveloperSelection(this.state.developer);
-
-    let selectedDevelopers = [...this.state.selectedDevelopers];
-    remove(selectedDevelopers, selectedDeveloper => selectedDeveloper === this.state.developer);
-
-    this.setState({
-      developer: null,
-      estimation: null,
-      selectedDevelopers: selectedDevelopers
-    });
+    this.client.resetDeveloperSelection(this.props.developer);
+    this.props.hasResetDeveloperSelection(this.props.developer);
   }
 
   estimationSelectionHandler(estimation) {
-    this.setState({
-      estimation: estimation
-    });
-
-    this.client.selectEstimation(this.state.developer, estimation);
+    this.props.hasSelectedEstimation(estimation);
+    this.client.selectEstimation(this.props.developer, estimation);
   }
 
   resetHandler() {
-    this.setState({
-      team: null,
-      developer: null,
-      estimation: null
-    });
-
+    this.props.hasReset();
     this.client.reset();
   }
 
   render() {
-    if (!this.state.connected) {
+    if (!this.props.connected) {
       return (
         <div>
           <strong>Connecting to server ...</strong>
@@ -107,18 +71,18 @@ class MobileApp extends Component {
       );
     }
 
-    if (!this.state.team) {
+    if (!this.props.team) {
       return (
         <TeamSelection teamSelectionHandler={this.teamSelectionHandler}/>
       );
     }
 
-    if (!this.state.developer) {
+    if (!this.props.developer) {
       return (
         <DeveloperSelection
-          selectedTeam={this.state.team}
-          selectedDeveloper={this.state.developer}
-          selectedDevelopers={this.state.selectedDevelopers}
+          selectedTeam={this.props.team}
+          selectedDeveloper={this.props.developer}
+          selectedDevelopers={this.props.selectedDevelopers}
           developerSelectionHandler={this.developerSelectionHandler}
           resetTeamSelectionHandler={this.resetTeamSelectionHandler}
         />
@@ -127,7 +91,7 @@ class MobileApp extends Component {
 
     return (
       <EstimationSelection
-        selectedEstimation={this.state.estimation}
+        selectedEstimation={this.props.estimation}
         estimationSelectionHandler={this.estimationSelectionHandler}
         resetHandler={this.resetHandler}
         resetDeveloperSelectionHandler={this.resetDeveloperSelectionHandler}
@@ -136,4 +100,23 @@ class MobileApp extends Component {
   }
 }
 
-export default MobileApp;
+const mapStateToProps = state => ({
+  connected: state.connected,
+  team: state.team,
+  developer: state.developer,
+  estimation: state.estimation,
+  selectedDevelopers: state.selectedDevelopers
+});
+
+const mapDispatchToProps = dispatch => ({
+  hasConnected: () => dispatch(hasConnected()),
+  hasSelectedTeam: team => dispatch(hasSelectedTeam(team)),
+  hasResetTeamSelection: () => dispatch(hasResetTeamSelection()),
+  hasSelectedDeveloper: developer => dispatch(hasSelectedDeveloper(developer)),
+  hasResetDeveloperSelection: previousDeveloper => dispatch(hasResetDeveloperSelection(previousDeveloper)),
+  hasSelectedEstimation: estimation => dispatch(hasSelectedEstimation(estimation)),
+  hasUpdated: state => dispatch(hasUpdated(state)),
+  hasReset: () => dispatch(hasReset())
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(MobileApp);
