@@ -1,19 +1,31 @@
-import React from "react";
+import React, {Component} from "react";
+import {connect} from "react-redux";
 import Team from "./Team";
+import {hasSelectedTeam} from "./actions/index";
 
-const TeamSelection = ({teamSelectionHandler}) => {
-  const teams = ["Alpakka", "Einhorn", "Irbis", "Kea", "Raccoon", "Tapir"];
+const teams = ["Alpakka", "Einhorn", "Irbis", "Kea", "Raccoon", "Tapir"];
 
-  const teamSelections = teams.map(team => {
-    return <Team teamSelectionHandler={teamSelectionHandler} name={team} key={team}/>
+class TeamSelection extends Component {
+  renderTeamSelections() {
+    return teams.map(team => {
+      return <Team teamSelectionHandler={() => this.props.hasSelectedTeam(team)} name={team} key={team}/>
+    });
+  };
 
-  });
+  render() {
+    return (
+      <div>
+        {this.renderTeamSelections()}
+      </div>
+    );
+  }
+}
 
-  return (
-    <div>
-      {teamSelections}
-    </div>
-  );
-};
+const mapStateToProps = state => ({
+});
 
-export default TeamSelection;
+const mapDispatchToProps = dispatch => ({
+  hasSelectedTeam: team => dispatch(hasSelectedTeam(team))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(TeamSelection);

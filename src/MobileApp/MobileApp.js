@@ -3,7 +3,6 @@ import {connect} from "react-redux";
 
 import {
   hasConnected,
-  hasSelectedTeam,
   hasResetDeveloperSelection,
   hasSelectedEstimation,
   hasUpdated,
@@ -24,7 +23,6 @@ class MobileApp extends Component {
     this.client.on("update", payload => this.props.hasUpdated(payload.state));
     this.client.on("reset", this.props.hasReset);
 
-    this.teamSelectionHandler = this.teamSelectionHandler.bind(this);
     this.resetDeveloperSelectionHandler = this.resetDeveloperSelectionHandler.bind(this);
     this.estimationSelectionHandler = this.estimationSelectionHandler.bind(this);
     this.resetHandler = this.resetHandler.bind(this);
@@ -34,10 +32,6 @@ class MobileApp extends Component {
     if (this.props.developer !== nextProps.developer && nextProps.developer !== null) {
       this.client.selectDeveloper(nextProps.developer);
     }
-  }
-
-  teamSelectionHandler(team) {
-    this.props.hasSelectedTeam(team);
   }
 
   resetDeveloperSelectionHandler() {
@@ -66,7 +60,7 @@ class MobileApp extends Component {
 
     if (!this.props.team) {
       return (
-        <TeamSelection teamSelectionHandler={this.teamSelectionHandler}/>
+        <TeamSelection/>
       );
     }
 
@@ -101,7 +95,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   hasConnected: () => dispatch(hasConnected()),
-  hasSelectedTeam: team => dispatch(hasSelectedTeam(team)),
   hasResetDeveloperSelection: previousDeveloper => dispatch(hasResetDeveloperSelection(previousDeveloper)),
   hasSelectedEstimation: estimation => dispatch(hasSelectedEstimation(estimation)),
   hasUpdated: state => dispatch(hasUpdated(state)),
