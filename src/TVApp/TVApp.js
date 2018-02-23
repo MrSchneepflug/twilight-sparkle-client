@@ -18,8 +18,8 @@ class TVApp extends Component {
       });
     });
 
-    this.client.on("setEstimationsByDeveloper", (payload) => {
-      const estimationsByDeveloper = payload.estimationsByDeveloper;
+    this.client.on("update", (payload) => {
+      const estimationsByDeveloper = payload.state;
 
       this.setState({
         estimationsByDeveloper

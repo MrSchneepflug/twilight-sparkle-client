@@ -24,9 +24,9 @@ class MobileApp extends Component {
       });
     });
 
-    this.client.on("setEstimationsByDeveloper", payload => {
+    this.client.on("update", payload => {
       this.setState({
-        selectedDevelopers: Object.keys(payload.estimationsByDeveloper)
+        selectedDevelopers: Object.keys(payload.state)
       });
     });
 
