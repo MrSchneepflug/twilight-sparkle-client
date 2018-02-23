@@ -24,9 +24,10 @@ export function hasSelectedDeveloper(developer) {
   }
 }
 
-export function hasResetDeveloperSelection() {
+export function hasResetDeveloperSelection(previousDeveloper) {
   return {
     type: "HAS_RESET_DEVELOPER_SELECTION",
+    previousDeveloper
   }
 }
 

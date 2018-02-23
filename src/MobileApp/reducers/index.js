@@ -1,4 +1,5 @@
 import {combineReducers} from "redux";
+import {remove} from "lodash";
 
 function connected(state = false, action) {
   switch (action.type) {
@@ -39,6 +40,8 @@ function estimation(state = null, action) {
   switch (action.type) {
     case "HAS_SELECTED_ESTIMATION":
       return action.estimation;
+    case "HAS_RESET_DEVELOPER_SELECTION":
+      return null;
     case "HAS_RESET":
       return null;
     default:
@@ -48,8 +51,12 @@ function estimation(state = null, action) {
 
 function selectedDevelopers(state = [], action) {
   switch (action.type) {
-    case "HAS_SELECTED_DEVELOPERS":
-      return action.developers;
+    case "HAS_UPDATED":
+      return Object.keys(action.state);
+    case "HAS_SELECT_DEVELOPER_SELECTION":
+      let selectedDevelopers = [...state];
+      remove(selectedDevelopers, selectedDeveloper => selectedDeveloper === action.previousDeveloper);
+      return selectedDevelopers;
     default:
       return state;
   }
