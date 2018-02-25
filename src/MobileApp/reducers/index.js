@@ -58,6 +58,8 @@ function selectedDevelopers(state = [], action) {
       remove(selectedDevelopers, selectedDeveloper => selectedDeveloper === action.previousDeveloper);
       return selectedDevelopers;
       break;
+    case "HAS_RESET":
+      return [];
     default:
       return state;
   }
