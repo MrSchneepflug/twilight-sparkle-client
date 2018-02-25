@@ -18,7 +18,7 @@ class EstimationSelection extends Component {
 
     return (
       <div key={estimation} onClick={this.buildSelectionHandler(estimation)} style={style}>
-        <strong>{estimation}{estimation === this.props.selectedEstimation ? " (selected)" : ""}</strong>
+        <strong>{estimation}{estimation === this.props.estimation ? " (selected)" : ""}</strong>
       </div>
     );
   }
@@ -38,7 +38,7 @@ class EstimationSelection extends Component {
     return (
       <div>
         <div style={style}>
-          <strong onClick={() => this.props.hasResetDeveloperSelection(this.props.selectedDeveloper)}>back</strong>
+          <strong onClick={() => this.props.hasResetDeveloperSelection(this.props.developer)}>back</strong>
         </div>
 
         <hr/>
@@ -54,6 +54,8 @@ class EstimationSelection extends Component {
 }
 
 const mapStateToProps = state => ({
+  developer: state.developer,
+  estimation: state.estimation,
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -14,9 +14,9 @@ const developersByTeam = {
 
 class DeveloperSelection extends Component {
   renderDeveloperSelections() {
-    return developersByTeam[this.props.selectedTeam].map(developer => {
+    return developersByTeam[this.props.team].map(developer => {
       const isDeveloperSelected = this.props.selectedDevelopers.indexOf(developer) !== -1;
-      const isSelf = developer === this.props.selectedDeveloper;
+      const isSelf = developer === this.props.developer;
 
       return (
         <Developer
@@ -48,6 +48,9 @@ class DeveloperSelection extends Component {
 }
 
 const mapStateToProps = state => ({
+  team: state.team,
+  developer: state.developer,
+  selectedDevelopers: state.selectedDevelopers
 });
 
 const mapDispatchToProps = dispatch => ({

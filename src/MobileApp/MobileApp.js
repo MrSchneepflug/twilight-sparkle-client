@@ -1,14 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-
-import {
-  hasConnected,
-  hasResetDeveloperSelection,
-  hasSelectedEstimation,
-  hasUpdated,
-  hasReset
-} from "./actions";
-
+import {hasConnected, hasUpdated, hasReset} from "./actions";
 import MobileClient from "../Websocket/MobileClient";
 import TeamSelection from "./TeamSelection";
 import DeveloperSelection from "./DeveloperSelection";
@@ -47,36 +39,19 @@ class MobileApp extends Component {
     }
 
     if (!this.props.team) {
-      return (
-        <TeamSelection/>
-      );
+      return <TeamSelection/>;
     }
 
     if (!this.props.developer) {
-      return (
-        <DeveloperSelection
-          selectedTeam={this.props.team}
-          selectedDeveloper={this.props.developer}
-          selectedDevelopers={this.props.selectedDevelopers}
-        />
-      );
+      return <DeveloperSelection/>;
     }
 
-    return (
-      <EstimationSelection
-        selectedDeveloper={this.props.developer}
-        selectedEstimation={this.props.estimation}
-      />
-    );
+    return <EstimationSelection/>;
   }
 }
 
 const mapStateToProps = state => ({
-  connected: state.connected,
-  team: state.team,
-  developer: state.developer,
-  estimation: state.estimation,
-  selectedDevelopers: state.selectedDevelopers
+  connected: state.connected
 });
 
 const mapDispatchToProps = dispatch => ({
