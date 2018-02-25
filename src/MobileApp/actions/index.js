@@ -38,13 +38,6 @@ export function hasSelectedEstimation(estimation) {
   }
 }
 
-export function hasSelectedDevelopers(developers) {
-  return {
-    type: "HAS_SELECTED_DEVELOPERS",
-    developers
-  }
-}
-
 export function hasUpdated(state) {
   return {
     type: "HAS_UPDATED",
