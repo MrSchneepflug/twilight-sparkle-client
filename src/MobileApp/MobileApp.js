@@ -19,7 +19,6 @@ class MobileApp extends Component {
     super(props);
 
     this.client = new MobileClient(this.props.hasConnected);
-
     this.client.on("update", payload => this.props.hasUpdated(payload.state));
     this.client.on("reset", this.props.hasReset);
   }
@@ -82,8 +81,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   hasConnected: () => dispatch(hasConnected()),
-  hasResetDeveloperSelection: previousDeveloper => dispatch(hasResetDeveloperSelection(previousDeveloper)),
-  hasSelectedEstimation: estimation => dispatch(hasSelectedEstimation(estimation)),
   hasUpdated: state => dispatch(hasUpdated(state)),
   hasReset: () => dispatch(hasReset())
 });
