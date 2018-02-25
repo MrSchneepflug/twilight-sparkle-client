@@ -29,12 +29,12 @@ class MobileApp extends Component {
       this.client.selectDeveloper(nextProps.developer);
     }
 
-    if (this.props.developer !== null && nextProps.developer === null) {
-      this.client.resetDeveloperSelection(this.props.developer);
-    }
-
     if (this.props.estimation !== nextProps.estimation && nextProps.estimation !== null) {
       this.client.selectEstimation(this.props.developer, nextProps.estimation);
+    }
+
+    if (this.props.developer !== null && nextProps.developer === null) {
+      this.client.resetDeveloperSelection(this.props.developer);
     }
   }
 
