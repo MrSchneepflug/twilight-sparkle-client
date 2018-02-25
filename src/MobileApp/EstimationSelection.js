@@ -17,7 +17,7 @@ class EstimationSelection extends Component {
     };
 
     return (
-      <div onClick={this.buildSelectionHandler(estimation)} style={style}>
+      <div key={estimation} onClick={this.buildSelectionHandler(estimation)} style={style}>
         <strong>{estimation}{estimation === this.props.selectedEstimation ? " (selected)" : ""}</strong>
       </div>
     );
