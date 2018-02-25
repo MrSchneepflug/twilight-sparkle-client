@@ -53,10 +53,11 @@ function selectedDevelopers(state = [], action) {
   switch (action.type) {
     case "HAS_UPDATED":
       return Object.keys(action.state);
-    case "HAS_SELECT_DEVELOPER_SELECTION":
+    case "HAS_RESET_DEVELOPER_SELECTION":
       let selectedDevelopers = [...state];
       remove(selectedDevelopers, selectedDeveloper => selectedDeveloper === action.previousDeveloper);
       return selectedDevelopers;
+      break;
     default:
       return state;
   }

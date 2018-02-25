@@ -22,31 +22,20 @@ class MobileApp extends Component {
 
     this.client.on("update", payload => this.props.hasUpdated(payload.state));
     this.client.on("reset", this.props.hasReset);
-
-    this.resetDeveloperSelectionHandler = this.resetDeveloperSelectionHandler.bind(this);
-    this.estimationSelectionHandler = this.estimationSelectionHandler.bind(this);
-    this.resetHandler = this.resetHandler.bind(this);
   }
 
   componentWillReceiveProps(nextProps) {
     if (this.props.developer !== nextProps.developer && nextProps.developer !== null) {
       this.client.selectDeveloper(nextProps.developer);
     }
-  }
 
-  resetDeveloperSelectionHandler() {
-    this.client.resetDeveloperSelection(this.props.developer);
-    this.props.hasResetDeveloperSelection(this.props.developer);
-  }
+    if (this.props.developer !== null && nextProps.developer === null) {
+      this.client.resetDeveloperSelection(this.props.developer);
+    }
 
-  estimationSelectionHandler(estimation) {
-    this.props.hasSelectedEstimation(estimation);
-    this.client.selectEstimation(this.props.developer, estimation);
-  }
-
-  resetHandler() {
-    this.props.hasReset();
-    this.client.reset();
+    if (this.props.estimation !== nextProps.estimation && nextProps.estimation !== null) {
+      this.client.selectEstimation(this.props.developer, nextProps.estimation);
+    }
   }
 
   render() {
@@ -76,10 +65,8 @@ class MobileApp extends Component {
 
     return (
       <EstimationSelection
+        selectedDeveloper={this.props.developer}
         selectedEstimation={this.props.estimation}
-        estimationSelectionHandler={this.estimationSelectionHandler}
-        resetHandler={this.resetHandler}
-        resetDeveloperSelectionHandler={this.resetDeveloperSelectionHandler}
       />
     );
   }

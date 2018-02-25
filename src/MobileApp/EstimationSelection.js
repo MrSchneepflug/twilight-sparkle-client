@@ -1,50 +1,65 @@
-import React from "react";
+import React, {Component} from "react";
+import {connect} from "react-redux";
+import {hasResetDeveloperSelection, hasSelectedEstimation} from "./actions/index";
+import {hasReset} from "../TVApp/actions/index";
 
-const EstimationSelection = ({selectedEstimation, estimationSelectionHandler, resetHandler, resetDeveloperSelectionHandler}) => {
-  const buildSelectionHandler = (number) => {
+class EstimationSelection extends Component {
+  buildSelectionHandler(number) {
     return () => {
-      estimationSelectionHandler(number)
+      this.props.hasSelectedEstimation(number)
     };
-  };
+  }
 
-  const buildEstimationSelection = estimation => {
+  buildEstimationSelection(estimation) {
     const style = {
       textAlign: "center",
       padding: "20px"
     };
 
     return (
-      <div onClick={buildSelectionHandler(estimation)} style={style}>
-        <strong>{estimation}{estimation === selectedEstimation ? " (selected)" : ""}</strong>
+      <div onClick={this.buildSelectionHandler(estimation)} style={style}>
+        <strong>{estimation}{estimation === this.props.selectedEstimation ? " (selected)" : ""}</strong>
       </div>
     );
-  };
+  }
 
-  const estimationSelections = [1, 2, 3, 5, 8, 13, 20].map(estimation => {
-    return buildEstimationSelection(estimation);
-  });
+  estimationSelections() {
+    return [1, 2, 3, 5, 8, 13, 20].map(estimation => {
+      return this.buildEstimationSelection(estimation);
+    });
+  }
 
+  render() {
+    const style = {
+      textAlign: "center",
+      padding: "20px"
+    };
 
-  const style = {
-    textAlign: "center",
-    padding: "20px"
-  };
+    return (
+      <div>
+        <div style={style}>
+          <strong onClick={() => this.props.hasResetDeveloperSelection(this.props.selectedDeveloper)}>back</strong>
+        </div>
 
-  return (
-    <div>
-      <div style={style}>
-        <strong onClick={resetDeveloperSelectionHandler}>back</strong>
+        <hr/>
+        {this.estimationSelections()}
+        <hr/>
+
+        <div style={style}>
+          <span onClick={this.props.hasReset}>RESET</span>
+        </div>
       </div>
+    );
+  }
+}
 
-      <hr/>
-      {estimationSelections}
-      <hr/>
+const mapStateToProps = state => ({
+});
 
-      <div style={style}>
-        <span onClick={resetHandler}>RESET</span>
-      </div>
-    </div>
-  );
-};
+const mapDispatchToProps = dispatch => ({
+  hasSelectedEstimation: estimation => dispatch(hasSelectedEstimation(estimation)),
+  hasReset: () => dispatch(hasReset()),
+  hasResetDeveloperSelection: previousDeveloper => dispatch(hasResetDeveloperSelection(previousDeveloper))
+});
 
-export default EstimationSelection;
+export default connect(mapStateToProps, mapDispatchToProps)(EstimationSelection);
