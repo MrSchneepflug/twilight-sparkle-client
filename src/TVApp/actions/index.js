@@ -1,18 +1,18 @@
-export function hasConnected() {
+export function connectToWebsocketServer() {
   return {
-    type: "HAS_CONNECTED"
+    type: "CONNECT"
   }
 }
 
-export function hasUpdated(state) {
+export function update(state) {
   return {
-    type: "HAS_UPDATED",
+    type: "UPDATE",
     state
   }
 }
 
-export function hasReset() {
+export function reset() {
   return {
-    type: "HAS_RESET"
+    type: "RESET"
   }
 }

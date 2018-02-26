@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {resetDeveloperSelection, selectEstimation} from "./actions/index";
-import {hasReset} from "../TVApp/actions/index";
+import {resetDeveloperSelection, selectEstimation, reset} from "./actions/index";
 
 class EstimationSelection extends Component {
   buildSelectionHandler(number) {
@@ -60,7 +59,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
-  reset: () => dispatch(hasReset()),
+  reset: () => dispatch(reset()),
   resetDeveloperSelection: previousDeveloper => dispatch(resetDeveloperSelection(previousDeveloper))
 });
 

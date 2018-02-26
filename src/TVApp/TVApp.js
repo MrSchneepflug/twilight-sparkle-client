@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {hasConnected, hasUpdated, hasReset} from "./actions/index";
+import {connectToWebsocketServer, update, reset} from "./actions/index";
 
 import TVClient from "../Websocket/TVClient";
 import Developer from "./Developer";
@@ -53,9 +53,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  connect: () => dispatch(hasConnected()),
-  update: state => dispatch(hasUpdated(state)),
-  reset: () => dispatch(hasReset())
+  connectToWebsocketServer: () => dispatch(connectToWebsocketServer()),
+  update: state => dispatch(update(state)),
+  reset: () => dispatch(reset())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TVApp);

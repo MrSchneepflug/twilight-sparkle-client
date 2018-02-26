@@ -2,7 +2,7 @@ import {combineReducers} from "redux";
 
 function connected(state = false, action) {
   switch (action.type) {
-    case "HAS_CONNECTED":
+    case "CONNECT":
       return true;
     default:
       return state;
@@ -11,9 +11,9 @@ function connected(state = false, action) {
 
 function estimationsByDeveloper(state = {}, action) {
   switch (action.type) {
-    case "HAS_UPDATED":
+    case "UPDATE":
       return action.state;
-    case "HAS_RESET":
+    case "RESET":
       return {};
     default:
       return state;
