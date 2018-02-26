@@ -3,18 +3,28 @@ import {connect} from "react-redux";
 import {selectDeveloper} from "./actions/index";
 
 class Developer extends Component {
+  constructor(props) {
+    super(props);
+
+    this.clickHandler = this.clickHandler.bind(this);
+  }
+
+  clickHandler() {
+    if (this.props.isDeveloperSelected) {
+      return;
+    }
+
+    this.props.selectDeveloper(this.props.name);
+  }
+
   render() {
     const style = {
       textAlign: "center",
       padding: "20px"
     };
 
-    const clickHandler = this.props.isDeveloperSelected
-      ? () => {}
-      : () => this.props.selectDeveloper(this.props.name);
-
     return (
-      <div style={style} onClick={clickHandler}>
+      <div style={style} onClick={this.clickHandler}>
         <strong>
           {this.props.name}
           {this.props.isDeveloperSelected && !this.props.isSelf ? " (selected)" : ""}
