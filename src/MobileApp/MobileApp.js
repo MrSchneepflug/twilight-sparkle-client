@@ -10,7 +10,7 @@ class MobileApp extends Component {
   constructor(props) {
     super(props);
 
-    this.client = new MobileClient(this.props.connect);
+    this.client = new MobileClient(this.props.connectToWebsocketServer);
     this.client.on("update", payload => this.props.update(payload.state));
     this.client.on("reset", this.props.reset);
   }
@@ -58,7 +58,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  connect: () => dispatch(connectToWebsocketServer()),
+  connectToWebsocketServer: () => dispatch(connectToWebsocketServer()),
   update: state => dispatch(update(state)),
   reset: () => dispatch(reset())
 });
