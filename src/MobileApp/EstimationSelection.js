@@ -1,12 +1,12 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {hasResetDeveloperSelection, hasSelectedEstimation} from "./actions/index";
+import {resetDeveloperSelection, selectEstimation} from "./actions/index";
 import {hasReset} from "../TVApp/actions/index";
 
 class EstimationSelection extends Component {
   buildSelectionHandler(number) {
     return () => {
-      this.props.hasSelectedEstimation(number)
+      this.props.selectEstimation(number)
     };
   }
 
@@ -38,7 +38,7 @@ class EstimationSelection extends Component {
     return (
       <div>
         <div style={style}>
-          <strong onClick={() => this.props.hasResetDeveloperSelection(this.props.developer)}>back</strong>
+          <strong onClick={() => this.props.resetDeveloperSelection(this.props.developer)}>back</strong>
         </div>
 
         <hr/>
@@ -46,7 +46,7 @@ class EstimationSelection extends Component {
         <hr/>
 
         <div style={style}>
-          <span onClick={this.props.hasReset}>RESET</span>
+          <span onClick={this.props.reset}>RESET</span>
         </div>
       </div>
     );
@@ -59,9 +59,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  hasSelectedEstimation: estimation => dispatch(hasSelectedEstimation(estimation)),
-  hasReset: () => dispatch(hasReset()),
-  hasResetDeveloperSelection: previousDeveloper => dispatch(hasResetDeveloperSelection(previousDeveloper))
+  selectEstimation: estimation => dispatch(selectEstimation(estimation)),
+  reset: () => dispatch(hasReset()),
+  resetDeveloperSelection: previousDeveloper => dispatch(resetDeveloperSelection(previousDeveloper))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EstimationSelection);

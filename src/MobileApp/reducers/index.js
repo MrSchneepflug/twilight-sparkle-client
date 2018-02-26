@@ -3,7 +3,7 @@ import {remove} from "lodash";
 
 function connected(state = false, action) {
   switch (action.type) {
-    case "HAS_CONNECTED":
+    case "CONNECT":
       return true;
     default:
       return state;
@@ -12,11 +12,11 @@ function connected(state = false, action) {
 
 function team(state = null, action) {
   switch (action.type) {
-    case "HAS_SELECTED_TEAM":
+    case "SELECT_TEAM":
       return action.team;
-    case "HAS_RESET_TEAM_SELECTION":
+    case "RESET_TEAM_SELECTION":
       return null;
-    case "HAS_RESET":
+    case "RESET":
       return null;
     default:
       return state;
@@ -25,11 +25,11 @@ function team(state = null, action) {
 
 function developer(state = null, action) {
   switch (action.type) {
-    case "HAS_SELECTED_DEVELOPER":
+    case "SELECT_DEVELOPER":
       return action.developer;
-    case "HAS_RESET_DEVELOPER_SELECTION":
+    case "RESET_DEVELOPER_SELECTION":
       return null;
-    case "HAS_RESET":
+    case "RESET":
       return null;
     default:
       return state;
@@ -38,11 +38,11 @@ function developer(state = null, action) {
 
 function estimation(state = null, action) {
   switch (action.type) {
-    case "HAS_SELECTED_ESTIMATION":
+    case "SELECT_ESTIMATION":
       return action.estimation;
-    case "HAS_RESET_DEVELOPER_SELECTION":
+    case "RESET_DEVELOPER_SELECTION":
       return null;
-    case "HAS_RESET":
+    case "RESET":
       return null;
     default:
       return state;
@@ -51,14 +51,14 @@ function estimation(state = null, action) {
 
 function selectedDevelopers(state = [], action) {
   switch (action.type) {
-    case "HAS_UPDATED":
+    case "UPDATE":
       return Object.keys(action.state);
-    case "HAS_RESET_DEVELOPER_SELECTION":
+    case "RESET_DEVELOPER_SELECTION":
       let selectedDevelopers = [...state];
       remove(selectedDevelopers, selectedDeveloper => selectedDeveloper === action.previousDeveloper);
       return selectedDevelopers;
       break;
-    case "HAS_RESET":
+    case "RESET":
       return [];
     default:
       return state;

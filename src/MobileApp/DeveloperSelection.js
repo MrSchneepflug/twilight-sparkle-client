@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Developer from "./Developer";
-import {hasResetTeamSelection} from "./actions/index";
+import {resetTeamSelection} from "./actions/index";
 
 const developersByTeam = {
   Alpakka: ["PD", "TH", "BP"],
@@ -38,7 +38,7 @@ class DeveloperSelection extends Component {
     return (
       <div>
         <div style={style}>
-          <strong onClick={this.props.hasResetTeamSelection}>back</strong>
+          <strong onClick={this.props.resetTeamSelection}>back</strong>
         </div>
         <hr/>
         {this.renderDeveloperSelections()}
@@ -54,7 +54,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  hasResetTeamSelection: () => dispatch(hasResetTeamSelection())
+  resetTeamSelection: () => dispatch(resetTeamSelection())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeveloperSelection);

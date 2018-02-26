@@ -1,52 +1,52 @@
-export function hasConnected() {
+export function connectToWebsocketServer() {
   return {
-    type: "HAS_CONNECTED"
+    type: "CONNECT"
   }
 }
 
-export function hasSelectedTeam(team) {
+export function selectTeam(team) {
   return {
-    type: "HAS_SELECTED_TEAM",
+    type: "SELECT_TEAM",
     team
   }
 }
 
-export function hasResetTeamSelection() {
+export function resetTeamSelection() {
   return {
-    type: "HAS_RESET_TEAM_SELECTION"
+    type: "RESET_TEAM_SELECTION"
   }
 }
 
-export function hasSelectedDeveloper(developer) {
+export function selectDeveloper(developer) {
   return {
-    type: "HAS_SELECTED_DEVELOPER",
+    type: "SELECT_DEVELOPER",
     developer
   }
 }
 
-export function hasResetDeveloperSelection(previousDeveloper) {
+export function resetDeveloperSelection(previousDeveloper) {
   return {
-    type: "HAS_RESET_DEVELOPER_SELECTION",
+    type: "RESET_DEVELOPER_SELECTION",
     previousDeveloper
   }
 }
 
-export function hasSelectedEstimation(estimation) {
+export function selectEstimation(estimation) {
   return {
-    type: "HAS_SELECTED_ESTIMATION",
+    type: "SELECT_ESTIMATION",
     estimation
   }
 }
 
-export function hasUpdated(state) {
+export function update(state) {
   return {
-    type: "HAS_UPDATED",
+    type: "UPDATE",
     state
   }
 }
 
-export function hasReset() {
+export function reset() {
   return {
-    type: "HAS_RESET"
+    type: "RESET"
   }
 }

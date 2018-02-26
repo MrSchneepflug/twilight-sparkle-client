@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {hasConnected, hasUpdated, hasReset} from "./actions";
+import {connectToWebsocketServer, update, reset} from "./actions";
 import MobileClient from "../Websocket/MobileClient";
 import TeamSelection from "./TeamSelection";
 import DeveloperSelection from "./DeveloperSelection";
@@ -10,9 +10,9 @@ class MobileApp extends Component {
   constructor(props) {
     super(props);
 
-    this.client = new MobileClient(this.props.hasConnected);
-    this.client.on("update", payload => this.props.hasUpdated(payload.state));
-    this.client.on("reset", this.props.hasReset);
+    this.client = new MobileClient(this.props.connect);
+    this.client.on("update", payload => this.props.update(payload.state));
+    this.client.on("reset", this.props.reset);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,9 +57,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  hasConnected: () => dispatch(hasConnected()),
-  hasUpdated: state => dispatch(hasUpdated(state)),
-  hasReset: () => dispatch(hasReset())
+  connect: () => dispatch(connectToWebsocketServer()),
+  update: state => dispatch(update(state)),
+  reset: () => dispatch(reset())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MobileApp);
