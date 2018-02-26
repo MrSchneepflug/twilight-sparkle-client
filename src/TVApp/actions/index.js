@@ -1,18 +1,9 @@
-export function connectToWebsocketServer() {
-  return {
-    type: "CONNECT"
-  }
-}
+import connectToWebsocketServer from "./connectToWebsocketServer";
+import update from "./update";
+import reset from "./reset";
 
-export function update(state) {
-  return {
-    type: "UPDATE",
-    state
-  }
-}
-
-export function reset() {
-  return {
-    type: "RESET"
-  }
+export {
+  connectToWebsocketServer,
+  update,
+  reset
 }
