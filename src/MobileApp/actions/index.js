@@ -1,52 +1,19 @@
-export function connectToWebsocketServer() {
-  return {
-    type: "CONNECT"
-  }
-}
+import connectToWebsocketServer from "./connectToWebsocketServer";
+import selectTeam from "./selectTeam";
+import resetTeamSelection from "./resetTeamSelection";
+import selectDeveloper from "./selectDeveloper";
+import resetDeveloperSelection from "./resetDeveloperSelection";
+import selectEstimation from "./selectEstimation";
+import update from "./update";
+import reset from "./reset";
 
-export function selectTeam(team) {
-  return {
-    type: "SELECT_TEAM",
-    team
-  }
-}
-
-export function resetTeamSelection() {
-  return {
-    type: "RESET_TEAM_SELECTION"
-  }
-}
-
-export function selectDeveloper(developer) {
-  return {
-    type: "SELECT_DEVELOPER",
-    developer
-  }
-}
-
-export function resetDeveloperSelection(previousDeveloper) {
-  return {
-    type: "RESET_DEVELOPER_SELECTION",
-    previousDeveloper
-  }
-}
-
-export function selectEstimation(estimation) {
-  return {
-    type: "SELECT_ESTIMATION",
-    estimation
-  }
-}
-
-export function update(state) {
-  return {
-    type: "UPDATE",
-    state
-  }
-}
-
-export function reset() {
-  return {
-    type: "RESET"
-  }
-}
+export {
+  connectToWebsocketServer,
+  selectTeam,
+  resetTeamSelection,
+  selectDeveloper,
+  resetDeveloperSelection,
+  selectEstimation,
+  update,
+  reset
+};
