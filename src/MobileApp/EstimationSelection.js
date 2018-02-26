@@ -3,6 +3,16 @@ import {connect} from "react-redux";
 import {resetDeveloperSelection, selectEstimation, reset} from "./actions/index";
 
 class EstimationSelection extends Component {
+  constructor(props) {
+    super(props);
+
+    this.clickHandler = this.clickHandler.bind(this);
+  }
+
+  clickHandler() {
+    this.props.resetDeveloperSelection(this.props.developer);
+  }
+
   buildSelectionHandler(number) {
     return () => {
       this.props.selectEstimation(number)
@@ -37,7 +47,7 @@ class EstimationSelection extends Component {
     return (
       <div>
         <div style={style}>
-          <strong onClick={() => this.props.resetDeveloperSelection(this.props.developer)}>back</strong>
+          <strong onClick={this.clickHandler}>back</strong>
         </div>
 
         <hr/>
@@ -54,7 +64,7 @@ class EstimationSelection extends Component {
 
 const mapStateToProps = state => ({
   developer: state.developer,
-  estimation: state.estimation,
+  estimation: state.estimation
 });
 
 const mapDispatchToProps = dispatch => ({
