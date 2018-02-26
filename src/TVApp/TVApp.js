@@ -14,6 +14,18 @@ class TVApp extends Component {
     this.client.on("reset", this.props.reset);
   }
 
+  renderDeveloperRows() {
+    return Object.keys(this.props.estimationsByDeveloper).map(developerName => {
+      return (
+        <Developer
+          name={developerName}
+          estimation={this.props.estimationsByDeveloper[developerName]}
+          key={developerName}
+        />
+      );
+    });
+  }
+
   render() {
     if (!this.props.connected) {
       return (
@@ -23,16 +35,6 @@ class TVApp extends Component {
       );
     }
 
-    let developerRows = Object.keys(this.props.estimationsByDeveloper).map(developerName => {
-      return (
-        <Developer
-          name={developerName}
-          estimation={this.props.estimationsByDeveloper[developerName]}
-          key={developerName}
-        />
-      );
-    });
-
     return (
       <table>
         <tbody>
@@ -40,7 +42,7 @@ class TVApp extends Component {
           <td>Developer</td>
           <td>Estimation</td>
         </tr>
-        {developerRows}
+        {this.renderDeveloperRows()}
         </tbody>
       </table>
     );
