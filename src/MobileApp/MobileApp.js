@@ -53,7 +53,8 @@ class MobileApp extends Component {
 const mapStateToProps = state => ({
   connected: state.connected,
   team: state.team,
-  developer: state.developer
+  developer: state.developer,
+  estimation: state.estimation
 });
 
 const mapDispatchToProps = dispatch => ({
