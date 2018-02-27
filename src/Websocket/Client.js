@@ -1,10 +1,16 @@
 class Client {
   constructor(onopen) {
     this.actionHandlers = {};
+    this.onopen = onopen;
 
     this.connection = new WebSocket("ws://localhost:5000");
-    this.connection.onopen = onopen;
+    this.connection.onopen = this.connectionHandler.bind(this);
     this.connection.onmessage = this.messageHandler.bind(this);
+  }
+
+  connectionHandler() {
+    this.onopen();
+    this.requestUpdate();
   }
 
   messageHandler(data) {
@@ -28,6 +34,12 @@ class Client {
       origin: this.getOrigin(),
       payload
     });
+  }
+
+  requestUpdate() {
+    this.connection.send(this.createMessage({
+      action: "requestUpdate"
+    }));
   }
 
   getOrigin() {
