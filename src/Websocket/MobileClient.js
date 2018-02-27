@@ -6,6 +6,12 @@ class MobileClient extends Client
     return "mobile";
   }
 
+  initialize() {
+    this.connection.send(this.createMessage({
+      action: "initialize"
+    }));
+  }
+
   selectDeveloper(developerName) {
     this.connection.send(this.createMessage({
       action: "selectDeveloper",

@@ -10,7 +10,7 @@ class Client {
 
   connectionHandler() {
     this.onopen();
-    this.requestUpdate();
+    this.initialize();
   }
 
   messageHandler(data) {
@@ -36,10 +36,8 @@ class Client {
     });
   }
 
-  requestUpdate() {
-    this.connection.send(this.createMessage({
-      action: "requestUpdate"
-    }));
+  initialize() {
+    throw new Error("Please specify an initialization method for the current implementation");
   }
 
   getOrigin() {
