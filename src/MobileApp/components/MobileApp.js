@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {connectToWebsocketServer, update, reset} from "./actions";
-import MobileClient from "../Websocket/MobileClient";
+import {connectToWebsocketServer, update, reset} from "../../shared/actions";
+import MobileClient from "../../Websocket/MobileClient";
 import TeamSelection from "./TeamSelection";
 import DeveloperSelection from "./DeveloperSelection";
 import EstimationSelection from "./EstimationSelection"

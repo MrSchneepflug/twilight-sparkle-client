@@ -3,8 +3,8 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import configureMobileStore from "./MobileApp/store";
 import configureTVStore from "./TVApp/store";
-import TVApp from "./TVApp/TVApp";
-import MobileApp from "./MobileApp/MobileApp";
+import TVApp from "./TVApp/components/TVApp";
+import MobileApp from "./MobileApp/components/MobileApp";
 import "typeface-roboto";
 
 const mobileStore = configureMobileStore({

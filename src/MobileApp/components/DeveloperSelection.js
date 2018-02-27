@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Developer from "./Developer";
-import {resetTeamSelection} from "./actions/index";
+import {resetTeamSelection} from "../actions";
 
 const developersByTeam = {
   Alpakka: ["PD", "TH", "BP"],

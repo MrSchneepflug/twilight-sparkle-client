@@ -1,5 +1,5 @@
 import {combineReducers} from "redux";
-import connected from "./connected";
+import {connected} from "../../shared/reducers";
 import team from "./team";
 import developer from "./developer";
 import estimation from "./estimation";

@@ -6,4 +6,4 @@ export {
   connectToWebsocketServer,
   update,
   reset
-}
+};
