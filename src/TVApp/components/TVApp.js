@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {connectToWebsocketServer, update, reset} from "../../shared/actions";
 
 import TVClient from "../../Websocket/TVClient";
+import LoadingScreen from "../../shared/components/LoadingScreen";
 import Developer from "./Developer";
 
 class TVApp extends Component {
@@ -28,11 +29,7 @@ class TVApp extends Component {
 
   render() {
     if (!this.props.connected) {
-      return (
-        <div>
-          Connecting ...
-        </div>
-      );
+      return <LoadingScreen/>;
     }
 
     return (

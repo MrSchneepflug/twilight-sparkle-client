@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {connectToWebsocketServer, update, reset} from "../../shared/actions";
 import MobileClient from "../../Websocket/MobileClient";
+import LoadingScreen from "../../shared/components/LoadingScreen";
 import TeamSelection from "./TeamSelection";
 import DeveloperSelection from "./DeveloperSelection";
 import EstimationSelection from "./EstimationSelection"
@@ -31,11 +32,7 @@ class MobileApp extends Component {
 
   render() {
     if (!this.props.connected) {
-      return (
-        <div>
-          <strong>Connecting to server ...</strong>
-        </div>
-      );
+      return <LoadingScreen/>;
     }
 
     if (!this.props.team) {
