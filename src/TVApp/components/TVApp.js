@@ -4,27 +4,15 @@ import {connectToWebsocketServer, update, reset} from "../../shared/actions";
 
 import TVClient from "../../Websocket/TVClient";
 import LoadingScreen from "../../shared/components/LoadingScreen";
-import Developer from "./Developer";
+import Dashboard from "./Dashboard";
 
 class TVApp extends Component {
   constructor(props) {
     super(props);
 
-    this.client = new TVClient(this.props.connect);
+    this.client = new TVClient(this.props.connectToWebsocketServer);
     this.client.on("update", payload => this.props.update(payload.state));
     this.client.on("reset", this.props.reset);
-  }
-
-  renderDeveloperRows() {
-    return Object.keys(this.props.estimationsByDeveloper).map(developerName => {
-      return (
-        <Developer
-          name={developerName}
-          estimation={this.props.estimationsByDeveloper[developerName]}
-          key={developerName}
-        />
-      );
-    });
   }
 
   render() {
@@ -32,23 +20,12 @@ class TVApp extends Component {
       return <LoadingScreen/>;
     }
 
-    return (
-      <table>
-        <tbody>
-        <tr>
-          <td>Developer</td>
-          <td>Estimation</td>
-        </tr>
-        {this.renderDeveloperRows()}
-        </tbody>
-      </table>
-    );
+    return <Dashboard/>;
   }
 }
 
 const mapStateToProps = state => ({
-  connected: state.connected,
-  estimationsByDeveloper: state.estimationsByDeveloper
+  connected: state.connected
 });
 
 const mapDispatchToProps = dispatch => ({
