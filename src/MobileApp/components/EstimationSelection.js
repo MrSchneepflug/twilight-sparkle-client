@@ -1,7 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {resetDeveloperSelection, selectEstimation} from "../actions";
-import {reset} from "../../shared/actions";
 
 class EstimationSelection extends Component {
   constructor(props) {
@@ -52,12 +51,8 @@ class EstimationSelection extends Component {
         </div>
 
         <hr/>
-        {this.estimationSelections()}
-        <hr/>
 
-        <div style={style}>
-          <span onClick={this.props.reset}>RESET</span>
-        </div>
+        {this.estimationSelections()}
       </div>
     );
   }
@@ -70,7 +65,6 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
-  reset: () => dispatch(reset()),
   resetDeveloperSelection: previousDeveloper => dispatch(resetDeveloperSelection(previousDeveloper))
 });
 

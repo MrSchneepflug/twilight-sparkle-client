@@ -1,6 +1,6 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {connectToWebsocketServer, update, reset} from "../../shared/actions";
+import {connectToWebsocketServer, update} from "../../shared/actions";
 import MobileClient from "../../Websocket/MobileClient";
 import LoadingScreen from "../../shared/components/LoadingScreen";
 import TeamSelection from "./TeamSelection";
@@ -13,7 +13,6 @@ class MobileApp extends Component {
 
     this.client = new MobileClient(this.props.connectToWebsocketServer);
     this.client.on("update", payload => this.props.update(payload.state));
-    this.client.on("reset", this.props.reset);
   }
 
   componentWillReceiveProps(nextProps) {
@@ -57,7 +56,6 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   connectToWebsocketServer: () => dispatch(connectToWebsocketServer()),
   update: state => dispatch(update(state)),
-  reset: () => dispatch(reset())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MobileApp);

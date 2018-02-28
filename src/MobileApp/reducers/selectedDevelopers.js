@@ -9,8 +9,6 @@ export default function selectedDevelopers(state = [], action) {
       remove(selectedDevelopers, selectedDeveloper => selectedDeveloper === action.previousDeveloper);
       return selectedDevelopers;
       break;
-    case "RESET":
-      return [];
     default:
       return state;
   }

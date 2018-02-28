@@ -4,8 +4,6 @@ export default function team(state = null, action) {
       return action.team;
     case "RESET_TEAM_SELECTION":
       return null;
-    case "RESET":
-      return null;
     default:
       return state;
   }

@@ -4,8 +4,6 @@ export default function estimation(state = null, action) {
       return action.estimation;
     case "RESET_DEVELOPER_SELECTION":
       return null;
-    case "RESET":
-      return null;
     default:
       return state;
   }

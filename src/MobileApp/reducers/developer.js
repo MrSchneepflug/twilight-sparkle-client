@@ -4,8 +4,6 @@ export default function developer(state = null, action) {
       return action.developer;
     case "RESET_DEVELOPER_SELECTION":
       return null;
-    case "RESET":
-      return null;
     default:
       return state;
   }
