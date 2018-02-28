@@ -4,12 +4,12 @@ import Developer from "./Developer";
 
 class Dashboard extends Component {
   renderDeveloperRows() {
-    return Object.keys(this.props.estimationsByDeveloper).map(developerName => {
+    return this.props.clients.map(client => {
       return (
         <Developer
-          name={developerName}
-          estimation={this.props.estimationsByDeveloper[developerName]}
-          key={developerName}
+          name={client.developer}
+          estimation={client.estimation}
+          key={client.developer}
         />
       );
     });
@@ -31,7 +31,7 @@ class Dashboard extends Component {
 }
 
 const mapStateToProps = state => ({
-  estimationsByDeveloper: state.estimationsByDeveloper
+  clients: state.clients
 });
 
 const mapDispatchToProps = dispatch => ({

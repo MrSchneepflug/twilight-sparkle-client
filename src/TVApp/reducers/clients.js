@@ -1,9 +1,9 @@
-export default function estimationsByDeveloper(state = {}, action) {
+export default function clients(state = [], action) {
   switch (action.type) {
     case "UPDATE":
       return action.state;
     case "RESET":
-      return {};
+      return [];
     default:
       return state;
   }

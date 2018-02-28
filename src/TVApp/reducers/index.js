@@ -1,8 +1,8 @@
 import {combineReducers} from "redux";
 import {connected} from "../../shared/reducers";
-import estimationsByDeveloper from "./estimationsByDeveloper";
+import clients from "./clients";
 
 export default combineReducers({
   connected,
-  estimationsByDeveloper
+  clients
 });

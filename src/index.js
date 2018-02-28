@@ -17,7 +17,7 @@ const mobileStore = configureMobileStore({
 
 const tvStore = configureTVStore({
   connected: false,
-  estimationsByDeveloper: {}
+  clients: []
 });
 
 ReactDOM.render((
