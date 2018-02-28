@@ -20,9 +20,15 @@ const tvStore = configureTVStore({
   clients: []
 });
 
+const isMobile = () => {
+  return navigator.userAgent.match(
+    /(iPhone|iPod|iPad|blackberry|android|Kindle|htc|lg|midp|mmp|mobile|nokia|opera mini|palm|pocket|psp|sgh|smartphone|symbian|treo mini|Playstation Portable|SonyEricsson|Samsung|MobileExplorer|PalmSource|Benq|Windows Phone|Windows Mobile|IEMobile|Windows CE|Nintendo Wii)/i
+  );
+};
+
 ReactDOM.render((
-    <Provider store={window.device === "mobile" ? mobileStore : tvStore}>
-      {window.device === "mobile" ? <MobileApp/> : <TVApp/>}
+    <Provider store={isMobile() ? mobileStore : tvStore}>
+      {isMobile() ? <MobileApp/> : <TVApp/>}
     </Provider>
   ),
   document.getElementById('root')
