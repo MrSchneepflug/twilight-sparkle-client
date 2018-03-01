@@ -1,12 +1,13 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import Developer from "./Developer";
+import Client from "./Client";
 
 class Dashboard extends Component {
   renderDeveloperRows() {
     return this.props.clients.map(client => {
       return (
-        <Developer
+        <Client
+          id={client.id}
           name={client.developer}
           estimation={client.estimation}
           key={client.developer}
@@ -20,6 +21,7 @@ class Dashboard extends Component {
       <table>
         <tbody>
         <tr>
+          <td>ID</td>
           <td>Developer</td>
           <td>Estimation</td>
         </tr>
