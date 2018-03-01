@@ -22,7 +22,7 @@ class Client {
     }
 
     const callback = this.actionHandlers[message.action];
-    callback(message.payload);
+    callback(message.state);
   }
 
   on(action, callback) {

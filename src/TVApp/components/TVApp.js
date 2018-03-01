@@ -11,7 +11,7 @@ class TVApp extends Component {
     super(props);
 
     this.client = new TVClient(this.props.connectToWebsocketServer);
-    this.client.on("update", payload => this.props.update(payload.state));
+    this.client.on("update", state => this.props.update(state));
   }
 
   render() {
