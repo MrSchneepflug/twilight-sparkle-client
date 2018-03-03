@@ -1,11 +1,18 @@
-import React, {Component} from 'react';
-import {connect} from "react-redux";
-import {connectToWebsocketServer, update} from "../../shared/actions";
+import React, { Component } from "react";
+import {
+  BrowserRouter as Router,
+  Redirect,
+  Route,
+  Switch,
+  Link
+} from "react-router-dom";
+import { connect } from "react-redux";
+import { connectToWebsocketServer, update } from "../../shared/actions";
 import MobileClient from "../../Websocket/MobileClient";
 import LoadingScreen from "../../shared/components/LoadingScreen";
 import TeamSelection from "./TeamSelection";
 import DeveloperSelection from "./DeveloperSelection";
-import EstimationSelection from "./EstimationSelection"
+import EstimationSelection from "./EstimationSelection";
 
 class MobileApp extends Component {
   constructor(props) {
@@ -16,11 +23,17 @@ class MobileApp extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.props.developer !== nextProps.developer && nextProps.developer !== null) {
+    if (
+      this.props.developer !== nextProps.developer &&
+      nextProps.developer !== null
+    ) {
       this.client.selectDeveloper(nextProps.developer);
     }
 
-    if (this.props.estimation !== nextProps.estimation && nextProps.estimation !== null) {
+    if (
+      this.props.estimation !== nextProps.estimation &&
+      nextProps.estimation !== null
+    ) {
       this.client.selectEstimation(this.props.developer, nextProps.estimation);
     }
 
@@ -30,19 +43,22 @@ class MobileApp extends Component {
   }
 
   render() {
-    if (!this.props.connected) {
-      return <LoadingScreen/>;
-    }
+    return (
+      <Router>
+        <div>
+          <Route exact path="/" component={LoadingScreen} />
+          <Route path="/teams" component={TeamSelection} />
+          <Route path="/developers" component={DeveloperSelection} />
+          <Route path="/estimation" component={EstimationSelection} />
 
-    if (!this.props.team) {
-      return <TeamSelection/>;
-    }
-
-    if (!this.props.developer) {
-      return <DeveloperSelection/>;
-    }
-
-    return <EstimationSelection/>;
+          <Switch>
+            {this.props.developer && <Redirect to="/estimation" />}
+            {this.props.team && <Redirect to="/developers" />}
+            {this.props.connected && <Redirect to="/teams" />}
+          </Switch>
+        </div>
+      </Router>
+    );
   }
 }
 
