@@ -7,12 +7,9 @@ import {
   Link
 } from "react-router-dom";
 import { connect } from "react-redux";
-import { connectToWebsocketServer, update } from "../../shared/actions";
-import MobileClient from "../../Websocket/MobileClient";
-import LoadingScreen from "../../shared/components/LoadingScreen";
-import TeamSelection from "./TeamSelection";
-import DeveloperSelection from "./DeveloperSelection";
-import EstimationSelection from "./EstimationSelection";
+import { connectToWebsocketServer, update } from "../shared/actions";
+import MobileClient from "../Websocket/MobileClient";
+import { Home, TeamSelection, DeveloperSelection, EstimationSelection } from "./scenes";
 
 class MobileApp extends Component {
   constructor(props) {
@@ -46,7 +43,7 @@ class MobileApp extends Component {
     return (
       <Router>
         <div>
-          <Route exact path="/" component={LoadingScreen} />
+          <Route exact path="/" component={Home} />
           <Route path="/teams" component={TeamSelection} />
           <Route path="/developers" component={DeveloperSelection} />
           <Route path="/estimation" component={EstimationSelection} />

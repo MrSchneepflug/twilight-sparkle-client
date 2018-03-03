@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {selectDeveloper} from "../actions";
+import {selectDeveloper} from "../../actions";
 
 class Developer extends Component {
   constructor(props) {

@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {resetDeveloperSelection, selectEstimation} from "../actions";
+import {resetDeveloperSelection, selectEstimation} from "../../actions";
 
 class EstimationSelection extends Component {
   constructor(props) {

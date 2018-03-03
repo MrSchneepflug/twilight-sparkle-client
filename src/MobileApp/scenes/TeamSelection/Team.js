@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {selectTeam} from "../actions";
+import {selectTeam} from "../../actions";
 
 class Team extends Component {
   constructor(props) {

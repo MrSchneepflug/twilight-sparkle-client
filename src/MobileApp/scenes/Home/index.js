@@ -1,6 +1,6 @@
 import React from "react";
 
-const LoadingScreen = () => {
+const Home = () => {
   return (
     <div>
       <strong>Connecting to server ...</strong>
@@ -8,4 +8,4 @@ const LoadingScreen = () => {
   );
 };
 
-export default LoadingScreen;
+export default Home;

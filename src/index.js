@@ -5,7 +5,7 @@ import mobileStore from "./MobileApp/store";
 import tvStore from "./TVApp/store";
 import AppShell from './AppShell/'
 import TVApp from "./TVApp/components/TVApp";
-import MobileApp from "./MobileApp/components/MobileApp";
+import MobileApp from "./MobileApp/";
 import "typeface-roboto";
 
 const isMobile = () => {
