@@ -3,8 +3,7 @@ import {
   BrowserRouter as Router,
   Redirect,
   Route,
-  Switch,
-  Link
+  Switch
 } from "react-router-dom";
 import { connect } from "react-redux";
 import { connectToWebsocketServer, update } from "../shared/actions";
