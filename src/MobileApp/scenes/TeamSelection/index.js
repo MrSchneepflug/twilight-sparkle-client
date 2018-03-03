@@ -1,4 +1,4 @@
-import React, {Component} from "react";
+import React from "react";
 import Team from "./Team";
 
 const teams = ["Alpakka", "Einhorn", "Irbis", "Kea", "Raccoon", "Tapir"];
