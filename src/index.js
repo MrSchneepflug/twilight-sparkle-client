@@ -1,11 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
-import configureMobileStore from "./MobileApp/store";
-import configureTVStore from "./TVApp/store";
+import mobileStore from "./MobileApp/store";
+import tvStore from "./TVApp/store";
 import AppShell from './AppShell/'
-import TVApp from "./TVApp/TVApp";
-import MobileApp from "./MobileApp/MobileApp";
+import TVApp from "./TVApp/components/TVApp";
+import MobileApp from "./MobileApp/components/MobileApp";
 import "typeface-roboto";
 
 const isMobile = () => {
@@ -14,23 +14,10 @@ const isMobile = () => {
   );
 };
 
-const mobileStore = configureMobileStore({
-  connected: false,
-  team: null,
-  developer: null,
-  estimation: null,
-  selectedDevelopers: []
-});
-
-const tvStore = configureTVStore({
-  connected: false,
-  estimationsByDeveloper: {}
-});
-
 ReactDOM.render((
-    <Provider store={window.device === "mobile" ? mobileStore : tvStore}>
+    <Provider store={isMobile() ? mobileStore : tvStore}>
       <AppShell label={isMobile() ? 'Twilight Sparkle - Mobile mode' : 'Twilight Sparkle - TV mode'}>
-        {isMobile() ? <MobileApp /> : <TVApp />}
+        {isMobile() ? <MobileApp/> : <TVApp/>}
       </AppShell>
     </Provider>
   ),

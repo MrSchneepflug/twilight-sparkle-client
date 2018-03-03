@@ -1,10 +1,16 @@
 class Client {
   constructor(onopen) {
     this.actionHandlers = {};
+    this.onopen = onopen;
 
     this.connection = new WebSocket("ws://localhost:5000");
-    this.connection.onopen = onopen;
+    this.connection.onopen = this.connectionHandler.bind(this);
     this.connection.onmessage = this.messageHandler.bind(this);
+  }
+
+  connectionHandler() {
+    this.onopen();
+    this.initialize();
   }
 
   messageHandler(data) {
@@ -16,7 +22,7 @@ class Client {
     }
 
     const callback = this.actionHandlers[message.action];
-    callback(message.payload);
+    callback(message.state);
   }
 
   on(action, callback) {
@@ -28,6 +34,10 @@ class Client {
       origin: this.getOrigin(),
       payload
     });
+  }
+
+  initialize() {
+    throw new Error("Please specify an initialization method for the current implementation");
   }
 
   getOrigin() {
