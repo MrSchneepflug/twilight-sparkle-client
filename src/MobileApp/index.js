@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import AppShell from "./AppShell"
 import {
   BrowserRouter as Router,
   Redirect,
@@ -41,7 +42,7 @@ class MobileApp extends Component {
   render() {
     return (
       <Router>
-        <div>
+        <AppShell>
           <Route exact path="/" component={Home} />
           <Route path="/teams" component={TeamSelection} />
           <Route path="/developers" component={DeveloperSelection} />
@@ -52,7 +53,7 @@ class MobileApp extends Component {
             {this.props.team && <Redirect to="/developers" />}
             {this.props.connected && <Redirect to="/teams" />}
           </Switch>
-        </div>
+        </AppShell>
       </Router>
     );
   }
