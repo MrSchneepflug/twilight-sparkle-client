@@ -71,7 +71,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   connectToWebsocketServer: () => dispatch(connectToWebsocketServer()),
-  update: state => dispatch(update(state)),
+  update: state => dispatch(update(state))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MobileApp);
