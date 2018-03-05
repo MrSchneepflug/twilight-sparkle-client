@@ -1,6 +1,8 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
-import {selectTeam} from "../../actions";
+import React, { Component } from "react";
+import { ListItem, ListItemText } from "material-ui/List";
+import Avatar from "material-ui/Avatar";
+import { connect } from "react-redux";
+import { selectTeam } from "../../actions";
 
 class Team extends Component {
   constructor(props) {
@@ -14,21 +16,16 @@ class Team extends Component {
   }
 
   render() {
-    const style = {
-      textAlign: "center",
-      padding: "20px"
-    };
-
     return (
-      <div style={style} onClick={this.clickHandler}>
-        <strong>{this.props.name}</strong>
-      </div>
+      <ListItem key={this.props.name} onClick={this.clickHandler}>
+        <Avatar>{this.props.name[0]}</Avatar>
+        <ListItemText primary={this.props.name} />
+      </ListItem>
     );
   }
 }
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   selectTeam: team => dispatch(selectTeam(team))
