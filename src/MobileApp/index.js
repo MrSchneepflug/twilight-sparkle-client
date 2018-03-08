@@ -1,12 +1,6 @@
 import React, { Component } from "react";
 import AppShell from "./AppShell";
-import {
-  BrowserRouter as Router,
-  Redirect,
-  Route,
-  Switch
-} from "react-router-dom";
-import { connect, compose } from "react-redux";
+import { connect } from "react-redux";
 import { connectToWebsocketServer, update } from "../shared/actions";
 import MobileClient from "../Websocket/MobileClient";
 import * as Scenes from "./scenes";
