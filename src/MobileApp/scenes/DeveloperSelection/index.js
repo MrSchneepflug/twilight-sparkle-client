@@ -1,7 +1,9 @@
-import React, {Component} from "react";
-import {connect} from "react-redux";
+import React, { Component } from "react";
+import { List, Divider, ListItem, ListItemIcon, ListItemText } from "material-ui";
+import ArrowBack from 'material-ui-icons/ArrowBack';
+import { connect } from "react-redux";
 import Developer from "./Developer";
-import {resetTeamSelection} from "../../actions";
+import { resetTeamSelection } from "../../actions";
 
 const developersByTeam = {
   Alpakka: ["PD", "TH", "BP"],
@@ -15,7 +17,8 @@ const developersByTeam = {
 class DeveloperSelection extends Component {
   renderDeveloperSelections() {
     return developersByTeam[this.props.team].map(developer => {
-      const isDeveloperSelected = this.props.selectedDevelopers.indexOf(developer) !== -1;
+      const isDeveloperSelected =
+        this.props.selectedDevelopers.indexOf(developer) !== -1;
       const isSelf = developer === this.props.developer;
 
       return (
@@ -37,11 +40,16 @@ class DeveloperSelection extends Component {
 
     return (
       <div>
-        <div style={style}>
-          <strong onClick={this.props.resetTeamSelection}>back</strong>
-        </div>
-        <hr/>
-        {this.renderDeveloperSelections()}
+        <List>{this.renderDeveloperSelections()}</List>
+        <Divider />
+        <List>
+          <ListItem onClick={this.props.resetTeamSelection}>
+            <ListItemIcon>
+              <ArrowBack />
+              </ListItemIcon>
+            <ListItemText primary="Back to team selection" />
+          </ListItem>
+        </List>
       </div>
     );
   }
