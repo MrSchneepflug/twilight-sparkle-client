@@ -1,15 +1,15 @@
 import React, { Component } from "react";
-import AppShell from "./AppShell"
+import AppShell from "./AppShell";
 import {
   BrowserRouter as Router,
   Redirect,
   Route,
   Switch
 } from "react-router-dom";
-import { connect } from "react-redux";
+import { connect, compose } from "react-redux";
 import { connectToWebsocketServer, update } from "../shared/actions";
 import MobileClient from "../Websocket/MobileClient";
-import { Home, TeamSelection, DeveloperSelection, EstimationSelection } from "./scenes";
+import * as Scenes from "./scenes";
 
 class MobileApp extends Component {
   constructor(props) {
@@ -39,22 +39,43 @@ class MobileApp extends Component {
     }
   }
 
+  getSceneTitle = () => {
+    if (!this.props.connected) {
+      return "Hang on!";
+    }
+
+    if (!this.props.team) {
+      return "Choose Your Team";
+    }
+
+    if (!this.props.developer) {
+      return "Select Developer";
+    }
+
+    return "Estimate!";
+  };
+
+  renderScene = () => {
+    if (!this.props.connected) {
+      return <Scenes.Home />;
+    }
+
+    if (!this.props.team) {
+      return <Scenes.TeamSelection />;
+    }
+
+    if (!this.props.developer) {
+      return <Scenes.DeveloperSelection />;
+    }
+
+    return <Scenes.EstimationSelection />;
+  };
+
   render() {
     return (
-      <Router>
-        <AppShell>
-          <Route exact path="/" component={Home} />
-          <Route path="/teams" component={TeamSelection} />
-          <Route path="/developers" component={DeveloperSelection} />
-          <Route path="/estimation" component={EstimationSelection} />
-
-          <Switch>
-            {this.props.developer && <Redirect to="/estimation" />}
-            {this.props.team && <Redirect to="/developers" />}
-            {this.props.connected && <Redirect to="/teams" />}
-          </Switch>
-        </AppShell>
-      </Router>
+      <AppShell title={this.getSceneTitle()}>
+        {this.renderScene()}
+      </AppShell>
     );
   }
 }

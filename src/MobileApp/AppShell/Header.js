@@ -18,7 +18,7 @@ function Header(props) {
       <AppBar position="static" color="default">
         <Toolbar>
           <Typography variant="title" color="inherit">
-            {props.label}
+            {props.title}
           </Typography>
         </Toolbar>
       </AppBar>
