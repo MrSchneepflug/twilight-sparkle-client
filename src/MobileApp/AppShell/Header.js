@@ -28,7 +28,7 @@ function Header(props) {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(Header);
