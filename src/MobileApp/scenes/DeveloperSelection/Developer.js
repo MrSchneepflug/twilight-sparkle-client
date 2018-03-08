@@ -23,7 +23,7 @@ class Developer extends Component {
       this.props.selectedDevelopers.indexOf(this.props.name) !== -1;
 
     return (
-      <ListItem key={this.props.name} onClick={this.clickHandler} disabled={isDeveloperSelected}>
+      <ListItem key={this.props.name} onClick={!isDeveloperSelected ? this.clickHandler : undefined} disabled={isDeveloperSelected}>
         <Avatar>{this.props.name[0] + this.props.name[1]}</Avatar>
         <ListItemText primary={this.props.name} secondary={isDeveloperSelected ? 'already selected' : 'available'}/>
       </ListItem>
