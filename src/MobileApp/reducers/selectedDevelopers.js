@@ -8,7 +8,6 @@ export default function selectedDevelopers(state = [], action) {
       let selectedDevelopers = [...state];
       remove(selectedDevelopers, selectedDeveloper => selectedDeveloper === action.previousDeveloper);
       return selectedDevelopers;
-      break;
     default:
       return state;
   }

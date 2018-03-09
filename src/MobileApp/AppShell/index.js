@@ -1,5 +1,5 @@
 import React from 'react'
-import Reboot from 'material-ui/Reboot';
+import Reboot from 'material-ui/Reboot'
 import Header from './Header'
 import Footer from './Footer'
 
@@ -8,7 +8,7 @@ class AppShell extends React.Component {
     return (
       <div>
         <Reboot />
-        <Header label={this.props.label} />
+        <Header title={this.props.title} />
         <main>
           {this.props.children}
         </main>
@@ -18,4 +18,4 @@ class AppShell extends React.Component {
   }
 }
 
-export default AppShell
+export default AppShell;

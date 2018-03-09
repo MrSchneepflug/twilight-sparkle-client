@@ -3,9 +3,8 @@ import ReactDOM from "react-dom";
 import {Provider} from "react-redux";
 import mobileStore from "./MobileApp/store";
 import tvStore from "./TVApp/store";
-import AppShell from './AppShell/'
 import TVApp from "./TVApp/components/TVApp";
-import MobileApp from "./MobileApp/components/MobileApp";
+import MobileApp from "./MobileApp/";
 import "typeface-roboto";
 
 const isMobile = () => {
@@ -16,9 +15,7 @@ const isMobile = () => {
 
 ReactDOM.render((
     <Provider store={isMobile() ? mobileStore : tvStore}>
-      <AppShell label={isMobile() ? 'Twilight Sparkle - Mobile mode' : 'Twilight Sparkle - TV mode'}>
-        {isMobile() ? <MobileApp/> : <TVApp/>}
-      </AppShell>
+      {isMobile() ? <MobileApp/> : <TVApp/>}
     </Provider>
   ),
   document.getElementById('root')

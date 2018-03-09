@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import {connectToWebsocketServer, update} from "../../shared/actions";
 
 import TVClient from "../../Websocket/TVClient";
-import LoadingScreen from "../../shared/components/LoadingScreen";
+import LoadingScreen from "../scenes/Home";
 import Dashboard from "./Dashboard";
 
 class TVApp extends Component {

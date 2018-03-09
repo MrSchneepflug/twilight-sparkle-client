@@ -18,7 +18,7 @@ function Header(props) {
       <AppBar position="static" color="default">
         <Toolbar>
           <Typography variant="title" color="inherit">
-            {props.label}
+            {props.title}
           </Typography>
         </Toolbar>
       </AppBar>
@@ -28,7 +28,7 @@ function Header(props) {
 
 Header.propTypes = {
   classes: PropTypes.object.isRequired,
-  label: PropTypes.string.isRequired
+  title: PropTypes.string.isRequired
 };
 
 export default withStyles(styles)(Header);
