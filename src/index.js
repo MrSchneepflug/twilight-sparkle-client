@@ -13,10 +13,20 @@ const isMobile = () => {
   );
 };
 
-ReactDOM.render((
-    <Provider store={isMobile() ? mobileStore : tvStore}>
-      {isMobile() ? <MobileApp/> : <TVApp/>}
+let app = null;
+
+if (isMobile()) {
+  app = (
+    <Provider store={mobileStore}>
+      <MobileApp/>
     </Provider>
-  ),
-  document.getElementById('root')
-);
+  );
+} else {
+  app = (
+    <Provider store={tvStore}>
+      <TVApp/>
+    </Provider>
+  );
+}
+
+ReactDOM.render(app, document.getElementById('root'));
