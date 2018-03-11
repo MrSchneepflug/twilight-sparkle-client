@@ -2,6 +2,11 @@ import {createStore} from "redux";
 import rootReducer from "../reducers";
 
 const initialState = {
+  location: {
+    pathname: "/",
+    search: "",
+    hash: ""
+  },
   connected: false,
   team: null,
   developer: null,
