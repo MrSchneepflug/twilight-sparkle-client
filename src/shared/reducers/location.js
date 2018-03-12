@@ -9,9 +9,7 @@ export const location = (state = initialState, action) => {
     case "LOCATION_CHANGE":
       return {
         ...state,
-        pathname: action.pathname,
-        search: action.search,
-        hash: action.hash
+        ...action.payload
       };
     default:
       return state;

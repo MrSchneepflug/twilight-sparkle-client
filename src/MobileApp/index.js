@@ -50,6 +50,7 @@ class MobileApp extends Component {
   };
 
   renderScene = () => {
+    /*
     if (!this.props.connected) {
       return <Scenes.Home />;
     }
@@ -63,6 +64,16 @@ class MobileApp extends Component {
     }
 
     return <Scenes.EstimationSelection />;
+    */
+
+    switch (this.props.location.pathname) {
+      case "/":
+        return this.props.connected
+          ? <Scenes.TeamSelection />
+          : <Scenes.Home />;
+      case "/developers":
+        return <Scenes.DeveloperSelection />;
+    }
   };
 
   render() {
@@ -75,6 +86,7 @@ class MobileApp extends Component {
 }
 
 const mapStateToProps = state => ({
+  location: state.location,
   connected: state.connected,
   team: state.team,
   developer: state.developer,
