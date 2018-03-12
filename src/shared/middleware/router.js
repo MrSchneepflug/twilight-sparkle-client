@@ -1,13 +1,19 @@
 export const routerMiddleware = history => () => next => action => {
   switch (action.type) {
     case "PUSH":
-      history.push(action.payload);
+      history.push({
+        href: action.href
+      });
       break;
     case "REPLACE":
-      history.replace(action.payload);
+      history.replace({
+        href: action.href
+      });
       break;
     case "GO":
-      history.go(action.payload);
+      history.go({
+        index: action.index
+      });
       break;
     case "GO_BACK":
       history.goBack();
