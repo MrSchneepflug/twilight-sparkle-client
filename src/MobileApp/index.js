@@ -34,19 +34,18 @@ class MobileApp extends Component {
   }
 
   getSceneTitle = () => {
-    if (!this.props.connected) {
-      return "Hang on!";
+    switch (this.props.location.pathname) {
+      case "/":
+        return this.props.connected
+          ? "Choose Your Team"
+          : "Hang on!";
+      case "/developers":
+          return "Select Developer";
+      case "/estimation":
+          return "Estimate";
     }
 
-    if (!this.props.team) {
-      return "Choose Your Team";
-    }
-
-    if (!this.props.developer) {
-      return "Select Developer";
-    }
-
-    return "Estimate!";
+    return "No title defined";
   };
 
   renderScene = () => {
