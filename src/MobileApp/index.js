@@ -71,6 +71,7 @@ class MobileApp extends Component {
         return this.props.connected
           ? <Scenes.TeamSelection />
           : <Scenes.Home />;
+      // @todo: /developers/einhorn ?
       case "/developers":
         return <Scenes.DeveloperSelection />;
     }
