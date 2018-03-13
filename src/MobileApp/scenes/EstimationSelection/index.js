@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {resetDeveloperSelection, selectEstimation} from "../../actions";
+import { push } from "../../../shared/actions/history";
 
 class EstimationSelection extends Component {
   constructor(props) {
@@ -65,7 +66,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
-  resetDeveloperSelection: previousDeveloper => dispatch(resetDeveloperSelection(previousDeveloper))
+  resetDeveloperSelection: previousDeveloper => {
+    dispatch(resetDeveloperSelection(previousDeveloper));
+    dispatch(push("/developers"));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EstimationSelection);
