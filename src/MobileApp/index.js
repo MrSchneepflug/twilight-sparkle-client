@@ -50,22 +50,6 @@ class MobileApp extends Component {
   };
 
   renderScene = () => {
-    /*
-    if (!this.props.connected) {
-      return <Scenes.Home />;
-    }
-
-    if (!this.props.team) {
-      return <Scenes.TeamSelection />;
-    }
-
-    if (!this.props.developer) {
-      return <Scenes.DeveloperSelection />;
-    }
-
-    return <Scenes.EstimationSelection />;
-    */
-
     switch (this.props.location.pathname) {
       case "/":
         return this.props.connected
@@ -74,6 +58,8 @@ class MobileApp extends Component {
       // @todo: /developers/einhorn ?
       case "/developers":
         return <Scenes.DeveloperSelection />;
+      case "/estimation":
+        return <Scenes.EstimationSelection />;
     }
   };
 
