@@ -13,12 +13,12 @@ import { resetTeamSelection } from "../../actions";
 import { goBack } from "../../../shared/actions/history";
 
 const developersByTeam = {
-  alpakka: ["PD", "TH", "BP"],
-  einhorn: ["TK", "TW", "MS", "JJ"],
-  irbis: ["AD", "ML", "SI", "TB"],
-  kea: ["CD", "DM", "PN", "TW", "PB"],
-  raccoon: ["AF", "SB", "IE"],
-  tapir: ["SD", "AO", "PC", "SG"]
+  alpakka: ["pd", "th", "bp"],
+  einhorn: ["tk", "tw", "ms", "jj"],
+  irbis: ["ad", "ml", "si", "tb"],
+  kea: ["cd", "dm", "pn", "tw", "pb"],
+  raccoon: ["af", "sb", "ie"],
+  tapir: ["sd", "ao", "pc", "sg"]
 };
 
 class DeveloperSelection extends Component {
