@@ -2,7 +2,7 @@ import React from "react";
 import List from "material-ui/List";
 import Team from "./Team";
 
-const teams = ["Alpakka", "Einhorn", "Irbis", "Kea", "Raccoon", "Tapir"];
+const teams = ["alpakka", "einhorn", "irbis", "kea", "raccoon", "tapir"];
 
 const TeamSelection = () => {
   return (

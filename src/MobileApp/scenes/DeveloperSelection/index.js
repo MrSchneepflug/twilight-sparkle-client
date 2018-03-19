@@ -13,12 +13,12 @@ import { resetTeamSelection } from "../../actions";
 import { push } from "../../../shared/actions/history";
 
 const developersByTeam = {
-  Alpakka: ["PD", "TH", "BP"],
-  Einhorn: ["TK", "TW", "MS", "JJ"],
-  Irbis: ["AD", "ML", "SI", "TB"],
-  Kea: ["CD", "DM", "PN", "TW", "PB"],
-  Raccoon: ["AF", "SB", "IE"],
-  Tapir: ["SD", "AO", "PC", "SG"]
+  alpakka: ["PD", "TH", "BP"],
+  einhorn: ["TK", "TW", "MS", "JJ"],
+  irbis: ["AD", "ML", "SI", "TB"],
+  kea: ["CD", "DM", "PN", "TW", "PB"],
+  raccoon: ["AF", "SB", "IE"],
+  tapir: ["SD", "AO", "PC", "SG"]
 };
 
 class DeveloperSelection extends Component {
@@ -50,7 +50,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   resetTeamSelection: () => {
     dispatch(resetTeamSelection());
-    dispatch(push({ pathname: "/" }));
+    dispatch(push({ pathname: "/teams" }));
   }
 });
 

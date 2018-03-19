@@ -16,7 +16,7 @@ class Developer extends Component {
       return;
     }
 
-    this.props.selectDeveloper(this.props.name);
+    this.props.selectDeveloper(this.props.pathname, this.props.name);
   }
 
   render() {
@@ -33,15 +33,16 @@ class Developer extends Component {
 }
 
 const mapStateToProps = state => ({
+  pathname: state.location.pathname,
   developer: state.developer,
   selectedDevelopers: state.selectedDevelopers
 });
 
 
 const mapDispatchToProps = dispatch => ({
-  selectDeveloper: developer => {
+  selectDeveloper: (pathname, developer) => {
     dispatch(selectDeveloper(developer));
-    dispatch(push({ pathname: "/estimation" }));
+    dispatch(push({ pathname: `${pathname}/${developer}/estimation` }));
   }
 });
 

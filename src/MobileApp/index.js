@@ -50,25 +50,31 @@ class MobileApp extends Component {
   };
 
   renderScene = () => {
-    switch (this.props.location.pathname) {
-      case "/":
-        return <Scenes.Home />;
-      case "/teams":
-        return <Scenes.TeamSelection />;
-      case "/developers":
-        const team = this.extractTeamFromQueryString();
-        return <Scenes.DeveloperSelection team={team}/>;
-      case "/estimation":
-        return <Scenes.EstimationSelection />;
+    const pathname = this.props.location.pathname;
+
+    if (/developers\/\w+\/estimation/.test(pathname)) {
+      return <Scenes.EstimationSelection />;
+    }
+
+    if (/teams\/\w+\/developers/.test(pathname)) {
+      const team = this.extractTeamFromURI();
+      return <Scenes.DeveloperSelection team={team}/>;
+    }
+
+    if (pathname === "/teams") {
+      return <Scenes.TeamSelection />;
+    }
+
+    if (pathname === "/") {
+      return <Scenes.Home />;
     }
   };
 
-  extractTeamFromQueryString() {
-    const queryString = this.props.location.search;
-    const matchResult = queryString.match(/team=(\w+)/);
+  extractTeamFromURI() {
+    const matchResult = this.props.location.pathname.match(/teams\/(\w+)/);
 
     if (matchResult === null) {
-      throw new Error("Could not extract team from query-string");
+      throw new Error("Could not extract team from URI");
     }
 
     return matchResult[1];

@@ -11,7 +11,7 @@ class EstimationSelection extends Component {
   }
 
   clickHandler() {
-    this.props.resetDeveloperSelection(this.props.developer);
+    this.props.resetDeveloperSelection(this.props.pathname, this.props.developer);
   }
 
   buildSelectionHandler(number) {
@@ -60,15 +60,20 @@ class EstimationSelection extends Component {
 }
 
 const mapStateToProps = state => ({
+  pathname: state.location.pathname,
   developer: state.developer,
   estimation: state.estimation
 });
 
 const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
-  resetDeveloperSelection: previousDeveloper => {
+  resetDeveloperSelection: (pathname, previousDeveloper) => {
     dispatch(resetDeveloperSelection(previousDeveloper));
-    dispatch(push({ pathname: "/developers" }));
+
+    const matchResult = pathname.match(/teams\/(\w+)/);
+    const team = matchResult[1];
+
+    dispatch(push({ pathname: `/teams/${team}/developers` }));
   }
 });
 
