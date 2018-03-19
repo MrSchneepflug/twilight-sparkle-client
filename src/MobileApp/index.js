@@ -4,6 +4,7 @@ import { connect } from "react-redux";
 import { connectToWebsocketServer, update } from "../shared/actions";
 import MobileClient from "../Websocket/MobileClient";
 import * as Scenes from "./scenes";
+import { push } from "../shared/actions/history";
 
 class MobileApp extends Component {
   constructor(props) {
@@ -51,9 +52,9 @@ class MobileApp extends Component {
   renderScene = () => {
     switch (this.props.location.pathname) {
       case "/":
-        return this.props.connected
-          ? <Scenes.TeamSelection />
-          : <Scenes.Home />;
+        return <Scenes.Home />;
+      case "/teams":
+        return <Scenes.TeamSelection />;
       case "/developers":
         const team = this.extractTeamFromQueryString();
         return <Scenes.DeveloperSelection team={team}/>;
@@ -71,6 +72,12 @@ class MobileApp extends Component {
     }
 
     return matchResult[1];
+  }
+
+  componentWillUpdate(nextProps) {
+    if (this.props.location.pathname === "/" && !this.props.connected && nextProps.connected) {
+      this.props.redirectToTeamSelection();
+    }
   }
 
   render() {
@@ -92,7 +99,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   connectToWebsocketServer: () => dispatch(connectToWebsocketServer()),
-  update: state => dispatch(update(state))
+  update: state => dispatch(update(state)),
+  redirectToTeamSelection: () => dispatch(push({ pathname: "/teams" }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MobileApp);
