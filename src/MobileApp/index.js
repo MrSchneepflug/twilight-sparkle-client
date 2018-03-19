@@ -54,13 +54,24 @@ class MobileApp extends Component {
         return this.props.connected
           ? <Scenes.TeamSelection />
           : <Scenes.Home />;
-      // @todo: /developers/einhorn ?
       case "/developers":
-        return <Scenes.DeveloperSelection />;
+        const team = this.extractTeamFromQueryString();
+        return <Scenes.DeveloperSelection team={team}/>;
       case "/estimation":
         return <Scenes.EstimationSelection />;
     }
   };
+
+  extractTeamFromQueryString() {
+    const queryString = this.props.location.search;
+    const matchResult = queryString.match(/team=(\w+)/);
+
+    if (matchResult === null) {
+      throw new Error("Could not extract team from query-string");
+    }
+
+    return matchResult[1];
+  }
 
   render() {
     return (
