@@ -52,21 +52,21 @@ class MobileApp extends Component {
   renderScene = () => {
     const pathname = this.props.location.pathname;
 
-    if (/developers\/\w+\/estimation/.test(pathname)) {
-      return <Scenes.EstimationSelection />;
-    }
-
-    if (/teams\/\w+\/developers/.test(pathname)) {
-      const team = this.extractTeamFromURI();
-      return <Scenes.DeveloperSelection team={team}/>;
+    if (pathname === "/") {
+      return <Scenes.Home />;
     }
 
     if (pathname === "/teams") {
       return <Scenes.TeamSelection />;
     }
 
-    if (pathname === "/") {
-      return <Scenes.Home />;
+    if (/^\/teams\/\w+\/developers$/.test(pathname)) {
+      const team = this.extractTeamFromURI();
+      return <Scenes.DeveloperSelection team={team}/>;
+    }
+
+    if (/^\/teams\/\w+\/developers\/\w+\/estimation$/.test(pathname)) {
+      return <Scenes.EstimationSelection />;
     }
   };
 
