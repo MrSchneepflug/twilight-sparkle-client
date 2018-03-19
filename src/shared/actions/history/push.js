@@ -1,6 +1,10 @@
-export default function push(href) {
+export default function push({ pathname, search, hash }) {
   return {
     type: "PUSH",
-    payload: href
+    payload: {
+      pathname,
+      search,
+      hash
+    }
   }
 }

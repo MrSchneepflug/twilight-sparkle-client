@@ -45,13 +45,12 @@ class DeveloperSelection extends Component {
 }
 
 const mapStateToProps = state => ({
-  team: state.team
 });
 
 const mapDispatchToProps = dispatch => ({
   resetTeamSelection: () => {
     dispatch(resetTeamSelection());
-    dispatch(push("/"));
+    dispatch(push({ pathname: "/" }));
   }
 });
 

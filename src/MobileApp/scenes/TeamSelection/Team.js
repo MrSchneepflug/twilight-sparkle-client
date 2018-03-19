@@ -31,7 +31,7 @@ const mapStateToProps = state => ({});
 const mapDispatchToProps = dispatch => ({
   selectTeam: team => {
     dispatch(selectTeam(team));
-    dispatch(push("/developers"));
+    dispatch(push({ pathname: "/developers", search: `?team=${team}` }));
   }
 });
 

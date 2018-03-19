@@ -68,7 +68,7 @@ const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
   resetDeveloperSelection: previousDeveloper => {
     dispatch(resetDeveloperSelection(previousDeveloper));
-    dispatch(push("/developers"));
+    dispatch(push({ pathname: "/developers" }));
   }
 });
 

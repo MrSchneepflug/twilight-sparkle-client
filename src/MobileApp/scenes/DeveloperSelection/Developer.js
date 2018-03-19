@@ -41,7 +41,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   selectDeveloper: developer => {
     dispatch(selectDeveloper(developer));
-    dispatch(push("/estimation"));
+    dispatch(push({ pathname: "/estimation" }));
   }
 });
 
