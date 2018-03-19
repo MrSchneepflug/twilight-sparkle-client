@@ -98,7 +98,6 @@ class MobileApp extends Component {
 const mapStateToProps = state => ({
   location: state.location,
   connected: state.connected,
-  team: state.team,
   developer: state.developer,
   estimation: state.estimation
 });

@@ -60,7 +60,6 @@ class EstimationSelection extends Component {
 }
 
 const mapStateToProps = state => ({
-  pathname: state.location.pathname,
   developer: state.developer,
   estimation: state.estimation
 });
