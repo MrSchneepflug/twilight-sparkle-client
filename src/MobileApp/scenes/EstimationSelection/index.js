@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import {resetDeveloperSelection, selectEstimation} from "../../actions";
-import { push } from "../../../shared/actions/history";
+import { goBack } from "../../../shared/actions/history";
 
 class EstimationSelection extends Component {
   constructor(props) {
@@ -69,11 +69,7 @@ const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
   resetDeveloperSelection: (pathname, previousDeveloper) => {
     dispatch(resetDeveloperSelection(previousDeveloper));
-
-    const matchResult = pathname.match(/teams\/(\w+)/);
-    const team = matchResult[1];
-
-    dispatch(push({ pathname: `/teams/${team}/developers` }));
+    dispatch(goBack());
   }
 });
 

@@ -10,7 +10,7 @@ import ArrowBack from "material-ui-icons/ArrowBack";
 import { connect } from "react-redux";
 import Developer from "./Developer";
 import { resetTeamSelection } from "../../actions";
-import { push } from "../../../shared/actions/history";
+import { goBack } from "../../../shared/actions/history";
 
 const developersByTeam = {
   alpakka: ["PD", "TH", "BP"],
@@ -50,7 +50,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   resetTeamSelection: () => {
     dispatch(resetTeamSelection());
-    dispatch(push({ pathname: "/teams" }));
+    dispatch(goBack());
   }
 });
 
