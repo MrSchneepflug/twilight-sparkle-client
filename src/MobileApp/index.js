@@ -19,8 +19,8 @@ class MobileApp extends Component {
     this.client.on("update", state => this.props.update(state));
   }
 
-  componentWillReceiveProps(nextProps) {
-    const pathname = new Pathname(nextProps.location.pathname);
+  componentDidUpdate(prevProps) {
+    const pathname = new Pathname(this.props.location.pathname);
 
     if (pathname.matchesDeveloperSelection() && this.state.developer !== null) {
       this.client.resetDeveloperSelection(this.state.developer);
@@ -41,10 +41,10 @@ class MobileApp extends Component {
     }
 
     if (
-      this.props.estimation !== nextProps.estimation &&
-      nextProps.estimation !== null
+      this.props.estimation !== prevProps.estimation &&
+      this.props.estimation !== null
     ) {
-      this.client.selectEstimation(this.state.developer, nextProps.estimation);
+      this.client.selectEstimation(this.state.developer, this.props.estimation);
     }
   }
 
