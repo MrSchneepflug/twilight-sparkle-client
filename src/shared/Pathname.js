@@ -20,24 +20,21 @@ class Pathname {
   }
 
   extractTeam() {
-    const matchResult = this.pathname.match(/^\/teams\/(\w+)/);
-
-    if (matchResult === null) {
-      throw new Error("Could not extract team from URI");
-    }
-
-    return matchResult[1];
+    return this.extract(/^\/teams\/(\w+)/);
   }
 
   extractDeveloper() {
-    const matchResult = this.pathname.match(/^\/teams\/\w+\/developers\/(\w+)/);
+    return this.extract(/^\/teams\/\w+\/developers\/(\w+)/);
+  }
+
+  extract(pattern) {
+    const matchResult = this.pathname.match(pattern);
 
     if (matchResult === null) {
-      throw new Error("Could not extract developer from pathname");
+      throw new Error(`Could not extract pattern ${pattern.toString()} from pathname`);
     }
 
     return matchResult[1];
-
   }
 }
 
