@@ -6,9 +6,9 @@ import {Provider} from "react-redux";
 import {createBrowserHistory} from "history";
 import {routerMiddleware} from "./shared/middleware/router";
 import {startListener} from "./shared/listener";
-import MobileApp from "./MobileApp/";
+import MobileApp from "./MobileApp";
 import mobileRootReducer, {initialState as initialMobileState} from "./MobileApp/reducers"
-import TVApp from "./TVApp/components/TVApp";
+import TVApp from "./TVApp";
 import tvRootReducer, {initialState as initialTVState} from "./TVApp/reducers";
 
 const isMobile = () => {

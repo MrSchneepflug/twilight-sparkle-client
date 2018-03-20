@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
-import {connectToWebsocketServer, update} from "../../shared/actions";
+import {connectToWebsocketServer, update} from "../shared/actions";
 
-import TVClient from "../../Websocket/TVClient";
-import * as SharedScenes from "../../shared/scenes";
-import Dashboard from "./Dashboard";
+import TVClient from "../Websocket/TVClient";
+import * as Scenes from "./scenes";
+import * as SharedScenes from "../shared/scenes";
 
 class TVApp extends Component {
   constructor(props) {
@@ -19,7 +19,7 @@ class TVApp extends Component {
       return <SharedScenes.Loading/>;
     }
 
-    return <Dashboard/>;
+    return <Scenes.Dashboard/>;
   }
 }
 
