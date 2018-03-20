@@ -1,17 +1,11 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {resetDeveloperSelection, selectEstimation} from "../../actions";
+import {selectEstimation} from "../../actions";
 import { goBack } from "../../../shared/actions/history";
 
 class EstimationSelection extends Component {
   constructor(props) {
     super(props);
-
-    this.clickHandler = this.clickHandler.bind(this);
-  }
-
-  clickHandler() {
-    this.props.resetDeveloperSelection(this.props.pathname, this.props.developer);
   }
 
   buildSelectionHandler(number) {
@@ -48,7 +42,7 @@ class EstimationSelection extends Component {
     return (
       <div>
         <div style={style}>
-          <strong onClick={this.clickHandler}>back</strong>
+          <strong onClick={this.props.goBack}>back</strong>
         </div>
 
         <hr/>
@@ -60,16 +54,12 @@ class EstimationSelection extends Component {
 }
 
 const mapStateToProps = state => ({
-  developer: state.developer,
   estimation: state.estimation
 });
 
 const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
-  resetDeveloperSelection: (pathname, previousDeveloper) => {
-    dispatch(resetDeveloperSelection(previousDeveloper));
-    dispatch(goBack());
-  }
+  goBack: () => dispatch(goBack())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EstimationSelection);

@@ -9,7 +9,6 @@ import {
 import ArrowBack from "material-ui-icons/ArrowBack";
 import { connect } from "react-redux";
 import Developer from "./Developer";
-import { resetTeamSelection } from "../../actions";
 import { goBack } from "../../../shared/actions/history";
 
 const developersByTeam = {
@@ -32,7 +31,7 @@ class DeveloperSelection extends Component {
         </List>
         <Divider />
         <List>
-          <ListItem onClick={this.props.resetTeamSelection}>
+          <ListItem onClick={this.props.goBack}>
             <ListItemIcon>
               <ArrowBack />
             </ListItemIcon>
@@ -48,10 +47,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  resetTeamSelection: () => {
-    dispatch(resetTeamSelection());
-    dispatch(goBack());
-  }
+  goBack: () => dispatch(goBack())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeveloperSelection);
