@@ -24,6 +24,7 @@ class TVApp extends Component {
 }
 
 const mapStateToProps = state => ({
+  location: state.location,
   connected: state.connected
 });
 
