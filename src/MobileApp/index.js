@@ -30,7 +30,7 @@ class MobileApp extends Component {
       });
     }
 
-    if (pathname.matchesEstimationSelection()) {
+    if (pathname.matchesEstimationSelection() && this.state.developer === null) {
       const developer = pathname.extractDeveloper();
 
       this.setState({
