@@ -92,7 +92,9 @@ class MobileApp extends Component {
   };
 
   componentWillUpdate(nextProps) {
-    if (this.props.location.pathname === "/" && !this.props.connected && nextProps.connected) {
+    const pathname = new Pathname(this.props.location.pathname);
+
+    if (pathname.matchesLoadingScreen() && !this.props.connected && nextProps.connected) {
       this.props.redirectToTeamSelection();
     }
   }
