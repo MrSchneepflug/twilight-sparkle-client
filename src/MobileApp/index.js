@@ -5,6 +5,7 @@ import { connectToWebsocketServer, update } from "../shared/actions";
 import MobileClient from "../Websocket/MobileClient";
 import Pathname from "../shared/Pathname";
 import * as Scenes from "./scenes";
+import * as SharedScenes from "../shared/scenes";
 import { push } from "../shared/actions/history";
 
 class MobileApp extends Component {
@@ -45,7 +46,7 @@ class MobileApp extends Component {
     const pathname = new Pathname(this.props.location.pathname);
 
     if (pathname.matchesLoadingScreen()) {
-      return <Scenes.Home />;
+      return <SharedScenes.Loading />;
     }
 
     if (pathname.matchesTeamSelection()) {
