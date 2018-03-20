@@ -61,7 +61,7 @@ class MobileApp extends Component {
     }
 
     if (/^\/teams\/\w+\/developers$/.test(pathname)) {
-      const team = this.extractTeamFromURI();
+      const team = this.extractTeamFromPathname(this.props.location.pathname);
       return <Scenes.DeveloperSelection team={team}/>;
     }
 
@@ -70,11 +70,21 @@ class MobileApp extends Component {
     }
   };
 
-  extractTeamFromURI() {
-    const matchResult = this.props.location.pathname.match(/teams\/(\w+)/);
+  extractTeamFromPathname(pathname) {
+    const matchResult = pathname.match(/teams\/(\w+)/);
 
     if (matchResult === null) {
       throw new Error("Could not extract team from URI");
+    }
+
+    return matchResult[1];
+  }
+
+  extractDeveloperFromPathname(pathname) {
+    const matchResult = pathname.match(/^\/teams\/\w+\/developers\/(\w+)$/);
+
+    if (matchResult === null) {
+      throw new Error("Could not extract developer from pathname");
     }
 
     return matchResult[1];
