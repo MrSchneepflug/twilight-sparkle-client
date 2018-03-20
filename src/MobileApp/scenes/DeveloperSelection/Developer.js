@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { Avatar, ListItem, ListItemText } from "material-ui";
 import { connect } from "react-redux";
-import { selectDeveloper } from "../../actions";
+import { push } from "../../../shared/actions/history";
 
 class Developer extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ class Developer extends Component {
       return;
     }
 
-    this.props.selectDeveloper(this.props.name);
+    this.props.selectDeveloper(this.props.pathname, this.props.name);
   }
 
   render() {
@@ -32,13 +32,15 @@ class Developer extends Component {
 }
 
 const mapStateToProps = state => ({
-  developer: state.developer,
+  pathname: state.location.pathname,
   selectedDevelopers: state.selectedDevelopers
 });
 
 
 const mapDispatchToProps = dispatch => ({
-  selectDeveloper: developer => dispatch(selectDeveloper(developer))
+  selectDeveloper: (pathname, developer) => {
+    dispatch(push({ pathname: `${pathname}/${developer}/estimation` }));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Developer);

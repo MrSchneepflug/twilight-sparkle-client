@@ -1,14 +1,19 @@
 import {combineReducers} from "redux";
-import {connected} from "../../shared/reducers";
-import team from "./team";
-import developer from "./developer";
+import {location, connected} from "../../shared/reducers";
 import estimation from "./estimation";
 import selectedDevelopers from "./selectedDevelopers";
+import {initialState as initialLocationState} from "../../shared/reducers/location"
+
+export const initialState = {
+  location: initialLocationState,
+  connected: false,
+  estimation: null,
+  selectedDevelopers: []
+};
 
 export default combineReducers({
+  location,
   connected,
-  team,
-  developer,
   estimation,
   selectedDevelopers
 });

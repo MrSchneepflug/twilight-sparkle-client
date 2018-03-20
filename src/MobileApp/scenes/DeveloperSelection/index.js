@@ -9,15 +9,15 @@ import {
 import ArrowBack from "material-ui-icons/ArrowBack";
 import { connect } from "react-redux";
 import Developer from "./Developer";
-import { resetTeamSelection } from "../../actions";
+import { goBack } from "../../../shared/actions/history";
 
 const developersByTeam = {
-  Alpakka: ["PD", "TH", "BP"],
-  Einhorn: ["TK", "TW", "MS", "JJ"],
-  Irbis: ["AD", "ML", "SI", "TB"],
-  Kea: ["CD", "DM", "PN", "TW", "PB"],
-  Raccoon: ["AF", "SB", "IE"],
-  Tapir: ["SD", "AO", "PC", "SG"]
+  alpakka: ["pd", "th", "bp"],
+  einhorn: ["tk", "tw", "ms", "jj"],
+  irbis: ["ad", "ml", "si", "tb"],
+  kea: ["cd", "dm", "pn", "tw", "pb"],
+  raccoon: ["af", "sb", "ie"],
+  tapir: ["sd", "ao", "pc", "sg"]
 };
 
 class DeveloperSelection extends Component {
@@ -31,7 +31,7 @@ class DeveloperSelection extends Component {
         </List>
         <Divider />
         <List>
-          <ListItem onClick={this.props.resetTeamSelection}>
+          <ListItem onClick={this.props.goBack}>
             <ListItemIcon>
               <ArrowBack />
             </ListItemIcon>
@@ -44,11 +44,10 @@ class DeveloperSelection extends Component {
 }
 
 const mapStateToProps = state => ({
-  team: state.team
 });
 
 const mapDispatchToProps = dispatch => ({
-  resetTeamSelection: () => dispatch(resetTeamSelection())
+  goBack: () => dispatch(goBack())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(DeveloperSelection);

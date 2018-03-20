@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { ListItem, ListItemText } from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 import { connect } from "react-redux";
-import { selectTeam } from "../../actions";
+import { push } from "../../../shared/actions/history";
 
 class Team extends Component {
   constructor(props) {
@@ -28,7 +28,7 @@ class Team extends Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  selectTeam: team => dispatch(selectTeam(team))
+  selectTeam: team => dispatch(push({ pathname: `/teams/${team}/developers` }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

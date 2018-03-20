@@ -1,11 +1,15 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
-import mobileStore from "./MobileApp/store";
-import tvStore from "./TVApp/store";
-import TVApp from "./TVApp/components/TVApp";
-import MobileApp from "./MobileApp/";
+import {createBrowserHistory} from "history";
 import "typeface-roboto";
+import {routerMiddleware} from "./shared/middleware/router";
+import {startListener} from "./shared/listener";
+import MobileApp from "./MobileApp/";
+import mobileRootReducer, {initialState as initialMobileState} from "./MobileApp/reducers"
+import TVApp from "./TVApp/components/TVApp";
+import tvStore from "./TVApp/store";
 
 const isMobile = () => {
   return navigator.userAgent.match(
@@ -13,10 +17,34 @@ const isMobile = () => {
   );
 };
 
-ReactDOM.render((
-    <Provider store={isMobile() ? mobileStore : tvStore}>
-      {isMobile() ? <MobileApp/> : <TVApp/>}
+let app = null;
+
+if (isMobile()) {
+  const history = createBrowserHistory();
+  const store = createStore(
+    mobileRootReducer,
+    initialMobileState,
+    compose(
+      applyMiddleware(
+        routerMiddleware(history)
+      ),
+      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  );
+
+  startListener(history, store);
+
+  app = (
+    <Provider store={store}>
+      <MobileApp/>
     </Provider>
-  ),
-  document.getElementById('root')
-);
+  );
+} else {
+  app = (
+    <Provider store={tvStore}>
+      <TVApp/>
+    </Provider>
+  );
+}
+
+ReactDOM.render(app, document.getElementById('root'));
