@@ -19,35 +19,6 @@ class MobileApp extends Component {
     this.client.on("update", state => this.props.update(state));
   }
 
-  componentDidUpdate(prevProps) {
-    const pathname = new Pathname(this.props.location.pathname);
-
-    if (pathname.matchesDeveloperSelection() && this.state.developer !== null) {
-      this.client.resetDeveloperSelection(this.state.developer);
-
-      this.setState({
-        developer: null
-      });
-    }
-
-    if (pathname.matchesEstimationSelection() && this.state.developer === null) {
-      const developer = pathname.extractDeveloper();
-
-      this.setState({
-        developer
-      });
-
-      this.client.selectDeveloper(developer);
-    }
-
-    if (
-      this.props.estimation !== prevProps.estimation &&
-      this.props.estimation !== null
-    ) {
-      this.client.selectEstimation(this.state.developer, this.props.estimation);
-    }
-  }
-
   getSceneTitle = () => {
     const pathname = new Pathname(this.props.location.pathname);
 
@@ -105,6 +76,34 @@ class MobileApp extends Component {
         {this.renderScene()}
       </AppShell>
     );
+  }
+  componentDidUpdate(prevProps) {
+    const pathname = new Pathname(this.props.location.pathname);
+
+    if (pathname.matchesDeveloperSelection() && this.state.developer !== null) {
+      this.client.resetDeveloperSelection(this.state.developer);
+
+      this.setState({
+        developer: null
+      });
+    }
+
+    if (pathname.matchesEstimationSelection() && this.state.developer === null) {
+      const developer = pathname.extractDeveloper();
+
+      this.setState({
+        developer
+      });
+
+      this.client.selectDeveloper(developer);
+    }
+
+    if (
+      this.props.estimation !== prevProps.estimation &&
+      this.props.estimation !== null
+    ) {
+      this.client.selectEstimation(this.state.developer, this.props.estimation);
+    }
   }
 }
 
