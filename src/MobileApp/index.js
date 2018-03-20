@@ -3,6 +3,7 @@ import AppShell from "./AppShell";
 import { connect } from "react-redux";
 import { connectToWebsocketServer, update } from "../shared/actions";
 import MobileClient from "../Websocket/MobileClient";
+import Pathname from "../shared/Pathname";
 import * as Scenes from "./scenes";
 import { push } from "../shared/actions/history";
 
@@ -19,7 +20,9 @@ class MobileApp extends Component {
   }
 
   componentWillReceiveProps(nextProps) {
-    if (this.pathnameMatchesDeveloperSelection(nextProps.location.pathname) && this.state.developer !== null) {
+    const pathname = new Pathname(nextProps.location.pathname);
+
+    if (pathname.matchesDeveloperSelection() && this.state.developer !== null) {
       this.client.resetDeveloperSelection(this.state.developer);
 
       this.setState({
@@ -27,8 +30,8 @@ class MobileApp extends Component {
       });
     }
 
-    if (this.pathnameMatchesEstimationSelection(nextProps.location.pathname)) {
-      const developer = this.extractDeveloperFromPathname(nextProps.location.pathname);
+    if (pathname.matchesEstimationSelection()) {
+      const developer = pathname.extractDeveloper();
 
       this.setState({
         developer
@@ -61,53 +64,25 @@ class MobileApp extends Component {
   };
 
   renderScene = () => {
-    const pathname = this.props.location.pathname;
+    const pathname = new Pathname(this.props.location.pathname);
 
-    if (pathname === "/") {
+    if (pathname.matchesLoadingScreen()) {
       return <Scenes.Home />;
     }
 
-    if (pathname === "/teams") {
+    if (pathname.matchesTeamSelection()) {
       return <Scenes.TeamSelection />;
     }
 
-    if (this.pathnameMatchesDeveloperSelection(this.props.location.pathname)) {
-      const team = this.extractTeamFromPathname(this.props.location.pathname);
+    if (pathname.matchesDeveloperSelection()) {
+      const team = pathname.extractTeam();
       return <Scenes.DeveloperSelection team={team}/>;
     }
 
-    if (this.pathnameMatchesEstimationSelection(this.props.location.pathname)) {
+    if (pathname.matchesEstimationSelection()) {
       return <Scenes.EstimationSelection />;
     }
   };
-
-  pathnameMatchesDeveloperSelection(pathname) {
-    return /^\/teams\/\w+\/developers$/.test(pathname);
-  }
-
-  pathnameMatchesEstimationSelection(pathname) {
-    return /^\/teams\/\w+\/developers\/\w+\/estimation$/.test(pathname);
-  }
-
-  extractTeamFromPathname(pathname) {
-    const matchResult = pathname.match(/teams\/(\w+)/);
-
-    if (matchResult === null) {
-      throw new Error("Could not extract team from URI");
-    }
-
-    return matchResult[1];
-  }
-
-  extractDeveloperFromPathname(pathname) {
-    const matchResult = pathname.match(/^\/teams\/\w+\/developers\/(\w+)/);
-
-    if (matchResult === null) {
-      throw new Error("Could not extract developer from pathname");
-    }
-
-    return matchResult[1];
-  }
 
   componentWillUpdate(nextProps) {
     if (this.props.location.pathname === "/" && !this.props.connected && nextProps.connected) {
