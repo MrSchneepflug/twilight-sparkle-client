@@ -10,27 +10,38 @@ class MobileApp extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      developer: null
+    };
+
     this.client = new MobileClient(this.props.connectToWebsocketServer);
     this.client.on("update", state => this.props.update(state));
   }
 
   componentWillReceiveProps(nextProps) {
-    if (
-      this.props.developer !== nextProps.developer &&
-      nextProps.developer !== null
-    ) {
-      this.client.selectDeveloper(nextProps.developer);
+    if (this.pathnameMatchesDeveloperSelection(nextProps.location.pathname) && this.state.developer !== null) {
+      this.client.resetDeveloperSelection(this.state.developer);
+
+      this.setState({
+        developer: null
+      });
+    }
+
+    if (this.pathnameMatchesEstimationSelection(nextProps.location.pathname)) {
+      const developer = this.extractDeveloperFromPathname(nextProps.location.pathname);
+
+      this.setState({
+        developer
+      });
+
+      this.client.selectDeveloper(developer);
     }
 
     if (
       this.props.estimation !== nextProps.estimation &&
       nextProps.estimation !== null
     ) {
-      this.client.selectEstimation(this.props.developer, nextProps.estimation);
-    }
-
-    if (this.props.developer !== null && nextProps.developer === null) {
-      this.client.resetDeveloperSelection(this.props.developer);
+      this.client.selectEstimation(this.state.developer, nextProps.estimation);
     }
   }
 
@@ -60,15 +71,23 @@ class MobileApp extends Component {
       return <Scenes.TeamSelection />;
     }
 
-    if (/^\/teams\/\w+\/developers$/.test(pathname)) {
+    if (this.pathnameMatchesDeveloperSelection(this.props.location.pathname)) {
       const team = this.extractTeamFromPathname(this.props.location.pathname);
       return <Scenes.DeveloperSelection team={team}/>;
     }
 
-    if (/^\/teams\/\w+\/developers\/\w+\/estimation$/.test(pathname)) {
+    if (this.pathnameMatchesEstimationSelection(this.props.location.pathname)) {
       return <Scenes.EstimationSelection />;
     }
   };
+
+  pathnameMatchesDeveloperSelection(pathname) {
+    return /^\/teams\/\w+\/developers$/.test(pathname);
+  }
+
+  pathnameMatchesEstimationSelection(pathname) {
+    return /^\/teams\/\w+\/developers\/\w+\/estimation$/.test(pathname);
+  }
 
   extractTeamFromPathname(pathname) {
     const matchResult = pathname.match(/teams\/(\w+)/);
@@ -81,7 +100,7 @@ class MobileApp extends Component {
   }
 
   extractDeveloperFromPathname(pathname) {
-    const matchResult = pathname.match(/^\/teams\/\w+\/developers\/(\w+)$/);
+    const matchResult = pathname.match(/^\/teams\/\w+\/developers\/(\w+)/);
 
     if (matchResult === null) {
       throw new Error("Could not extract developer from pathname");
@@ -108,7 +127,6 @@ class MobileApp extends Component {
 const mapStateToProps = state => ({
   location: state.location,
   connected: state.connected,
-  developer: state.developer,
   estimation: state.estimation
 });
 
