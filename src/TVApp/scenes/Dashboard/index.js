@@ -9,7 +9,7 @@ class Dashboard extends Component {
         <Client
           id={client.id}
           name={client.developer}
-          key={client.developer}
+          key={client.id}
         />
       );
     });

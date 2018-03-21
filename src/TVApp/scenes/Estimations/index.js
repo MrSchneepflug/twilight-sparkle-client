@@ -2,9 +2,9 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 
 class Estimations extends Component {
-  renderEstimation(developer, estimation) {
+  renderEstimation(id, developer, estimation) {
     return (
-      <tr key={developer}>
+      <tr key={id}>
         <td>{developer}</td>
         <td>{estimation}</td>
       </tr>
@@ -12,7 +12,7 @@ class Estimations extends Component {
   }
 
   renderEstimations() {
-    return this.props.clients.map(client => this.renderEstimation(client.developer, client.estimation));
+    return this.props.clients.map(client => this.renderEstimation(client.id, client.developer, client.estimation));
   }
 
   render() {

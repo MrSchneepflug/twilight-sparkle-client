@@ -15,6 +15,10 @@ class Pathname {
     return this.pathname === "/dashboard";
   }
 
+  matchesEstimations() {
+    return this.pathname === "/estimations";
+  }
+
   matchesDeveloperSelection() {
     return /^\/teams\/\w+\/developers$/.test(this.pathname);
   }

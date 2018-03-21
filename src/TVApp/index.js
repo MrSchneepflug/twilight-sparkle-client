@@ -22,6 +22,10 @@ class TVApp extends Component {
     if (pathname.matchesLoadingScreen() && !this.props.connected && nextProps.connected) {
       this.props.redirectToDashboard();
     }
+
+    if (!this.eachClientHasEstimation(this.props.clients) && this.eachClientHasEstimation(nextProps.clients)) {
+      this.props.redirectToEstimations();
+    }
   }
 
   render() {
@@ -32,16 +36,16 @@ class TVApp extends Component {
     }
 
     if (pathname.matchesDashboard()) {
-      if (this.eachDeveloperHasEstimation()) {
-        return <Scenes.Estimations/>;
-      } else {
-        return <Scenes.Dashboard/>;
-      }
+      return <Scenes.Dashboard/>;
+    }
+
+    if (pathname.matchesEstimations()) {
+      return <Scenes.Estimations/>
     }
   }
 
-  eachDeveloperHasEstimation() {
-    return this.props.clients.reduce((result, client) => result && client.estimation, true);
+  eachClientHasEstimation(clients) {
+    return clients.reduce((result, client) => result && client.estimation, true);
   }
 }
 
@@ -54,7 +58,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   connectToWebsocketServer: () => dispatch(connectToWebsocketServer()),
   update: state => dispatch(update(state)),
-  redirectToDashboard: () => dispatch(push({ pathname: "/dashboard" }))
+  redirectToDashboard: () => dispatch(push({ pathname: "/dashboard" })),
+  redirectToEstimations: () => dispatch(push({ pathname: "/estimations" }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(TVApp);
