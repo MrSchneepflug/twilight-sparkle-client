@@ -11,6 +11,10 @@ class Pathname {
     return this.pathname === "/teams";
   }
 
+  matchesDashboard() {
+    return this.pathname === "/dashboard";
+  }
+
   matchesDeveloperSelection() {
     return /^\/teams\/\w+\/developers$/.test(this.pathname);
   }
