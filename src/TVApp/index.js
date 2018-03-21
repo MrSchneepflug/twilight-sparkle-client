@@ -32,14 +32,23 @@ class TVApp extends Component {
     }
 
     if (pathname.matchesDashboard()) {
-      return <Scenes.Dashboard/>;
+      if (this.eachDeveloperHasEstimation()) {
+        return <Scenes.Estimations/>;
+      } else {
+        return <Scenes.Dashboard/>;
+      }
     }
+  }
+
+  eachDeveloperHasEstimation() {
+    return this.props.clients.reduce((result, client) => result && client.estimation, true);
   }
 }
 
 const mapStateToProps = state => ({
   location: state.location,
-  connected: state.connected
+  connected: state.connected,
+  clients: state.clients
 });
 
 const mapDispatchToProps = dispatch => ({

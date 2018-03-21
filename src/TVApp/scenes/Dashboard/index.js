@@ -9,7 +9,6 @@ class Dashboard extends Component {
         <Client
           id={client.id}
           name={client.developer}
-          estimation={client.estimation}
           key={client.developer}
         />
       );
@@ -23,7 +22,6 @@ class Dashboard extends Component {
         <tr>
           <td>ID</td>
           <td>Developer</td>
-          <td>Estimation</td>
         </tr>
         {this.renderDeveloperRows()}
         </tbody>

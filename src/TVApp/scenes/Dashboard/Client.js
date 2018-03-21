@@ -5,7 +5,6 @@ const Client = ({id, name, estimation}) => {
     <tr>
       <td>{id}</td>
       <td>{name}</td>
-      <td>{estimation}</td>
     </tr>
   );
 };
