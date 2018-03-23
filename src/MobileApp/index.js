@@ -6,7 +6,7 @@ import MobileClient from "../Websocket/MobileClient";
 import Pathname from "../shared/Pathname";
 import * as Scenes from "./scenes";
 import * as SharedScenes from "../shared/scenes";
-import { push } from "../shared/actions/history";
+import { replace } from "../shared/actions/history";
 
 class MobileApp extends Component {
   constructor(props) {
@@ -114,7 +114,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   connectToWebsocketServer: () => dispatch(connectToWebsocketServer()),
   update: state => dispatch(update(state)),
-  redirectToTeamSelection: () => dispatch(push({ pathname: "/teams" }))
+  redirectToTeamSelection: () => dispatch(replace({ pathname: "/teams" }))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(MobileApp);
