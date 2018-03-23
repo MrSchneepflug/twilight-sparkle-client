@@ -1,4 +1,12 @@
 import React, {Component} from "react";
+import {
+  List,
+  Divider,
+  ListItem,
+  ListItemIcon,
+  ListItemText
+} from "material-ui";
+import ArrowBack from "material-ui-icons/ArrowBack";
 import {connect} from "react-redux";
 import {selectEstimation} from "../../actions";
 import { goBack } from "../../../shared/actions/history";
@@ -41,13 +49,18 @@ class EstimationSelection extends Component {
 
     return (
       <div>
-        <div style={style}>
-          <strong onClick={this.props.goBack}>back</strong>
-        </div>
-
-        <hr/>
-
-        {this.estimationSelections()}
+        <List>
+          {this.estimationSelections()}
+        </List>
+        <Divider />
+        <List>
+          <ListItem onClick={this.props.goBack}>
+            <ListItemIcon>
+              <ArrowBack />
+            </ListItemIcon>
+            <ListItemText primary="Back to developer selection" />
+          </ListItem>
+        </List>
       </div>
     );
   }
