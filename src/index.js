@@ -26,12 +26,14 @@ if (isMobile()) {
   store = createStore(
     mobileRootReducer,
     initialMobileState,
-    compose(
-      applyMiddleware(
-        routerMiddleware(history)
-      ),
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
+    window.__REDUX_DEVTOOLS_EXTENSION__
+      ? compose(
+        applyMiddleware(
+          routerMiddleware(history)
+        ),
+        window.__REDUX_DEVTOOLS_EXTENSION__()
+      )
+      : applyMiddleware(routerMiddleware(history))
   );
 
   startListener(history, store);
