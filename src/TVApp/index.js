@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {connectToWebsocketServer, update} from "../shared/actions";
-import {push} from "../shared/actions/history";
+import {push, replace} from "../shared/actions/history";
 import Pathname from "../shared/Pathname";
 
 import TVClient from "../Websocket/TVClient";
@@ -58,7 +58,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   connectToWebsocketServer: () => dispatch(connectToWebsocketServer()),
   update: state => dispatch(update(state)),
-  redirectToDashboard: () => dispatch(push({ pathname: "/dashboard" })),
+  redirectToDashboard: () => dispatch(replace({ pathname: "/dashboard" })),
   redirectToEstimations: () => dispatch(push({ pathname: "/estimations" }))
 });
 
