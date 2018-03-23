@@ -16,18 +16,6 @@ class TVApp extends Component {
     this.client.on("update", state => this.props.update(state));
   }
 
-  componentWillUpdate(nextProps) {
-    const pathname = new Pathname(this.props.location.pathname);
-
-    if (pathname.matchesLoadingScreen() && !this.props.connected && nextProps.connected) {
-      this.props.redirectToDashboard();
-    }
-
-    if (!this.eachClientHasEstimation(this.props.clients) && this.eachClientHasEstimation(nextProps.clients)) {
-      this.props.redirectToEstimations();
-    }
-  }
-
   render() {
     const pathname = new Pathname(this.props.location.pathname);
 
@@ -41,6 +29,18 @@ class TVApp extends Component {
 
     if (pathname.matchesEstimations()) {
       return <Scenes.Estimations/>
+    }
+  }
+
+  componentDidUpdate(prevProps) {
+    const pathname = new Pathname(this.props.location.pathname);
+
+    if (pathname.matchesLoadingScreen() && !prevProps.connected && this.props.connected) {
+      this.props.redirectToDashboard();
+    }
+
+    if (!this.eachClientHasEstimation(prevProps.clients) && this.eachClientHasEstimation(this.props.clients)) {
+      this.props.redirectToEstimations();
     }
   }
 
