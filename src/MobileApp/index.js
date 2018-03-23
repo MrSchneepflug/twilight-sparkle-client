@@ -63,14 +63,6 @@ class MobileApp extends Component {
     }
   };
 
-  componentWillUpdate(nextProps) {
-    const pathname = new Pathname(this.props.location.pathname);
-
-    if (pathname.matchesLoadingScreen() && !this.props.connected && nextProps.connected) {
-      this.props.redirectToTeamSelection();
-    }
-  }
-
   render() {
     return (
       <AppShell title={this.getSceneTitle()}>
@@ -78,8 +70,13 @@ class MobileApp extends Component {
       </AppShell>
     );
   }
+
   componentDidUpdate(prevProps) {
     const pathname = new Pathname(this.props.location.pathname);
+
+    if (pathname.matchesLoadingScreen() && !prevProps.connected && this.props.connected) {
+      this.props.redirectToTeamSelection();
+    }
 
     if (pathname.matchesDeveloperSelection() && this.state.developer !== null) {
       this.client.resetDeveloperSelection(this.state.developer);
