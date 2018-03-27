@@ -10,6 +10,11 @@ import MobileApp from "./MobileApp";
 import mobileRootReducer, {initialState as initialMobileState} from "./MobileApp/reducers"
 import TVApp from "./TVApp";
 import tvRootReducer, {initialState as initialTVState} from "./TVApp/reducers";
+import MobileClient from "./Websocket/MobileClient";
+import TVClient from "./Websocket/TVClient";
+import {update} from "./shared/actions";
+import * as SharedScenes from "./shared/scenes";
+import replace from "./shared/actions/history/replace";
 
 const isMobile = () => {
   return navigator.userAgent.match(
@@ -19,6 +24,7 @@ const isMobile = () => {
 
 let app = null;
 let store = null;
+let client = null;
 
 const history = createBrowserHistory();
 
@@ -28,21 +34,27 @@ if (isMobile()) {
     initialMobileState,
     window.__REDUX_DEVTOOLS_EXTENSION__
       ? compose(
-        applyMiddleware(
-          routerMiddleware(history)
-        ),
-        window.__REDUX_DEVTOOLS_EXTENSION__()
+      applyMiddleware(
+        routerMiddleware(history)
+      ),
+      window.__REDUX_DEVTOOLS_EXTENSION__()
       )
       : applyMiddleware(routerMiddleware(history))
   );
 
   startListener(history, store);
 
-  app = (
-    <Provider store={store}>
-      <MobileApp/>
-    </Provider>
-  );
+  client = new MobileClient(() => {
+    store.dispatch(replace({ pathname: "/teams" }))
+
+    app = (
+      <Provider store={store}>
+        <MobileApp client={client} />
+      </Provider>
+    );
+
+    ReactDOM.render(app, document.getElementById('root'));
+  });
 } else {
   store = createStore(
     tvRootReducer,
@@ -57,11 +69,23 @@ if (isMobile()) {
 
   startListener(history, store);
 
-  app = (
-    <Provider store={store}>
-      <TVApp/>
-    </Provider>
-  );
+  client = new TVClient(() => {
+    store.dispatch(replace({ pathname: "/dashboard" }))
+
+    app = (
+      <Provider store={store}>
+        <TVApp client={client} />
+      </Provider>
+    );
+
+    ReactDOM.render(app, document.getElementById('root'));
+  });
 }
 
-ReactDOM.render(app, document.getElementById('root'));
+client.on("update", state => {
+  store.dispatch(update(state))
+});
+
+client.connect();
+
+ReactDOM.render(<SharedScenes.Loading/>, document.getElementById('root'));

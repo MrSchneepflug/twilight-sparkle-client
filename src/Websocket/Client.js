@@ -2,7 +2,9 @@ class Client {
   constructor(onopen) {
     this.actionHandlers = {};
     this.onopen = onopen;
+  }
 
+  connect() {
     this.connection = new WebSocket("ws://localhost:5000");
     this.connection.onopen = this.connectionHandler.bind(this);
     this.connection.onmessage = this.messageHandler.bind(this);
