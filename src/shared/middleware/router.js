@@ -1,4 +1,4 @@
-export const routerMiddleware = history => () => next => action => {
+export const createRouterMiddleware = history => () => next => action => {
   switch (action.type) {
     case "PUSH":
       history.push(action.payload);
