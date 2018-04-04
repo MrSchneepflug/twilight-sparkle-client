@@ -4,17 +4,21 @@ import ReactDOM from "react-dom";
 import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import {createBrowserHistory} from "history";
-import {routerMiddleware} from "./shared/middleware/router";
+
+import replace from "./shared/actions/history/replace";
 import {startListener} from "./shared/listener";
-import MobileApp from "./MobileApp";
-import mobileRootReducer, {initialState as initialMobileState} from "./MobileApp/reducers"
-import TVApp from "./TVApp";
-import tvRootReducer, {initialState as initialTVState} from "./TVApp/reducers";
-import MobileClient from "./Websocket/MobileClient";
-import TVClient from "./Websocket/TVClient";
 import {update} from "./shared/actions";
 import * as SharedScenes from "./shared/scenes";
-import replace from "./shared/actions/history/replace";
+import {createRouterMiddleware} from "./shared/middleware/router";
+
+import MobileApp from "./MobileApp";
+import mobileRootReducer, {initialState as initialMobileState} from "./MobileApp/reducers"
+import {createWebsocketMiddleware} from "./MobileApp/middleware/websocket";
+import MobileClient from "./Websocket/MobileClient";
+
+import TVApp from "./TVApp";
+import tvRootReducer, {initialState as initialTVState} from "./TVApp/reducers";
+import TVClient from "./Websocket/TVClient";
 
 const isMobile = () => {
   return navigator.userAgent.match(
@@ -27,6 +31,8 @@ let store = null;
 let client = null;
 
 const history = createBrowserHistory();
+const routerMiddleware = createRouterMiddleware(history);
+const websocketMiddleware = createWebsocketMiddleware(client);
 
 if (isMobile()) {
   store = createStore(
@@ -34,18 +40,16 @@ if (isMobile()) {
     initialMobileState,
     window.__REDUX_DEVTOOLS_EXTENSION__
       ? compose(
-      applyMiddleware(
-        routerMiddleware(history)
-      ),
-      window.__REDUX_DEVTOOLS_EXTENSION__()
+        applyMiddleware(routerMiddleware, websocketMiddleware),
+        window.__REDUX_DEVTOOLS_EXTENSION__()
       )
-      : applyMiddleware(routerMiddleware(history))
+      : applyMiddleware(routerMiddleware, websocketMiddleware)
   );
 
   startListener(history, store);
 
   client = new MobileClient(() => {
-    store.dispatch(replace({ pathname: "/teams" }))
+    store.dispatch(replace({ pathname: "/teams" }));
 
     app = (
       <Provider store={store}>
@@ -60,9 +64,7 @@ if (isMobile()) {
     tvRootReducer,
     initialTVState,
     compose(
-      applyMiddleware(
-        routerMiddleware(history)
-      ),
+      applyMiddleware(routerMiddleware),
       window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
     )
   );
