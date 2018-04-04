@@ -5,14 +5,6 @@ import Pathname from "../shared/Pathname";
 import * as Scenes from "./scenes";
 
 class MobileApp extends Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      developer: null
-    };
-  }
-
   getSceneTitle = () => {
     const pathname = new Pathname(this.props.location.pathname);
 
@@ -59,40 +51,10 @@ class MobileApp extends Component {
       </AppShell>
     );
   }
-
-  componentDidUpdate(prevProps) {
-    const pathname = new Pathname(this.props.location.pathname);
-
-    if (pathname.matchesDeveloperSelection() && this.state.developer !== null) {
-      this.props.client.resetDeveloperSelection(this.state.developer);
-
-      this.setState({
-        developer: null
-      });
-    }
-
-    if (pathname.matchesEstimationSelection() && this.state.developer === null) {
-      const developer = pathname.extractDeveloper();
-
-      this.setState({
-        developer
-      });
-
-      this.props.client.selectDeveloper(developer);
-    }
-
-    if (
-      this.props.estimation !== prevProps.estimation &&
-      this.props.estimation !== null
-    ) {
-      this.props.client.selectEstimation(this.state.developer, this.props.estimation);
-    }
-  }
 }
 
 const mapStateToProps = state => ({
-  location: state.location,
-  estimation: state.estimation
+  location: state.location
 });
 
 const mapDispatchToProps = dispatch => ({

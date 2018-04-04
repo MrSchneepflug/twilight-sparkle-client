@@ -1,8 +1,20 @@
-export const createWebsocketMiddleware = client => store => next => action => {
-  console.log(client, store);
+import Pathname from "../../shared/Pathname";
 
-  switch (action.type) {
-    default:
-      return next(action);
+export const createWebsocketMiddleware = client => store => next => action => {
+  const state = store.getState();
+  const pathname = new Pathname(state.location.pathname);
+
+  if (pathname.matchesDeveloperSelection()) {
+    client.resetDeveloperSelection();
   }
+
+  if (pathname.matchesEstimationSelection()) {
+    client.selectDeveloper(pathname.extractDeveloper());
+  }
+
+  if (action.type === "SELECT_ESTIMATION") {
+    client.selectEstimation(action.estimation);
+  }
+
+  return next(action);
 };
