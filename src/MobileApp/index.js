@@ -3,6 +3,7 @@ import AppShell from "./AppShell";
 import { connect } from "react-redux";
 import Pathname from "../shared/Pathname";
 import * as Scenes from "./scenes";
+import * as SharedScenes from "../shared/scenes";
 
 class MobileApp extends Component {
   getSceneTitle = () => {
@@ -45,6 +46,10 @@ class MobileApp extends Component {
   };
 
   render() {
+    if (!this.props.connected) {
+      return <SharedScenes.Loading />;
+    }
+
     return (
       <AppShell title={this.getSceneTitle()}>
         {this.renderScene()}
@@ -54,6 +59,7 @@ class MobileApp extends Component {
 }
 
 const mapStateToProps = state => ({
+  connected: state.connected,
   location: state.location
 });
 

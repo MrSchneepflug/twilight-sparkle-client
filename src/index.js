@@ -7,7 +7,7 @@ import {createBrowserHistory} from "history";
 
 import replace from "./shared/actions/history/replace";
 import {startListener} from "./shared/listener";
-import {update} from "./shared/actions";
+import {connectToWebsocketServer, update} from "./shared/actions";
 import * as SharedScenes from "./shared/scenes";
 import {createRouterMiddleware} from "./shared/middleware/router";
 
@@ -56,7 +56,7 @@ if (isMobile()) {
 
   client = new MobileClient(() => {
     store.dispatch(replace({ pathname: "/teams" }));
-    ReactDOM.render(app, document.getElementById('root'));
+    store.dispatch(connectToWebsocketServer());
   });
 } else {
   store = createStore(
@@ -78,8 +78,6 @@ if (isMobile()) {
         <TVApp client={client} />
       </Provider>
     );
-
-    ReactDOM.render(app, document.getElementById('root'));
   });
 }
 
@@ -89,4 +87,4 @@ client.on("update", state => {
 
 client.connect();
 
-ReactDOM.render(<SharedScenes.Loading/>, document.getElementById('root'));
+ReactDOM.render(app, document.getElementById('root'));
