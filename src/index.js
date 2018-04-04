@@ -48,15 +48,14 @@ if (isMobile()) {
 
   startListener(history, store);
 
+  app = (
+    <Provider store={store}>
+      <MobileApp/>
+    </Provider>
+  );
+
   client = new MobileClient(() => {
     store.dispatch(replace({ pathname: "/teams" }));
-
-    app = (
-      <Provider store={store}>
-        <MobileApp client={client} />
-      </Provider>
-    );
-
     ReactDOM.render(app, document.getElementById('root'));
   });
 } else {
