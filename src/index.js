@@ -1,7 +1,6 @@
 import "typeface-roboto";
 import React from "react";
 import ReactDOM from "react-dom";
-import {createStore, applyMiddleware, compose} from "redux";
 import {Provider} from "react-redux";
 import {createBrowserHistory} from "history";
 
@@ -17,7 +16,7 @@ import {createWebsocketMiddleware} from "./MobileApp/middleware/websocket";
 import MobileClient from "./Websocket/MobileClient";
 
 import TVApp from "./TVApp";
-import tvRootReducer, {initialState as initialTVState} from "./TVApp/reducers";
+import {createTVStore} from "./TVApp/store";
 import TVClient from "./Websocket/TVClient";
 
 const isMobile = () => {
@@ -47,14 +46,7 @@ if (isMobile()) {
     store.dispatch(connectToWebsocketServer());
   });
 
-  store = createStore(
-    tvRootReducer,
-    initialTVState,
-    compose(
-      applyMiddleware(routerMiddleware),
-      window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-    )
-  );
+  store = createTVStore([routerMiddleware]);
 
   app = <TVApp/>;
 }
