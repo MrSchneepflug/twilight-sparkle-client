@@ -72,10 +72,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
-  goBack: () => {
-    dispatch(goBack());
-    dispatch(resetDeveloperSelection());
-  }
+  goBack: () => dispatch(goBack())
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EstimationSelection);
