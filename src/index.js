@@ -7,8 +7,8 @@ import {createBrowserHistory} from "history";
 
 import replace from "./shared/actions/history/replace";
 import {startListener} from "./shared/listener";
+import Pathname from "./shared/Pathname";
 import {connectToWebsocketServer, update} from "./shared/actions";
-import * as SharedScenes from "./shared/scenes";
 import {createRouterMiddleware} from "./shared/middleware/router";
 
 import MobileApp from "./MobileApp";
@@ -26,39 +26,37 @@ const isMobile = () => {
   );
 };
 
-let app = null;
-let store = null;
-let client = null;
+let app, store, client, websocketMiddleware;
 
 const history = createBrowserHistory();
 const routerMiddleware = createRouterMiddleware(history);
-const websocketMiddleware = createWebsocketMiddleware(client);
 
 if (isMobile()) {
+  client = new MobileClient(() => {
+    store.dispatch(replace({pathname: "/teams"}));
+    store.dispatch(connectToWebsocketServer());
+  });
+
+  websocketMiddleware = createWebsocketMiddleware(client);
+
   store = createStore(
     mobileRootReducer,
     initialMobileState,
     window.__REDUX_DEVTOOLS_EXTENSION__
       ? compose(
-        applyMiddleware(routerMiddleware, websocketMiddleware),
-        window.__REDUX_DEVTOOLS_EXTENSION__()
+      applyMiddleware(routerMiddleware, websocketMiddleware),
+      window.__REDUX_DEVTOOLS_EXTENSION__()
       )
       : applyMiddleware(routerMiddleware, websocketMiddleware)
   );
 
-  startListener(history, store);
-
-  app = (
-    <Provider store={store}>
-      <MobileApp/>
-    </Provider>
-  );
-
-  client = new MobileClient(() => {
-    store.dispatch(replace({ pathname: "/teams" }));
+  app = <MobileApp/>;
+} else {
+  client = new TVClient(() => {
+    store.dispatch(replace({pathname: "/dashboard"}))
     store.dispatch(connectToWebsocketServer());
   });
-} else {
+
   store = createStore(
     tvRootReducer,
     initialTVState,
@@ -68,17 +66,7 @@ if (isMobile()) {
     )
   );
 
-  startListener(history, store);
-
-  client = new TVClient(() => {
-    store.dispatch(replace({ pathname: "/dashboard" }))
-
-    app = (
-      <Provider store={store}>
-        <TVApp client={client} />
-      </Provider>
-    );
-  });
+  app = <TVApp/>;
 }
 
 client.on("update", state => {
@@ -87,4 +75,12 @@ client.on("update", state => {
 
 client.connect();
 
-ReactDOM.render(app, document.getElementById('root'));
+const pathname = new Pathname(window.location.pathname);
+
+if (!pathname.matchesLoadingScreen()) {
+  store.dispatch(replace("/"));
+}
+
+startListener(history, store);
+
+ReactDOM.render(<Provider store={store}>{app}</Provider>, document.getElementById('root'));
