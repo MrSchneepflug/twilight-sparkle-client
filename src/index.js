@@ -12,7 +12,7 @@ import {connectToWebsocketServer, update} from "./shared/actions";
 import {createRouterMiddleware} from "./shared/middleware/router";
 
 import MobileApp from "./MobileApp";
-import mobileRootReducer, {initialState as initialMobileState} from "./MobileApp/reducers"
+import {createMobileStore} from "./MobileApp/store";
 import {createWebsocketMiddleware} from "./MobileApp/middleware/websocket";
 import MobileClient from "./Websocket/MobileClient";
 
@@ -38,17 +38,7 @@ if (isMobile()) {
   });
 
   websocketMiddleware = createWebsocketMiddleware(client);
-
-  store = createStore(
-    mobileRootReducer,
-    initialMobileState,
-    window.__REDUX_DEVTOOLS_EXTENSION__
-      ? compose(
-      applyMiddleware(routerMiddleware, websocketMiddleware),
-      window.__REDUX_DEVTOOLS_EXTENSION__()
-      )
-      : applyMiddleware(routerMiddleware, websocketMiddleware)
-  );
+  store = createMobileStore([routerMiddleware, websocketMiddleware]);
 
   app = <MobileApp/>;
 } else {
