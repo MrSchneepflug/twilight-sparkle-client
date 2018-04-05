@@ -8,8 +8,8 @@ import {
 } from "material-ui";
 import ArrowBack from "material-ui-icons/ArrowBack";
 import {connect} from "react-redux";
-import {selectEstimation} from "../../actions";
-import { goBack } from "../../../shared/actions/history";
+import {selectEstimation, resetDeveloperSelection} from "../../actions";
+import {goBack} from "../../../shared/actions/history";
 
 class EstimationSelection extends Component {
   constructor(props) {
@@ -52,13 +52,13 @@ class EstimationSelection extends Component {
         <List>
           {this.estimationSelections()}
         </List>
-        <Divider />
+        <Divider/>
         <List>
           <ListItem onClick={this.props.goBack}>
             <ListItemIcon>
-              <ArrowBack />
+              <ArrowBack/>
             </ListItemIcon>
-            <ListItemText primary="Back to developer selection" />
+            <ListItemText primary="Back to developer selection"/>
           </ListItem>
         </List>
       </div>
@@ -72,7 +72,10 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   selectEstimation: estimation => dispatch(selectEstimation(estimation)),
-  goBack: () => dispatch(goBack())
+  goBack: () => {
+    dispatch(goBack());
+    dispatch(resetDeveloperSelection());
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(EstimationSelection);
