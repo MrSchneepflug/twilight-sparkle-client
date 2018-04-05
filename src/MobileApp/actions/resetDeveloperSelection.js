@@ -1,6 +1,5 @@
-export default function resetDeveloperSelection(previousDeveloper) {
+export default function resetDeveloperSelection() {
   return {
-    type: "RESET_DEVELOPER_SELECTION",
-    previousDeveloper
+    type: "RESET_DEVELOPER_SELECTION"
   }
 }
