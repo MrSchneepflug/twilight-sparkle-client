@@ -1,4 +1,4 @@
-import {createStore, applyMiddleware, compose} from "redux";
+import {applyMiddleware, compose, createStore} from "redux";
 import mobileRootReducer from "./reducers"
 import {initialState as initialLocationState} from "../shared/reducers/location"
 

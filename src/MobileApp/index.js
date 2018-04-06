@@ -1,6 +1,6 @@
-import React, { Component } from "react";
+import React, {Component} from "react";
 import AppShell from "./AppShell";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import Pathname from "../shared/Pathname";
 import * as Scenes from "./scenes";
 import * as SharedScenes from "../shared/scenes";
@@ -32,7 +32,7 @@ class MobileApp extends Component {
     const pathname = new Pathname(this.props.location.pathname);
 
     if (pathname.matchesTeamSelection()) {
-      return <Scenes.TeamSelection />;
+      return <Scenes.TeamSelection/>;
     }
 
     if (pathname.matchesDeveloperSelection()) {
@@ -41,13 +41,13 @@ class MobileApp extends Component {
     }
 
     if (pathname.matchesEstimationSelection()) {
-      return <Scenes.EstimationSelection />;
+      return <Scenes.EstimationSelection/>;
     }
   };
 
   render() {
     if (!this.props.connected) {
-      return <SharedScenes.Loading />;
+      return <SharedScenes.Loading/>;
     }
 
     return (
@@ -63,7 +63,6 @@ const mapStateToProps = state => ({
   location: state.location
 });
 
-const mapDispatchToProps = dispatch => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(MobileApp);

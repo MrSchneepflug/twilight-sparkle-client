@@ -1,4 +1,4 @@
-export default function push({ pathname, search, hash }) {
+export default function push({pathname, search, hash}) {
   return {
     type: "PUSH",
     payload: {

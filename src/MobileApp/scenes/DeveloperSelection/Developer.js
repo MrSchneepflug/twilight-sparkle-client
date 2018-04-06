@@ -1,7 +1,7 @@
-import React, { Component } from "react";
-import { Avatar, ListItem, ListItemText } from "material-ui";
-import { connect } from "react-redux";
-import { push } from "../../../shared/actions/history";
+import React, {Component} from "react";
+import {Avatar, ListItem, ListItemText} from "material-ui";
+import {connect} from "react-redux";
+import {push} from "../../../shared/actions/history";
 import {selectDeveloper} from "../../actions";
 
 class Developer extends Component {
@@ -24,7 +24,8 @@ class Developer extends Component {
       this.props.selectedDevelopers.indexOf(this.props.name) !== -1;
 
     return (
-      <ListItem key={this.props.name} onClick={!isDeveloperSelected ? this.clickHandler : undefined} disabled={isDeveloperSelected}>
+      <ListItem key={this.props.name} onClick={!isDeveloperSelected ? this.clickHandler : undefined}
+                disabled={isDeveloperSelected}>
         <Avatar>{this.props.name[0] + this.props.name[1]}</Avatar>
         <ListItemText primary={this.props.name} secondary={isDeveloperSelected ? 'already selected' : 'available'}/>
       </ListItem>
@@ -40,7 +41,7 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   selectDeveloper: (pathname, developer) => {
-    dispatch(push({ pathname: `${pathname}/${developer}/estimation` }));
+    dispatch(push({pathname: `${pathname}/${developer}/estimation`}));
     dispatch(selectDeveloper(developer));
   }
 });

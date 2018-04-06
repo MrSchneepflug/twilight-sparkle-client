@@ -1,7 +1,6 @@
 import Client from "./Client";
 
-class TVClient extends Client
-{
+class TVClient extends Client {
   getOrigin() {
     return "tv";
   }

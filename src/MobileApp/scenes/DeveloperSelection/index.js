@@ -1,15 +1,9 @@
-import React, { Component } from "react";
-import {
-  List,
-  Divider,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from "material-ui";
+import React, {Component} from "react";
+import {Divider, List, ListItem, ListItemIcon, ListItemText} from "material-ui";
 import ArrowBack from "material-ui-icons/ArrowBack";
-import { connect } from "react-redux";
+import {connect} from "react-redux";
 import Developer from "./Developer";
-import { goBack } from "../../../shared/actions/history";
+import {goBack} from "../../../shared/actions/history";
 
 const developersByTeam = {
   alpakka: ["pd", "th", "bp"],
@@ -26,16 +20,16 @@ class DeveloperSelection extends Component {
       <div>
         <List>
           {developersByTeam[this.props.team].map(developer => (
-            <Developer key={developer} name={developer} />
+            <Developer key={developer} name={developer}/>
           ))}
         </List>
-        <Divider />
+        <Divider/>
         <List>
           <ListItem onClick={this.props.goBack}>
             <ListItemIcon>
-              <ArrowBack />
+              <ArrowBack/>
             </ListItemIcon>
-            <ListItemText primary="Back to team selection" />
+            <ListItemText primary="Back to team selection"/>
           </ListItem>
         </List>
       </div>
@@ -43,8 +37,7 @@ class DeveloperSelection extends Component {
   }
 }
 
-const mapStateToProps = state => ({
-});
+const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
   goBack: () => dispatch(goBack())

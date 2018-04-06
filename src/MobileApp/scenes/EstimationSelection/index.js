@@ -1,14 +1,8 @@
 import React, {Component} from "react";
-import {
-  List,
-  Divider,
-  ListItem,
-  ListItemIcon,
-  ListItemText
-} from "material-ui";
+import {Divider, List, ListItem, ListItemIcon, ListItemText} from "material-ui";
 import ArrowBack from "material-ui-icons/ArrowBack";
 import {connect} from "react-redux";
-import {selectEstimation, resetDeveloperSelection} from "../../actions";
+import {selectEstimation} from "../../actions";
 import {goBack} from "../../../shared/actions/history";
 
 class EstimationSelection extends Component {
@@ -42,11 +36,6 @@ class EstimationSelection extends Component {
   }
 
   render() {
-    const style = {
-      textAlign: "center",
-      padding: "20px"
-    };
-
     return (
       <div>
         <List>

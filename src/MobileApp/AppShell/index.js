@@ -7,12 +7,12 @@ class AppShell extends React.Component {
   render() {
     return (
       <div>
-        <Reboot />
-        <Header title={this.props.title} />
+        <Reboot/>
+        <Header title={this.props.title}/>
         <main>
           {this.props.children}
         </main>
-        <Footer />
+        <Footer/>
       </div>
     )
   }

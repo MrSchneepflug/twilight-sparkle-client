@@ -1,4 +1,4 @@
-import {remove, map, filter} from "lodash";
+import {filter, map, remove} from "lodash";
 
 export default function selectedDevelopers(state = [], action) {
   switch (action.type) {

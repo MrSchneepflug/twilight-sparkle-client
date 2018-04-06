@@ -19,7 +19,7 @@ class Estimations extends Component {
     return (
       <table>
         <tbody>
-          {this.renderEstimations()}
+        {this.renderEstimations()}
         </tbody>
       </table>
     );
@@ -30,7 +30,6 @@ const mapStateToProps = state => ({
   clients: state.clients
 });
 
-const mapDispatchToProps = dispatch => ({
-});
+const mapDispatchToProps = dispatch => ({});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Estimations);

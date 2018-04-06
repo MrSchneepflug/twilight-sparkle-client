@@ -1,7 +1,6 @@
 import Client from "./Client";
 
-class MobileClient extends Client
-{
+class MobileClient extends Client {
   getOrigin() {
     return "mobile";
   }
