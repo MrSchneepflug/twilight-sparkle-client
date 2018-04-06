@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {push} from "../shared/actions/history";
 import Pathname from "../shared/Pathname";
+import ClientCollection from "../shared/ClientCollection";
 import * as Scenes from "./scenes";
 import * as SharedScenes from "../shared/scenes";
 
@@ -23,13 +24,12 @@ class TVApp extends Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (!this.eachClientHasEstimation(prevProps.clients) && this.eachClientHasEstimation(this.props.clients)) {
+    const previousClients = new ClientCollection(prevProps.clients);
+    const nextClients = new ClientCollection(this.props.clients);
+
+    if (!previousClients.haveEstimated() && nextClients.haveEstimated()) {
       this.props.redirectToEstimations();
     }
-  }
-
-  eachClientHasEstimation(clients) {
-    return clients.reduce((result, client) => result && client.estimation, true);
   }
 }
 
