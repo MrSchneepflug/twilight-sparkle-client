@@ -51,12 +51,6 @@ if (isMobile()) {
   app = <TVApp/>;
 }
 
-client.on("update", state => {
-  store.dispatch(update(state))
-});
-
-client.connect();
-
 const pathname = new Pathname(window.location.pathname);
 
 if (!pathname.matchesLoadingScreen()) {
@@ -66,3 +60,6 @@ if (!pathname.matchesLoadingScreen()) {
 startListener(history, store);
 
 ReactDOM.render(<Provider store={store}>{app}</Provider>, document.getElementById('root'));
+
+client.on("update", state => store.dispatch(update(state)));
+client.connect();
