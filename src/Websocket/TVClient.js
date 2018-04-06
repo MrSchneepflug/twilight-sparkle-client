@@ -7,7 +7,7 @@ class TVClient extends Client {
 
   initialize() {
     this.connection.send(this.createMessage({
-      action: "requestUpdate"
+      action: "requestState"
     }));
   }
 }
