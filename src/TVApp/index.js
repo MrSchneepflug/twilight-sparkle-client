@@ -21,6 +21,10 @@ class TVApp extends Component {
     if (pathname.matchesEstimations()) {
       return <Scenes.Estimations/>
     }
+
+    if (pathname.matchesArena()) {
+      return <Scenes.Arena/>
+    }
   }
 
   componentDidUpdate(prevProps) {

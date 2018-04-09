@@ -20,6 +20,8 @@ class Estimations extends Component {
 
     if (clients.haveEstimatedCloseEnough()) {
       setTimeout(this.props.redirectToDashboard, 5000);
+    } else {
+      setTimeout(this.props.redirectToArena, 5000);
     }
   }
 }
@@ -29,7 +31,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectToDashboard: () => dispatch(push({pathname: "/dashboard"}))
+  redirectToDashboard: () => dispatch(push({pathname: "/dashboard"})),
+  redirectToArena: () => dispatch(push({pathname: "/arena"}))
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Estimations);
