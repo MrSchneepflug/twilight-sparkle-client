@@ -14,11 +14,15 @@ class ClientCollection {
   }
 
   haveEstimatedWithinHighRange() {
-    const estimations = map(this.clients, "estimations");
-    const lowestEstimation = Math.min(...estimations);
-    const highestEstimation = Math.max(...estimations);
+    return this.highestEstimation() - this.lowestEstimation() > 2;
+  }
 
-    return highestEstimation - lowestEstimation > 2;
+  lowestEstimation() {
+    return Math.min(...map(this.clients, "estimations"));
+  }
+
+  highestEstimation() {
+    return Math.max(...map(this.clients, "estimations"));
   }
 }
 
