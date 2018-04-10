@@ -30,12 +30,23 @@ class Dashboard extends Component {
       </table>
     );
   }
+
+  componentDidUpdate(prevProps) {
+    const previousClients = new ClientCollection(prevProps.clients);
+    const nextClients = new ClientCollection(this.props.clients);
+
+    if (!previousClients.haveEstimated() && nextClients.haveEstimated()) {
+      this.props.redirectToEstimations();
+    }
+  }
 }
 
 const mapStateToProps = state => ({
   clients: state.clients
 });
 
-const mapDispatchToProps = dispatch => ({});
+const mapDispatchToProps = dispatch => ({
+  redirectToEstimations: () => dispatch(push({pathname: "/estimations"}))
+});
 
 export default connect(mapStateToProps, mapDispatchToProps)(Dashboard);
