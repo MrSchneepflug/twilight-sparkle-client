@@ -1,6 +1,6 @@
 import React from "react";
 
-const Client = ({id, name, estimation}) => {
+const Developer = ({id, name}) => {
   return (
     <tr>
       <td>{id}</td>
@@ -9,4 +9,4 @@ const Client = ({id, name, estimation}) => {
   );
 };
 
-export default Client;
+export default Developer;

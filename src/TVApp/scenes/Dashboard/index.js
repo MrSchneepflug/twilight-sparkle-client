@@ -1,12 +1,14 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import Client from "./Client";
+import push from "../../../shared/actions/history/push";
+import Developer from "./Developer";
+import ClientCollection from "../../../shared/ClientCollection";
 
 class Dashboard extends Component {
   renderDeveloperRows() {
     return this.props.clients.map(client => {
       return (
-        <Client
+        <Developer
           id={client.id}
           name={client.developer}
           key={client.id}
