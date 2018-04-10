@@ -1,4 +1,4 @@
-import {map} from "lodash";
+import {map, find} from "lodash";
 
 class ClientCollection {
   constructor(clients) {
@@ -23,6 +23,18 @@ class ClientCollection {
 
   highestEstimation() {
     return Math.max(...map(this.clients, "estimation"));
+  }
+
+  clientWithLowestEstimation() {
+    return this.findClientByEstimation(this.lowestEstimation());
+  }
+
+  clientWithHighestEstimation() {
+    return this.findClientByEstimation(this.highestEstimation());
+  }
+
+  findClientByEstimation(estimation) {
+    return find(this.clients, client => client.estimation === estimation);
   }
 }
 
