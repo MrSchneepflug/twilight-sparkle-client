@@ -39,55 +39,69 @@ class Arena extends Component {
   }
 
   componentDidMount() {
-    const lowestPreInterval = setInterval(() => {
-      if (this.state.countdown > 0) {
-        this.setState({
-          countdown: this.state.countdown - 1
-        });
-      } else {
-        clearInterval(lowestPreInterval);
-        this.setState({
-          countdown: 3
-        });
+    const start = new Promise(resolve => {
+      const interval = setInterval(() => {
+        if (this.state.countdown > 0) {
+          this.setState({
+            countdown: this.state.countdown - 1
+          });
+        } else {
+          clearInterval(interval);
+          this.setState({
+            countdown: 3
+          });
+          resolve();
+        }
+      }, 1000)
+    });
 
-        const lowestInterval = setInterval(() => {
+    start.then(() => {
+      return new Promise(resolve => {
+        const interval = setInterval(() => {
           if (this.state.countdownLowestEstimation > 0) {
             this.setState({
               countdownLowestEstimation: this.state.countdownLowestEstimation - 1
             });
           } else {
-            clearInterval(lowestInterval);
-
-            const highestPreInterval = setInterval(() => {
-              if (this.state.countdown > 0) {
-                this.setState({
-                  countdown: this.state.countdown - 1
-                });
-              } else {
-                clearInterval(highestPreInterval);
-                this.setState({
-                  countdown: 3
-                });
-
-                const highestInterval = setInterval(() => {
-                  if (this.state.countdownHighestEstimation > 0) {
-                    this.setState({
-                      countdownHighestEstimation: this.state.countdownHighestEstimation - 1
-                    });
-                  } else {
-                    clearInterval(highestInterval);
-
-                    setTimeout(() => {
-                      this.props.redirectToDashboard();
-                    }, 5000);
-                  }
-                }, 1000);
-              }
-            }, 1000);
+            clearInterval(interval);
+            resolve();
           }
         }, 1000);
-      }
-    }, 1000);
+      });
+    }).then(() => {
+      return new Promise(resolve => {
+        const interval = setInterval(() => {
+          if (this.state.countdown > 0) {
+            this.setState({
+              countdown: this.state.countdown - 1
+            });
+          } else {
+            clearInterval(interval);
+            this.setState({
+              countdown: 3
+            });
+            resolve();
+          }
+        }, 1000)
+      });
+    }).then(() => {
+      return new Promise(resolve => {
+        const interval = setInterval(() => {
+          if (this.state.countdownHighestEstimation > 0) {
+            this.setState({
+              countdownHighestEstimation: this.state.countdownHighestEstimation - 1
+            });
+          } else {
+            clearInterval(interval);
+            resolve();
+          }
+        }, 1000);
+      });
+    }).then(() => {
+      setTimeout(() => {
+        this.props.redirectToDashboard();
+      }, 5000);
+    });
   }
 }
 
