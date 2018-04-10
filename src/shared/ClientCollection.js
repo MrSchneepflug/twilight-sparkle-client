@@ -18,11 +18,11 @@ class ClientCollection {
   }
 
   lowestEstimation() {
-    return Math.min(...map(this.clients, "estimations"));
+    return Math.min(...map(this.clients, "estimation"));
   }
 
   highestEstimation() {
-    return Math.max(...map(this.clients, "estimations"));
+    return Math.max(...map(this.clients, "estimation"));
   }
 }
 
