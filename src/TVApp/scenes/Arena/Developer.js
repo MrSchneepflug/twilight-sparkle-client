@@ -1,9 +1,9 @@
 import React from "react";
 
-const Developer = ({name, estimation, countdown}) => {
+const Developer = ({developer, estimation, countdown}) => {
   return (
     <tr>
-      <td>{name}</td>
+      <td>{developer}</td>
       <td>{estimation}</td>
       <td>{countdown}</td>
     </tr>
