@@ -10,8 +10,8 @@ class Arena extends Component {
 
     this.state = {
       globalCountdown: 3,
-      lowestCountdown: 3,
-      highestCountdown: 3
+      lowestCountdown: 5,
+      highestCountdown: 5
     };
   }
 
@@ -39,7 +39,7 @@ class Arena extends Component {
   }
 
   componentDidMount() {
-    const createCountdown = type => {
+    const createCountdown = (type, initialValue) => {
       return resolve => {
         const interval = setInterval(() => {
           if (this.state[type] > 0) {
@@ -50,7 +50,7 @@ class Arena extends Component {
             clearInterval(interval);
 
             this.setState({
-                [type]: 3
+                [type]: initialValue
             });
 
             resolve();
@@ -59,14 +59,14 @@ class Arena extends Component {
       };
     };
 
-    const start = new Promise(createCountdown("globalCountdown"));
+    const start = new Promise(createCountdown("globalCountdown", 3));
 
     start.then(() => {
-      return new Promise(createCountdown("lowestCountdown"));
+      return new Promise(createCountdown("lowestCountdown", 5));
     }).then(() => {
-      return new Promise(createCountdown("globalCountdown"));
+      return new Promise(createCountdown("globalCountdown", 3));
     }).then(() => {
-      return new Promise(createCountdown("highestCountdown"));
+      return new Promise(createCountdown("highestCountdown", 5));
     }).then(() => {
       setTimeout(this.props.redirectToDashboard, 5000);
     });
