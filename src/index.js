@@ -31,7 +31,8 @@ const history = createBrowserHistory();
 const routerMiddleware = createRouterMiddleware(history);
 
 if (isMobile()) {
-  client = new MobileClient(() => {
+  client = new MobileClient();
+  client.on("open", () => {
     store.dispatch(replace({pathname: "/teams"}));
     store.dispatch(connectToWebsocketServer());
   });
@@ -41,7 +42,8 @@ if (isMobile()) {
 
   app = <MobileApp/>;
 } else {
-  client = new TVClient(() => {
+  client = new TVClient();
+  client.on("open", () => {
     store.dispatch(replace({pathname: "/dashboard"}))
     store.dispatch(connectToWebsocketServer());
   });

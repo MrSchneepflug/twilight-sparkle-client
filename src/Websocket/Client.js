@@ -1,7 +1,6 @@
 class Client {
-  constructor(onopen) {
+  constructor() {
     this.actionHandlers = {};
-    this.onopen = onopen;
   }
 
   connect() {
@@ -11,7 +10,10 @@ class Client {
   }
 
   connectionHandler() {
-    this.onopen();
+    if (typeof this.actionHandlers.open === "function") {
+      this.actionHandlers.open();
+    }
+
     this.initialize();
   }
 
