@@ -9,9 +9,9 @@ class Arena extends Component {
     super(props);
 
     this.state = {
-      countdown: 3,
-      countdownLowestEstimation: 3,
-      countdownHighestEstimation: 3
+      globalCountdown: 3,
+      lowestCountdown: 3,
+      highestCountdown: 3
     };
   }
 
@@ -22,16 +22,16 @@ class Arena extends Component {
 
     return (
       <div>
-        Countdown: {this.state.countdown}
+        Countdown: {this.state.globalCountdown}
 
         <table>
           <tbody>
-            <tr>
-              <Developer {...clientWithLowestEstimation} countdown={this.state.countdownLowestEstimation} />
-            </tr>
-            <tr>
-              <Developer {...clientWithHighestEstimation} countdown={this.state.countdownHighestEstimation} />
-            </tr>
+          <tr>
+            <Developer {...clientWithLowestEstimation} countdown={this.state.lowestCountdown}/>
+          </tr>
+          <tr>
+            <Developer {...clientWithHighestEstimation} countdown={this.state.highestCountdown}/>
+          </tr>
           </tbody>
         </table>
       </div>
@@ -39,68 +39,36 @@ class Arena extends Component {
   }
 
   componentDidMount() {
-    const start = new Promise(resolve => {
-      const interval = setInterval(() => {
-        if (this.state.countdown > 0) {
-          this.setState({
-            countdown: this.state.countdown - 1
-          });
-        } else {
-          clearInterval(interval);
-          this.setState({
-            countdown: 3
-          });
-          resolve();
-        }
-      }, 1000)
-    });
+    const createCountdown = type => {
+      return resolve => {
+        const interval = setInterval(() => {
+          if (this.state[type] > 0) {
+            this.setState({
+              [type]: this.state[type] - 1
+            });
+          } else {
+            clearInterval(interval);
+
+            this.setState({
+                [type]: 3
+            });
+
+            resolve();
+          }
+        }, 1000);
+      };
+    };
+
+    const start = new Promise(createCountdown("globalCountdown"));
 
     start.then(() => {
-      return new Promise(resolve => {
-        const interval = setInterval(() => {
-          if (this.state.countdownLowestEstimation > 0) {
-            this.setState({
-              countdownLowestEstimation: this.state.countdownLowestEstimation - 1
-            });
-          } else {
-            clearInterval(interval);
-            resolve();
-          }
-        }, 1000);
-      });
+      return new Promise(createCountdown("lowestCountdown"));
     }).then(() => {
-      return new Promise(resolve => {
-        const interval = setInterval(() => {
-          if (this.state.countdown > 0) {
-            this.setState({
-              countdown: this.state.countdown - 1
-            });
-          } else {
-            clearInterval(interval);
-            this.setState({
-              countdown: 3
-            });
-            resolve();
-          }
-        }, 1000)
-      });
+      return new Promise(createCountdown("globalCountdown"));
     }).then(() => {
-      return new Promise(resolve => {
-        const interval = setInterval(() => {
-          if (this.state.countdownHighestEstimation > 0) {
-            this.setState({
-              countdownHighestEstimation: this.state.countdownHighestEstimation - 1
-            });
-          } else {
-            clearInterval(interval);
-            resolve();
-          }
-        }, 1000);
-      });
+      return new Promise(createCountdown("highestCountdown"));
     }).then(() => {
-      setTimeout(() => {
-        this.props.redirectToDashboard();
-      }, 5000);
+      setTimeout(this.props.redirectToDashboard, 5000);
     });
   }
 }
