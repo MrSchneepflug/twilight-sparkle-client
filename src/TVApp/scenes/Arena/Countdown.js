@@ -43,6 +43,10 @@ class Countdown extends Component {
   }
 
   render() {
+    if (!this.props.active) {
+      return null;
+    }
+
     return (
       <div>
         {this.state.countdown}
