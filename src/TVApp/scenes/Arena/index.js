@@ -64,6 +64,12 @@ class Arena extends Component {
           </tr>
           </tbody>
         </table>
+
+        <Countdown
+          initialValue={5}
+          active={this.state.isRedirectCountdownActive}
+          onFinish={this.props.redirectToDashboard}
+        />
       </div>
     );
   }
