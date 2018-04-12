@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Developer from "./Developer";
+import Countdown from "./Countdown";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
 
@@ -9,9 +10,9 @@ class Arena extends Component {
     super(props);
 
     this.state = {
-      globalCountdown: 3,
-      lowestCountdown: 5,
-      highestCountdown: 5
+      isGlobalCountdownActive: true,
+      isLowestCountdownActive: false,
+      isHighestCountdownActive: false
     };
   }
 
@@ -22,54 +23,42 @@ class Arena extends Component {
 
     return (
       <div>
-        Countdown: {this.state.globalCountdown}
+        Countdown:
+        <Countdown
+          active={this.state.isGlobalCountdownActive}
+          onFinish={() => {
+            this.setState({
+              isGlobalCountdownActive: false,
+              isLowestCountdownActive: !this.state.isLowestCountdownActive,
+              isHighestCountdownActive: this.state.isLowestCountdownActive
+            })
+          }}
+        />
 
         <table>
           <tbody>
           <tr>
-            <Developer {...clientWithLowestEstimation} countdown={this.state.lowestCountdown}/>
+            <Developer {...clientWithLowestEstimation}/>
+            <Countdown
+              active={this.state.isLowestCountdownActive}
+              onFinish={() => {
+                this.setState({
+                  isGlobalCountdownActive: true
+                })
+              }}/>
           </tr>
           <tr>
-            <Developer {...clientWithHighestEstimation} countdown={this.state.highestCountdown}/>
+            <Developer {...clientWithHighestEstimation}/>
+            <Countdown
+              active={this.state.isHighestCountdownActive}
+              onFinish={() => {
+                setTimeout(this.props.redirectToDashboard, 5000);
+              }}/>
           </tr>
           </tbody>
         </table>
       </div>
     );
-  }
-
-  componentDidMount() {
-    const createCountdown = (type, initialValue) => {
-      return resolve => {
-        const interval = setInterval(() => {
-          if (this.state[type] > 0) {
-            this.setState({
-              [type]: this.state[type] - 1
-            });
-          } else {
-            clearInterval(interval);
-
-            this.setState({
-                [type]: initialValue
-            });
-
-            resolve();
-          }
-        }, 1000);
-      };
-    };
-
-    const start = new Promise(createCountdown("globalCountdown", 3));
-
-    start.then(() => {
-      return new Promise(createCountdown("lowestCountdown", 5));
-    }).then(() => {
-      return new Promise(createCountdown("globalCountdown", 3));
-    }).then(() => {
-      return new Promise(createCountdown("highestCountdown", 5));
-    }).then(() => {
-      setTimeout(this.props.redirectToDashboard, 5000);
-    });
   }
 }
 
