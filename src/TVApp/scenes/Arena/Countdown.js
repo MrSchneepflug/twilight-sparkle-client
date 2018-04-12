@@ -34,7 +34,9 @@ class Countdown extends Component {
           countdown: this.props.initialValue || INITIAL_VALUE_DEFAULT
         });
 
-        this.props.onFinish();
+        if (typeof this.props.onFinish === "function") {
+          this.props.onFinish();
+        }
       }
     }, 1000);
 
