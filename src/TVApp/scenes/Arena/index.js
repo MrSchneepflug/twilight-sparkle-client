@@ -10,9 +10,11 @@ class Arena extends Component {
     super(props);
 
     this.state = {
+      previousCountdownWasLowestCountdown: false,
       isGlobalCountdownActive: true,
       isLowestCountdownActive: false,
-      isHighestCountdownActive: false
+      isHighestCountdownActive: false,
+      isRedirectCountdownActive: false
     };
   }
 
@@ -29,8 +31,8 @@ class Arena extends Component {
           onFinish={() => {
             this.setState({
               isGlobalCountdownActive: false,
-              isLowestCountdownActive: !this.state.isLowestCountdownActive,
-              isHighestCountdownActive: this.state.isLowestCountdownActive
+              isLowestCountdownActive: !this.state.previousCountdownWasLowestCountdown,
+              isHighestCountdownActive: this.state.previousCountdownWasLowestCountdown
             })
           }}
         />
@@ -43,7 +45,9 @@ class Arena extends Component {
               active={this.state.isLowestCountdownActive}
               onFinish={() => {
                 this.setState({
-                  isGlobalCountdownActive: true
+                  previousCountdownWasLowestCountdown: true,
+                  isGlobalCountdownActive: true,
+                  isLowestCountdownActive: false
                 })
               }}/>
           </tr>
@@ -52,7 +56,10 @@ class Arena extends Component {
             <Countdown
               active={this.state.isHighestCountdownActive}
               onFinish={() => {
-                setTimeout(this.props.redirectToDashboard, 5000);
+                this.setState({
+                  isRedirectCountdownActive: true,
+                  isHighestCountdownActive: false
+                })
               }}/>
           </tr>
           </tbody>
