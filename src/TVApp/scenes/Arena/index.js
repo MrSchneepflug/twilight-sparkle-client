@@ -1,7 +1,7 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
 import Developer from "./Developer";
-import Countdown from "./Countdown";
+import {Countdown} from "../../../shared/components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
 

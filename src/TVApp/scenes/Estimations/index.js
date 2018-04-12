@@ -3,7 +3,7 @@ import {connect} from "react-redux";
 import Estimation from "./Estimation";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
-import Countdown from "../Arena/Countdown";
+import {Countdown} from "../../../shared/components";
 
 class Estimations extends Component {
   constructor(props) {
