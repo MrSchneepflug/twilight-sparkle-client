@@ -7,29 +7,33 @@ import push from "../../../shared/actions/history/push";
 import ClientCollection from "../../../shared/ClientCollection";
 
 class Dashboard extends Component {
-  renderDeveloperRows() {
+  renderAvatars() {
+    const {avatarContainer, avatarWithSelectedDeveloper, avatarWithEstimation} = this.props.classes;
+
     return this.props.clients.map(client => {
+      let avatarClass = null;
+
+      if (client.developer) {
+        if (client.estimation) {
+          avatarClass = avatarWithEstimation;
+        } else {
+          avatarClass = avatarWithSelectedDeveloper;
+        }
+      }
+
       return (
-        <Developer
-          id={client.id}
-          name={client.developer}
-          key={client.id}
-        />
+        <div className={avatarContainer}>
+          <Avatar className={avatarClass}>{client.developer ? client.developer : "?"}</Avatar>
+        </div>
       );
     });
   }
 
   render() {
     return (
-      <table>
-        <tbody>
-        <tr>
-          <td>ID</td>
-          <td>Developer</td>
-        </tr>
-        {this.renderDeveloperRows()}
-        </tbody>
-      </table>
+      <div className={this.props.classes.clientContainer}>
+        {this.renderAvatars(styles)}
+      </div>
     );
   }
 
