@@ -1,6 +1,6 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import Estimation from "./Estimation";
+import {Client} from "../../components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
 import {Countdown} from "../../../shared/components";
@@ -19,7 +19,7 @@ class Estimations extends Component {
       <div>
         <table>
           <tbody>
-          {this.props.clients.map(client => <Estimation {...client}/>)}
+          {this.props.clients.map(client => <Client showEstimation {...client}/>)}
           </tbody>
         </table>
 
