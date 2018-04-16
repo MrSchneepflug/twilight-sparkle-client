@@ -41,7 +41,7 @@ class Arena extends Component {
         </div>
 
         <div>
-          <Client developer={clientWithLowestEstimation.developer} estimation={clientWithLowestEstimation.estimation}/>
+          <Client showEstimation {...clientWithLowestEstimation}/>
           <Countdown
             active={this.state.isLowestCountdownActive}
             onFinish={() => {
@@ -54,7 +54,7 @@ class Arena extends Component {
         </div>
 
         <div>
-          <Client developer={clientWithHighestEstimation.developer} estimation={clientWithHighestEstimation.estimation}/>
+          <Client showEstimation {...clientWithHighestEstimation}/>
           <Countdown
             active={this.state.isHighestCountdownActive}
             onFinish={() => {
