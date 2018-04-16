@@ -16,8 +16,8 @@ class Client extends Component {
 
     return(
       <div className={this.props.classes.container}>
-        <Avatar className={avatarClass}>{this.props.developer ? this.props.developer : "?"}</Avatar>
-        <span>{this.props.estimation ? this.props.estimation : "?"}</span>
+        <Avatar className={avatarClass}>{this.props.developer || "?"}</Avatar>
+        <span>{this.props.estimation || "?"}</span>
       </div>
     );
   }
