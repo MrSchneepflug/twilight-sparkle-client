@@ -1,38 +1,16 @@
 import React, {Component} from "react";
 import {compose} from "redux";
 import {connect} from "react-redux";
-import {Avatar} from "material-ui";
 import {withStyles} from "material-ui/styles";
 import push from "../../../shared/actions/history/push";
 import ClientCollection from "../../../shared/ClientCollection";
+import {Client} from "../../components";
 
 class Dashboard extends Component {
-  renderAvatars() {
-    const {avatarContainer, avatarWithSelectedDeveloper, avatarWithEstimation} = this.props.classes;
-
-    return this.props.clients.map(client => {
-      let avatarClass = null;
-
-      if (client.developer) {
-        if (client.estimation) {
-          avatarClass = avatarWithEstimation;
-        } else {
-          avatarClass = avatarWithSelectedDeveloper;
-        }
-      }
-
-      return (
-        <div className={avatarContainer}>
-          <Avatar className={avatarClass}>{client.developer ? client.developer : "?"}</Avatar>
-        </div>
-      );
-    });
-  }
-
   render() {
     return (
       <div className={this.props.classes.clientContainer}>
-        {this.renderAvatars(styles)}
+        {this.props.clients.map(client => <Client {...client}/>)}
       </div>
     );
   }
@@ -58,15 +36,6 @@ const mapDispatchToProps = dispatch => ({
 const styles = {
   clientContainer: {
     display: "flex"
-  },
-  avatarContainer: {
-    margin: "10px"
-  },
-  avatarWithSelectedDeveloper: {
-    backgroundColor: "#2196F3"
-  },
-  avatarWithEstimation: {
-    backgroundColor: "#4CAF50"
   }
 };
 

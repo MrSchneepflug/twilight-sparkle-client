@@ -1,9 +1,10 @@
 import React, {Component} from "react";
+import {compose} from "redux";
 import {connect} from "react-redux";
-import Developer from "./Developer";
 import {Countdown} from "../../../shared/components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
+import {Client} from "../../components";
 
 class Arena extends Component {
   constructor(props) {
@@ -25,45 +26,44 @@ class Arena extends Component {
 
     return (
       <div>
-        Countdown:
-        <Countdown
-          active={this.state.isGlobalCountdownActive}
-          onFinish={() => {
-            this.setState({
-              isGlobalCountdownActive: false,
-              isLowestCountdownActive: !this.state.previousCountdownWasLowestCountdown,
-              isHighestCountdownActive: this.state.previousCountdownWasLowestCountdown
-            })
-          }}
-        />
+        <div>
+          Countdown:
+          <Countdown
+            active={this.state.isGlobalCountdownActive}
+            onFinish={() => {
+              this.setState({
+                isGlobalCountdownActive: false,
+                isLowestCountdownActive: !this.state.previousCountdownWasLowestCountdown,
+                isHighestCountdownActive: this.state.previousCountdownWasLowestCountdown
+              })
+            }}
+          />
+        </div>
 
-        <table>
-          <tbody>
-          <tr>
-            <Developer {...clientWithLowestEstimation}/>
-            <Countdown
-              active={this.state.isLowestCountdownActive}
-              onFinish={() => {
-                this.setState({
-                  previousCountdownWasLowestCountdown: true,
-                  isGlobalCountdownActive: true,
-                  isLowestCountdownActive: false
-                })
-              }}/>
-          </tr>
-          <tr>
-            <Developer {...clientWithHighestEstimation}/>
-            <Countdown
-              active={this.state.isHighestCountdownActive}
-              onFinish={() => {
-                this.setState({
-                  isRedirectCountdownActive: true,
-                  isHighestCountdownActive: false
-                })
-              }}/>
-          </tr>
-          </tbody>
-        </table>
+        <div>
+          <Client developer={clientWithLowestEstimation.developer} estimation={clientWithLowestEstimation.estimation}/>
+          <Countdown
+            active={this.state.isLowestCountdownActive}
+            onFinish={() => {
+              this.setState({
+                previousCountdownWasLowestCountdown: true,
+                isGlobalCountdownActive: true,
+                isLowestCountdownActive: false
+              })
+            }}/>
+        </div>
+
+        <div>
+          <Client developer={clientWithHighestEstimation.developer} estimation={clientWithHighestEstimation.estimation}/>
+          <Countdown
+            active={this.state.isHighestCountdownActive}
+            onFinish={() => {
+              this.setState({
+                isRedirectCountdownActive: true,
+                isHighestCountdownActive: false
+              })
+            }}/>
+        </div>
 
         <Countdown
           initialValue={5}
