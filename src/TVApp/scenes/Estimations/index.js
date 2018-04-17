@@ -20,7 +20,7 @@ class Estimations extends Component {
     return (
       <div>
         <div>
-          {this.props.clients.map(client => <Client showEstimation {...client}/>)}
+          {this.props.clients.map(client => <Client showEstimation key={client.id} {...client}/>)}
         </div>
 
         <Countdown
