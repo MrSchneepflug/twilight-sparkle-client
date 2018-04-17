@@ -26,7 +26,10 @@ class Client {
     }
 
     const callback = this.actionHandlers[message.action];
-    callback(message.state);
+
+    if (typeof callback === "function") {
+      callback(message.state);
+    }
   }
 
   on(action, callback) {
