@@ -6,10 +6,6 @@ import {selectEstimation} from "../../actions";
 import {goBack} from "../../../shared/actions/history";
 
 class EstimationSelection extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   buildSelectionHandler(number) {
     return () => {
       this.props.selectEstimation(number)

@@ -1,5 +1,4 @@
 import React, {Component} from "react";
-import {compose} from "redux";
 import {connect} from "react-redux";
 import {Countdown} from "../../../shared/components";
 import ClientCollection from "../../../shared/ClientCollection";
