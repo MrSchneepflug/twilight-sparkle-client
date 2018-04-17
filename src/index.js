@@ -12,11 +12,13 @@ import {createRouterMiddleware} from "./shared/middleware/router";
 
 import MobileApp from "./MobileApp";
 import {createMobileStore} from "./MobileApp/store";
-import {createWebsocketMiddleware} from "./MobileApp/middleware/websocket";
+import {selectEstimation} from "./MobileApp/actions";
+import {createWebsocketMiddleware as createMobileWebsocketMiddleware} from "./MobileApp/middleware/websocket";
 import MobileClient from "./Websocket/MobileClient";
 
 import TVApp from "./TVApp";
 import {createTVStore} from "./TVApp/store";
+import {createWebsocketMiddleware as createTVWebsocketMiddleware} from "./TVApp/middleware/websocket";
 import TVClient from "./Websocket/TVClient";
 
 const isMobile = () => {
@@ -36,19 +38,23 @@ if (isMobile()) {
     store.dispatch(replace({pathname: "/teams"}));
     store.dispatch(connectToWebsocketServer());
   });
+  client.on("resetEstimation", () => {
+    store.dispatch(selectEstimation(null));
+  });
 
-  websocketMiddleware = createWebsocketMiddleware(client);
+  websocketMiddleware = createMobileWebsocketMiddleware(client);
   store = createMobileStore([routerMiddleware, websocketMiddleware]);
 
   app = <MobileApp/>;
 } else {
   client = new TVClient();
   client.on("open", () => {
-    store.dispatch(replace({pathname: "/dashboard"}))
+    store.dispatch(replace({pathname: "/dashboard"}));
     store.dispatch(connectToWebsocketServer());
   });
 
-  store = createTVStore([routerMiddleware]);
+  websocketMiddleware = createTVWebsocketMiddleware(client);
+  store = createTVStore([routerMiddleware, websocketMiddleware]);
 
   app = <TVApp/>;
 }
