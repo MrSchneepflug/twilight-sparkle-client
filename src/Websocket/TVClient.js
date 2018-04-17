@@ -10,6 +10,12 @@ class TVClient extends Client {
       action: "requestState"
     }));
   }
+
+  resetEstimations() {
+    this.connection.send(this.createMessage({
+      action: "resetEstimations"
+    }));
+  }
 }
 
 export default TVClient;
