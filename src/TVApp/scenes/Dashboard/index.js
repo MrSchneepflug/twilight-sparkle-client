@@ -10,7 +10,7 @@ class Dashboard extends Component {
   render() {
     return (
       <div className={this.props.classes.clientContainer}>
-        {this.props.clients.map(client => <Client {...client}/>)}
+        {this.props.clients.map(client => <Client key={client.id} {...client}/>)}
       </div>
     );
   }
