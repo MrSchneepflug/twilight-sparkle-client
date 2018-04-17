@@ -68,7 +68,7 @@ class Arena extends Component {
 
         <Countdown
           initialValue={5}
-          active={this.state.isRedirectCountdownActive}
+          active={this.state.redirectToArena}
           onFinish={this.props.redirectToDashboard}
         />
       </div>

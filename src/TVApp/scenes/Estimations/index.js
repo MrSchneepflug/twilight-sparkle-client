@@ -11,7 +11,8 @@ class Estimations extends Component {
     super(props);
 
     this.state = {
-      isRedirectCountdownActive: false
+      redirectToArena: false,
+      redirectToDashboard: false
     };
   }
 
@@ -24,8 +25,13 @@ class Estimations extends Component {
 
         <Countdown
           initialValue={5}
-          active={this.state.isRedirectCountdownActive}
+          active={this.state.redirectToArena}
           onFinish={this.props.redirectToArena}/>
+
+        <Countdown
+          initialValue={5}
+          active={this.state.redirectToDashboard}
+          onFinish={this.props.redirectToDashboard}/>
       </div>
     );
   }
@@ -34,10 +40,12 @@ class Estimations extends Component {
     const clients = new ClientCollection(this.props.clients);
 
     if (clients.haveEstimatedCloseEnough()) {
-      setTimeout(this.props.redirectToDashboard, 5000);
+      this.setState({
+        redirectToDashboard: true
+      });
     } else {
       this.setState({
-        isRedirectCountdownActive: true
+        redirectToArena: true
       });
     }
   }
