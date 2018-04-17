@@ -4,6 +4,7 @@ import {Client} from "../../components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
 import {Countdown} from "../../../shared/components";
+import {resetEstimations} from "../../actions";
 
 class Estimations extends Component {
   constructor(props) {
@@ -17,11 +18,9 @@ class Estimations extends Component {
   render() {
     return (
       <div>
-        <table>
-          <tbody>
+        <div>
           {this.props.clients.map(client => <Client showEstimation {...client}/>)}
-          </tbody>
-        </table>
+        </div>
 
         <Countdown
           initialValue={5}
@@ -49,7 +48,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectToDashboard: () => dispatch(push({pathname: "/dashboard"})),
+  redirectToDashboard: () => {
+    dispatch(push({pathname: "/dashboard"}));
+    dispatch(resetEstimations());
+  },
   redirectToArena: () => dispatch(push({pathname: "/arena"}))
 });
 

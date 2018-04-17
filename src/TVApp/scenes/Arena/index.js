@@ -5,6 +5,7 @@ import {Countdown} from "../../../shared/components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
 import {Client} from "../../components";
+import resetEstimations from "../../actions/resetEstimations";
 
 class Arena extends Component {
   constructor(props) {
@@ -80,7 +81,10 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectToDashboard: () => dispatch(push({pathname: "/dashboard"})),
+  redirectToDashboard: () => {
+    dispatch(push({pathname: "/dashboard"}));
+    dispatch(resetEstimations());
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Arena);
