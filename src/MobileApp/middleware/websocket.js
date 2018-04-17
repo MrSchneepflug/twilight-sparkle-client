@@ -9,7 +9,7 @@ export const createWebsocketMiddleware = client => store => next => action => {
     case "SELECT_ESTIMATION":
       client.selectEstimation(action.estimation);
       break;
-    default:
-      return next(action);
   }
+
+  return next(action);
 };

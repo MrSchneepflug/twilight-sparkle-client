@@ -3,7 +3,7 @@ export const createWebsocketMiddleware = client => store => next => action => {
     case "RESET_ESTIMATIONS":
       client.resetEstimations();
       break;
-    default:
-      return next(action);
   }
+
+  return next(action);
 };
