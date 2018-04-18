@@ -1,13 +1,13 @@
 import React, {Component} from "react";
-
-const INITIAL_VALUE_DEFAULT = 3;
+import PropTypes from "prop-types";
+import {LinearProgress} from "material-ui";
 
 class Countdown extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      countdown: props.initialValue || INITIAL_VALUE_DEFAULT
+      countdown: props.initialValue
     };
 
     if (props.active) {
@@ -31,7 +31,7 @@ class Countdown extends Component {
         clearInterval(interval);
 
         this.setState({
-          countdown: this.props.initialValue || INITIAL_VALUE_DEFAULT
+          countdown: this.props.initialValue
         });
 
         if (typeof this.props.onFinish === "function") {
@@ -54,5 +54,13 @@ class Countdown extends Component {
     )
   }
 }
+
+Countdown.propTypes = {
+  initialValue: PropTypes.number.isRequired
+};
+
+Countdown.defaultProps = {
+  initialValue: 3
+};
 
 export default Countdown;
