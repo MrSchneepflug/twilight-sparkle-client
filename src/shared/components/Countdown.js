@@ -48,9 +48,11 @@ class Countdown extends Component {
     }
 
     return (
-      <div>
-        {this.state.countdown}
-      </div>
+      <LinearProgress
+        variant={"determinate"}
+        color={"primary"}
+        value={this.state.countdown * 100 / this.props.initialValue}
+      />
     )
   }
 }
