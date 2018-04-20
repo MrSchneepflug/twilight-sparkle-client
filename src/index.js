@@ -42,6 +42,9 @@ if (isMobile()) {
   client.on("resetEstimation", () => {
     store.dispatch(selectEstimation(null, false));
   });
+  client.on("revealEstimation", () => {
+    store.dispatch(replace({pathname: "/estimation"}));
+  });
 
   websocketMiddleware = createMobileWebsocketMiddleware(client);
   store = createMobileStore([routerMiddleware, websocketMiddleware]);
