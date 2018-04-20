@@ -25,6 +25,10 @@ class MobileApp extends Component {
       return "Estimate!";
     }
 
+    if (pathname.matchesEstimationRevelation()) {
+      return "My Estimation";
+    }
+
     return "No title defined";
   };
 
@@ -42,6 +46,10 @@ class MobileApp extends Component {
 
     if (pathname.matchesEstimationSelection()) {
       return <Scenes.EstimationSelection/>;
+    }
+
+    if (pathname.matchesEstimationRevelation()) {
+      return <Scenes.EstimationRevelation/>;
     }
   };
 

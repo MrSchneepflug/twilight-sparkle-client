@@ -31,6 +31,10 @@ class Pathname {
     return /^\/teams\/\w+\/developers\/\w+\/estimation$/.test(this.pathname);
   }
 
+  matchesEstimationRevelation() {
+    return this.pathname === "/estimation";
+  }
+
   extractTeam() {
     return this.extract(/^\/teams\/(\w+)/);
   }
