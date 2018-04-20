@@ -1,9 +1,8 @@
-import React from 'react'
+import React, {Component} from 'react'
 import Reboot from 'material-ui/Reboot'
 import Header from './Header'
-import Footer from './Footer'
 
-class AppShell extends React.Component {
+class AppShell extends Component {
   render() {
     return (
       <div>
@@ -12,7 +11,6 @@ class AppShell extends React.Component {
         <main>
           {this.props.children}
         </main>
-        <Footer/>
       </div>
     )
   }
