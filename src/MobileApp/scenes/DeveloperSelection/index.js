@@ -15,13 +15,21 @@ const developersByTeam = {
 };
 
 class DeveloperSelection extends Component {
+  renderDevelopers() {
+    if (!this.props.team) {
+      return null;
+    }
+
+    return developersByTeam[this.props.team].map(developer => (
+      <Developer key={developer} name={developer}/>
+    ))
+  }
+
   render() {
     return (
       <div>
         <List>
-          {developersByTeam[this.props.team].map(developer => (
-            <Developer key={developer} name={developer}/>
-          ))}
+          {this.renderDevelopers()}
         </List>
         <Divider/>
         <List>
@@ -37,7 +45,9 @@ class DeveloperSelection extends Component {
   }
 }
 
-const mapStateToProps = state => ({});
+const mapStateToProps = state => ({
+  team: state.team
+});
 
 const mapDispatchToProps = dispatch => ({
   goBack: () => dispatch(goBack())
