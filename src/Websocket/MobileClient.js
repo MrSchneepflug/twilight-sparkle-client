@@ -18,12 +18,6 @@ class MobileClient extends Client {
     }));
   }
 
-  resetDeveloperSelection() {
-    this.connection.send(this.createMessage({
-      action: "resetDeveloperSelection"
-    }));
-  }
-
   selectEstimation(estimation) {
     this.connection.send(this.createMessage({
       action: "selectEstimation",

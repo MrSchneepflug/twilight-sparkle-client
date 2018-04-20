@@ -1,6 +1,6 @@
 import {locationChange} from "./actions/history";
 import Pathname from "./Pathname";
-import {resetDeveloperSelection} from "../MobileApp/actions";
+import {selectDeveloper} from "../MobileApp/actions";
 
 export function startListener(history, store) {
   store.dispatch(locationChange({
@@ -15,7 +15,7 @@ export function startListener(history, store) {
     const nextPathname = new Pathname(location.pathname);
 
     if (previousPathname.matchesEstimationSelection() && nextPathname.matchesDeveloperSelection()) {
-      store.dispatch(resetDeveloperSelection())
+      store.dispatch(selectDeveloper(null))
     }
 
     store.dispatch(locationChange({
