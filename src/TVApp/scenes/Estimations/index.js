@@ -4,7 +4,7 @@ import {Client} from "../../components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
 import {Countdown} from "../../../shared/components";
-import {resetEstimations} from "../../actions";
+import {resetEstimations, revealEstimations} from "../../actions";
 
 class Estimations extends Component {
   constructor(props) {
@@ -37,6 +37,8 @@ class Estimations extends Component {
   }
 
   componentDidMount() {
+    this.props.revealEstimations();
+
     const clients = new ClientCollection(this.props.clients);
 
     if (clients.haveEstimatedCloseEnough()) {
@@ -56,6 +58,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
+  revealEstimations: () => {
+    dispatch(revealEstimations());
+  },
   redirectToDashboard: () => {
     dispatch(push({pathname: "/dashboard"}));
     dispatch(resetEstimations());
