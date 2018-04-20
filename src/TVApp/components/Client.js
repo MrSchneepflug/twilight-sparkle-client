@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import {Avatar} from "material-ui";
+import {Avatar, Badge} from "material-ui";
 import {withStyles} from "material-ui/styles";
 
 class Client extends Component {
@@ -14,10 +14,19 @@ class Client extends Component {
       }
     }
 
+    let avatar = <Avatar className={avatarClass}>{this.props.developer || "?"}</Avatar>;
+
+    if (this.props.showEstimation) {
+      avatar = (
+        <Badge badgeContent={this.props.estimation || "?"} color="primary">
+          <Avatar className={avatarClass}>{this.props.developer || "?"}</Avatar>
+        </Badge>
+      );
+    }
+
     return(
       <div className={this.props.classes.container}>
-        <Avatar className={avatarClass}>{this.props.developer || "?"}</Avatar>
-        {this.props.showEstimation ? <span>{this.props.estimation || "?"}</span> : null}
+        {avatar}
       </div>
     );
   }
