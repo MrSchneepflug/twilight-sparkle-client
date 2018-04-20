@@ -15,6 +15,7 @@ import {createMobileStore} from "./MobileApp/store";
 import {selectEstimation} from "./MobileApp/actions";
 import {createWebsocketMiddleware as createMobileWebsocketMiddleware} from "./MobileApp/middleware/websocket";
 import MobileClient from "./Websocket/MobileClient";
+import {startListener as startMobileListener} from "./MobileApp/listener";
 
 import TVApp from "./TVApp";
 import {createTVStore} from "./TVApp/store";
@@ -44,6 +45,7 @@ if (isMobile()) {
 
   websocketMiddleware = createMobileWebsocketMiddleware(client);
   store = createMobileStore([routerMiddleware, websocketMiddleware]);
+  startMobileListener(history, store);
 
   app = <MobileApp/>;
 } else {
