@@ -24,11 +24,11 @@ class Pathname {
   }
 
   matchesDeveloperSelection() {
-    return this.pathname === "/developers"
+    return this.pathname === "/developers";
   }
 
   matchesEstimationSelection() {
-    return this.pathname === "/estimations"
+    return this.pathname === "/estimations";
   }
 
   matchesEstimationRevelation() {
