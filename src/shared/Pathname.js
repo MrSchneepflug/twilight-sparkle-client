@@ -24,29 +24,15 @@ class Pathname {
   }
 
   matchesDeveloperSelection() {
-    return /^\/teams\/\w+\/developers$/.test(this.pathname);
+    return this.pathname === "/developers"
   }
 
   matchesEstimationSelection() {
-    return /^\/teams\/\w+\/developers\/\w+\/estimation$/.test(this.pathname);
+    return this.pathname === "/estimations"
   }
 
   matchesEstimationRevelation() {
     return this.pathname === "/estimation";
-  }
-
-  extractTeam() {
-    return this.extract(/^\/teams\/(\w+)/);
-  }
-
-  extract(pattern) {
-    const matchResult = this.pathname.match(pattern);
-
-    if (matchResult === null) {
-      throw new Error(`Could not extract pattern ${pattern.toString()} from pathname`);
-    }
-
-    return matchResult[1];
   }
 }
 

@@ -5,6 +5,7 @@ import {initialState as initialLocationState} from "../shared/reducers/location"
 export const initialState = {
   connected: false,
   location: initialLocationState,
+  team: null,
   developer: null,
   estimation: null,
   selectedDevelopers: []

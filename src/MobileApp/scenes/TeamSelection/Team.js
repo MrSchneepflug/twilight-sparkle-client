@@ -3,6 +3,7 @@ import {ListItem, ListItemText} from "material-ui/List";
 import Avatar from "material-ui/Avatar";
 import {connect} from "react-redux";
 import {push} from "../../../shared/actions/history";
+import {selectTeam} from "../../actions";
 
 class Team extends Component {
   constructor(props) {
@@ -28,7 +29,10 @@ class Team extends Component {
 const mapStateToProps = state => ({});
 
 const mapDispatchToProps = dispatch => ({
-  selectTeam: team => dispatch(push({pathname: `/teams/${team}/developers`}))
+  selectTeam: team => {
+    dispatch(push({pathname: "/developers"}));
+    dispatch(selectTeam(team));
+  }
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(Team);

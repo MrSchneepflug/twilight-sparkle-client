@@ -40,8 +40,7 @@ class MobileApp extends Component {
     }
 
     if (pathname.matchesDeveloperSelection()) {
-      const team = pathname.extractTeam();
-      return <Scenes.DeveloperSelection team={team}/>;
+      return <Scenes.DeveloperSelection/>;
     }
 
     if (pathname.matchesEstimationSelection()) {

@@ -1,5 +1,5 @@
 import Pathname from "../shared/Pathname";
-import {selectDeveloper, selectEstimation} from "./actions";
+import {selectTeam, selectDeveloper, selectEstimation} from "./actions";
 
 export function startListener(history, store) {
   history.listen(location => {
@@ -10,6 +10,10 @@ export function startListener(history, store) {
     if (previousPathname.matchesEstimationSelection() && nextPathname.matchesDeveloperSelection()) {
       store.dispatch(selectDeveloper(null));
       store.dispatch(selectEstimation(null));
+    }
+
+    if (previousPathname.matchesDeveloperSelection() && nextPathname.matchesTeamSelection()) {
+      store.dispatch(selectTeam(null));
     }
   });
 }
