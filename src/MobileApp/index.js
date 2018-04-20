@@ -1,5 +1,5 @@
 import React, {Component} from "react";
-import AppShell from "./AppShell";
+import AppShell from "../shared/AppShell";
 import {connect} from "react-redux";
 import Pathname from "../shared/Pathname";
 import * as Scenes from "./scenes";

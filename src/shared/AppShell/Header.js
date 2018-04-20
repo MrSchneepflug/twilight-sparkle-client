@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography';
 const styles = {
   root: {
     flexGrow: 1,
-  },
+  }
 };
 
 function Header(props) {

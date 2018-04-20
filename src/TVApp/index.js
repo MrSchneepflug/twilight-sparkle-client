@@ -3,9 +3,32 @@ import {connect} from "react-redux";
 import Pathname from "../shared/Pathname";
 import * as Scenes from "./scenes";
 import * as SharedScenes from "../shared/scenes";
+import AppShell from "../shared/AppShell/index";
 
 class TVApp extends Component {
-  render() {
+  getSceneTitle = () => {
+    const pathname = new Pathname(this.props.location.pathname);
+
+    if (pathname.matchesLoadingScreen()) {
+      return "Hang on!";
+    }
+
+    if (pathname.matchesDashboard()) {
+      return "Dashboard";
+    }
+
+    if (pathname.matchesEstimations()) {
+      return "Estimations";
+    }
+
+    if (pathname.matchesArena()) {
+      return "Arena";
+    }
+
+    return "No title defined";
+  };
+
+  renderScene() {
     if (!this.props.connected) {
       return <SharedScenes.Loading/>;
     }
@@ -23,6 +46,14 @@ class TVApp extends Component {
     if (pathname.matchesArena()) {
       return <Scenes.Arena/>
     }
+  }
+
+  render() {
+    return (
+      <AppShell title={this.getSceneTitle()}>
+        {this.renderScene()}
+      </AppShell>
+    );
   }
 }
 
