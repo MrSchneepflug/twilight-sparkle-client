@@ -4,7 +4,9 @@ export const createWebsocketMiddleware = client => store => next => action => {
       client.selectDeveloper(action.developer);
       break;
     case "SELECT_ESTIMATION":
-      client.selectEstimation(action.estimation);
+      if (action.updateServerState) {
+        client.selectEstimation(action.estimation);
+      }
       break;
   }
 

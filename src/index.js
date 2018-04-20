@@ -40,7 +40,7 @@ if (isMobile()) {
     store.dispatch(connectToWebsocketServer());
   });
   client.on("resetEstimation", () => {
-    store.dispatch(selectEstimation(null));
+    store.dispatch(selectEstimation(null, false));
   });
 
   websocketMiddleware = createMobileWebsocketMiddleware(client);

@@ -1,6 +1,7 @@
-export default function selectEstimation(estimation) {
+export default function selectEstimation(estimation, updateServerState = true) {
   return {
     type: "SELECT_ESTIMATION",
-    estimation
+    estimation,
+    updateServerState
   }
 }
