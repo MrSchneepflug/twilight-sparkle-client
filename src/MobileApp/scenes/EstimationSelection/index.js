@@ -8,7 +8,11 @@ import {goBack} from "../../../shared/actions/history";
 class EstimationSelection extends Component {
   buildSelectionHandler(number) {
     return () => {
-      this.props.selectEstimation(number)
+      if (this.props.estimation === number) {
+        this.props.selectEstimation(null);
+      } else {
+        this.props.selectEstimation(number)
+      }
     };
   }
 
