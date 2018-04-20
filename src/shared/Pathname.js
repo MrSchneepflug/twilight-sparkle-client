@@ -35,10 +35,6 @@ class Pathname {
     return this.extract(/^\/teams\/(\w+)/);
   }
 
-  extractDeveloper() {
-    return this.extract(/^\/teams\/\w+\/developers\/(\w+)/);
-  }
-
   extract(pattern) {
     const matchResult = this.pathname.match(pattern);
 
