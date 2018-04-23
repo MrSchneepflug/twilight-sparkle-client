@@ -3,6 +3,7 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {withStyles} from "material-ui/styles";
 import {replace} from "../../../shared/actions/history";
+import {Countdown} from "../../../shared/components";
 
 class EstimationRevelation extends Component {
   render() {
@@ -11,12 +12,14 @@ class EstimationRevelation extends Component {
         <strong className={this.props.classes.estimation}>
           {this.props.estimation}
         </strong>
+
+        <Countdown
+          initialValue={5}
+          active
+          onFinish={this.props.redirectToEstimationSelection}
+        />
       </div>
     );
-  }
-
-  componentDidMount() {
-    setTimeout(this.props.redirectToEstimationSelection, 5000);
   }
 }
 
