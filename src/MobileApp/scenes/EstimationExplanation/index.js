@@ -3,16 +3,25 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {withStyles} from "material-ui/styles";
 import {replace} from "../../../shared/actions/history";
-import {Countdown, Client} from "../../../shared/components";
+import {Client} from "../../../shared/components";
 import ClientCollection from "../../../shared/ClientCollection";
+import createCountdown from "../../../shared/countdown";
+import {LinearProgress} from "material-ui";
+
+const INITIAL_GLOBAL_COUNTDOWN = 3;
+const INITIAL_LOWEST_COUNTDOWN = 3;
+const INITIAL_HIGHEST_COUNTDOWN = 3;
 
 class EstimationExplanation extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      clientWithLowestEstimationActive: true,
-      clientWithHighestEstimationActive: false
+      clientWithLowestEstimationActive: false,
+      clientWithHighestEstimationActive: false,
+      globalCountdown: INITIAL_GLOBAL_COUNTDOWN,
+      lowestCountdown: INITIAL_LOWEST_COUNTDOWN,
+      highestCountdown: INITIAL_HIGHEST_COUNTDOWN
     };
   }
 
@@ -23,37 +32,58 @@ class EstimationExplanation extends Component {
 
     return (
       <div>
-        {this.state.clientWithLowestEstimationActive && <Client {...clientWithLowestEstimation}/>}
-        <Countdown
-          initialValue={5}
-          active
-          onFinish={() => {
-            this.setState({
-              clientWithLowestEstimationActive: false,
-              clientWithHighestEstimationActive: true
-            })
-          }}
+        <LinearProgress
+          variant={"determinate"}
+          color={"primary"}
+          value={this.state.globalCountdown * 100 / INITIAL_GLOBAL_COUNTDOWN}
         />
+
+        {this.state.clientWithLowestEstimationActive && <Client {...clientWithLowestEstimation}/>}
+        <LinearProgress
+          variant={"determinate"}
+          color={"primary"}
+          value={this.state.lowestCountdown * 100 / INITIAL_LOWEST_COUNTDOWN}
+        />
+
 
         {this.state.clientWithHighestEstimationActive && <Client {...clientWithHighestEstimation}/>}
-        <Countdown
-          initialValue={5}
-          active={this.state.clientWithHighestEstimationActive}
-          onFinish={() => {
-            this.setState({
-              clientWithLowestEstimationActive: false,
-              clientWithHighestEstimationActive: false
-            })
-          }}
-        />
-
-        <Countdown
-          initialValue={5}
-          active={!this.state.clientWithLowestEstimationActive && !this.state.clientWithHighestEstimationActive}
-          onFinish={this.props.redirectToEstimationSelection}
+        <LinearProgress
+          variant={"determinate"}
+          color={"primary"}
+          value={this.state.highestCountdown * 100 / INITIAL_HIGHEST_COUNTDOWN}
         />
       </div>
     );
+  }
+
+  componentDidMount() {
+    const start = createCountdown(this, "globalCountdown", 3);
+
+    start.then(() => {
+      this.setState({
+        clientWithLowestEstimationActive: true
+      });
+
+      return createCountdown(this, "lowestCountdown", 3);
+    }).then(() => {
+      this.setState({
+        clientWithLowestEstimationActive: false
+      });
+
+      return createCountdown(this, "globalCountdown", 3);
+    }).then(() => {
+      this.setState({
+        clientWithHighestEstimationActive: true
+      });
+
+      return createCountdown(this, "highestCountdown", 5);
+    }).then(() => {
+      this.setState({
+        clientWithHighestEstimationActive: true
+      });
+
+      setTimeout(this.props.redirectToEstimationSelection, 5000);
+    });
   }
 }
 
