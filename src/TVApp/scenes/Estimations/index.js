@@ -2,16 +2,19 @@ import React, {Component} from "react";
 import {connect} from "react-redux";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
-import {Countdown, Client} from "../../../shared/components";
+import {Client} from "../../../shared/components";
 import {resetEstimations, revealEstimations} from "../../actions";
+import {LinearProgress} from "material-ui";
+import createCountdown from "../../../shared/countdown";
+
+const INITIAL_REDIRECT_COUNTDOWN = 5;
 
 class Estimations extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      redirectToArena: false,
-      redirectToDashboard: false
+      redirectCountdown: INITIAL_REDIRECT_COUNTDOWN
     };
   }
 
@@ -22,15 +25,11 @@ class Estimations extends Component {
           {this.props.clients.map(client => <Client showEstimation key={client.id} {...client}/>)}
         </div>
 
-        <Countdown
-          initialValue={5}
-          active={this.state.redirectToArena}
-          onFinish={this.props.redirectToArena}/>
-
-        <Countdown
-          initialValue={5}
-          active={this.state.redirectToDashboard}
-          onFinish={this.props.redirectToDashboard}/>
+        <LinearProgress
+          variant={"determinate"}
+          color={"primary"}
+          value={this.state.redirectCountdown * 100 / INITIAL_REDIRECT_COUNTDOWN}
+        />
       </div>
     );
   }
@@ -39,16 +38,15 @@ class Estimations extends Component {
     this.props.revealEstimations();
 
     const clients = new ClientCollection(this.props.clients);
+    const redirectCountdown = createCountdown(this, "redirectCountdown", INITIAL_REDIRECT_COUNTDOWN);
 
-    if (clients.haveEstimatedCloseEnough()) {
-      this.setState({
-        redirectToDashboard: true
-      });
-    } else {
-      this.setState({
-        redirectToArena: true
-      });
-    }
+    redirectCountdown.then(() => {
+      if (clients.haveEstimatedCloseEnough()) {
+        this.props.redirectToDashboard();
+      } else {
+        this.props.redirectToArena();
+      }
+    });
   }
 }
 
