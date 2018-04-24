@@ -8,7 +8,7 @@ export const initialState = {
   team: null,
   developer: null,
   estimation: null,
-  selectedDevelopers: []
+  clients: []
 };
 
 export function createMobileStore(middlewares) {
