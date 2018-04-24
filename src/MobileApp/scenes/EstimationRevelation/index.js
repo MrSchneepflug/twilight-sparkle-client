@@ -3,30 +3,48 @@ import {connect} from "react-redux";
 import {compose} from "redux";
 import {withStyles} from "material-ui/styles";
 import {replace} from "../../../shared/actions/history";
-import {Countdown} from "../../../shared/components";
 import ClientCollection from "../../../shared/ClientCollection";
+import createCountdown from "../../../shared/countdown";
+import {LinearProgress} from "material-ui";
+
+const INITIAL_REDIRECT_COUNTDOWN = 5;
 
 class EstimationRevelation extends Component {
-  render() {
-    const clients = new ClientCollection(this.props.clients);
+  constructor(props) {
+    super(props);
 
+    this.state = {
+      redirectCountdown: INITIAL_REDIRECT_COUNTDOWN
+    };
+  }
+
+  render() {
     return (
       <div>
         <strong className={this.props.classes.estimation}>
           {this.props.estimation}
         </strong>
 
-        <Countdown
-          initialValue={5}
-          active
-          onFinish={
-            clients.haveEstimatedCloseEnough()
-              ? this.props.redirectToEstimationSelection
-              : this.props.redirectToEstimationExplanation
-          }
+        <LinearProgress
+          variant={"determinate"}
+          color={"primary"}
+          value={this.state.redirectCountdown * 100 / INITIAL_REDIRECT_COUNTDOWN}
         />
       </div>
     );
+  }
+
+  componentDidMount() {
+    const clients = new ClientCollection(this.props.clients);
+    const redirectCountdown = createCountdown(this, "redirectCountdown", INITIAL_REDIRECT_COUNTDOWN);
+
+    redirectCountdown.then(() => {
+      if (clients.haveEstimatedCloseEnough()) {
+        this.props.redirectToEstimationSelection();
+      } else {
+        this.props.redirectToEstimationExplanation();
+      }
+    });
   }
 }
 
