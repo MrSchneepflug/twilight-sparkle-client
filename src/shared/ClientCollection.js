@@ -25,10 +25,12 @@ class ClientCollection {
     return Math.max(...map(this.clients, "estimation"));
   }
 
+  // @todo: does not work with multiple lowest estimations ...
   clientWithLowestEstimation() {
     return this.findClientByEstimation(this.lowestEstimation());
   }
 
+  // @todo: does not work with multiple highest estimations ...
   clientWithHighestEstimation() {
     return this.findClientByEstimation(this.highestEstimation());
   }
