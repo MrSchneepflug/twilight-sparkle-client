@@ -29,6 +29,10 @@ class MobileApp extends Component {
       return "My Estimation";
     }
 
+    if (pathname.matchesEstimationExplanation()) {
+      return "Estimation Explanation";
+    }
+
     return "No title defined";
   };
 
