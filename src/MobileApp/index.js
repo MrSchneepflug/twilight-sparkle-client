@@ -50,6 +50,10 @@ class MobileApp extends Component {
     if (pathname.matchesEstimationRevelation()) {
       return <Scenes.EstimationRevelation/>;
     }
+
+    if (pathname.matchesEstimationExplanation()) {
+      return <Scenes.EstimationExplanation/>;
+    }
   };
 
   render() {

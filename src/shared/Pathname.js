@@ -34,6 +34,10 @@ class Pathname {
   matchesEstimationRevelation() {
     return this.pathname === "/estimation";
   }
+
+  matchesEstimationExplanation() {
+    return this.pathname === "/explanation";
+  }
 }
 
 export default Pathname;
