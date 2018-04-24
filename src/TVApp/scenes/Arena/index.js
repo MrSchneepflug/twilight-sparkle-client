@@ -5,6 +5,7 @@ import {Client} from "../../../shared/components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
 import resetEstimations from "../../actions/resetEstimations";
+import createCountdown from "../../../shared/countdown";
 
 const INITIAL_GLOBAL_COUNTDOWN = 3;
 const INITIAL_LOWEST_COUNTDOWN = 3;
@@ -59,34 +60,14 @@ class Arena extends Component {
   }
 
   componentDidMount() {
-    const createCountdown = (type, initialValue) => {
-      return resolve => {
-        const interval = setInterval(() => {
-          if (this.state[type] > 0) {
-            this.setState({
-              [type]: this.state[type] - 1
-            });
-          } else {
-            clearInterval(interval);
-
-            this.setState({
-              [type]: initialValue
-            });
-
-            resolve();
-          }
-        }, 1000);
-      };
-    };
-
-    const start = new Promise(createCountdown("globalCountdown", 3));
+    const start = createCountdown(this, "globalCountdown", 3);
 
     start.then(() => {
-      return new Promise(createCountdown("lowestCountdown", 3));
+      return createCountdown(this, "lowestCountdown", 3);
     }).then(() => {
-      return new Promise(createCountdown("globalCountdown", 3));
+      return createCountdown(this, "globalCountdown", 3);
     }).then(() => {
-      return new Promise(createCountdown("highestCountdown", 5));
+      return createCountdown(this, "highestCountdown", 5);
     }).then(() => {
       setTimeout(this.props.redirectToDashboard, 5000);
     });
