@@ -4,9 +4,12 @@ import {compose} from "redux";
 import {withStyles} from "material-ui/styles";
 import {replace} from "../../../shared/actions/history";
 import {Countdown} from "../../../shared/components";
+import ClientCollection from "../../../shared/ClientCollection";
 
 class EstimationRevelation extends Component {
   render() {
+    const clients = new ClientCollection(this.props.clients);
+
     return (
       <div>
         <strong className={this.props.classes.estimation}>
@@ -16,7 +19,11 @@ class EstimationRevelation extends Component {
         <Countdown
           initialValue={5}
           active
-          onFinish={this.props.redirectToEstimationSelection}
+          onFinish={
+            clients.haveEstimatedCloseEnough()
+              ? this.props.redirectToEstimationSelection
+              : this.props.redirectToEstimationExplanation
+          }
         />
       </div>
     );
@@ -24,11 +31,13 @@ class EstimationRevelation extends Component {
 }
 
 const mapStateToProps = state => ({
-  estimation: state.estimation
+  estimation: state.estimation,
+  clients: state.clients
 });
 
 const mapDispatchToProps = dispatch => ({
-  redirectToEstimationSelection: () => dispatch(replace({pathname: "/estimations"}))
+  redirectToEstimationSelection: () => dispatch(replace({pathname: "/estimations"})),
+  redirectToEstimationExplanation: () => dispatch(replace({pathname: "/explanation"}))
 });
 
 const styles = {
