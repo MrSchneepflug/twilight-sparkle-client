@@ -4,7 +4,7 @@ import {connect} from "react-redux";
 import {withStyles} from "material-ui/styles";
 import push from "../../../shared/actions/history/push";
 import ClientCollection from "../../../shared/ClientCollection";
-import {Client} from "../../components";
+import {Client} from "../../../shared/components";
 
 class Dashboard extends Component {
   render() {

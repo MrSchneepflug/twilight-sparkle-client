@@ -3,7 +3,7 @@ import {connected, location} from "../../shared/reducers";
 import team from "./team";
 import developer from "./developer";
 import estimation from "./estimation";
-import selectedDevelopers from "./selectedDevelopers";
+import clients from "./clients";
 
 export default combineReducers({
   connected,
@@ -11,5 +11,5 @@ export default combineReducers({
   team,
   developer,
   estimation,
-  selectedDevelopers
+  clients
 });

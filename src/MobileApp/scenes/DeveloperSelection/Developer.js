@@ -1,6 +1,7 @@
 import React, {Component} from "react";
 import {Avatar, ListItem, ListItemText} from "material-ui";
 import {connect} from "react-redux";
+import {find} from "lodash";
 import {push} from "../../../shared/actions/history";
 import {selectDeveloper} from "../../actions";
 
@@ -20,8 +21,7 @@ class Developer extends Component {
   }
 
   render() {
-    const isDeveloperSelected =
-      this.props.selectedDevelopers.indexOf(this.props.name) !== -1;
+    const isDeveloperSelected = find(this.props.clients, client => client.developer === this.props.name) !== undefined;
 
     return (
       <ListItem key={this.props.name} onClick={!isDeveloperSelected ? this.clickHandler : undefined}
@@ -35,7 +35,7 @@ class Developer extends Component {
 
 const mapStateToProps = state => ({
   pathname: state.location.pathname,
-  selectedDevelopers: state.selectedDevelopers
+  clients: state.clients
 });
 
 

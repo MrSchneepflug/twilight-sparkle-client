@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Client} from "../../components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
-import {Countdown} from "../../../shared/components";
+import {Countdown, Client} from "../../../shared/components";
 import {resetEstimations, revealEstimations} from "../../actions";
 
 class Estimations extends Component {

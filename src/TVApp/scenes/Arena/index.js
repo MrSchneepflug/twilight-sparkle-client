@@ -1,9 +1,8 @@
 import React, {Component} from "react";
 import {connect} from "react-redux";
-import {Countdown} from "../../../shared/components";
+import {Countdown, Client} from "../../../shared/components";
 import ClientCollection from "../../../shared/ClientCollection";
 import push from "../../../shared/actions/history/push";
-import {Client} from "../../components";
 import resetEstimations from "../../actions/resetEstimations";
 
 class Arena extends Component {
