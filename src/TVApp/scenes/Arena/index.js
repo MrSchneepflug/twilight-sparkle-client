@@ -16,45 +16,51 @@ class Arena extends Component {
     super(props);
 
     this.state = {
+      clientWithLowestEstimationActive: false,
+      clientWithHighestEstimationActive: false,
       globalCountdown: INITIAL_GLOBAL_COUNTDOWN,
       lowestCountdown: INITIAL_LOWEST_COUNTDOWN,
       highestCountdown: INITIAL_HIGHEST_COUNTDOWN
     };
   }
 
-  render() {
+  getCurrentCountdownValue() {
+    if (!this.state.clientWithLowestEstimationActive && !this.state.clientWithHighestEstimationActive) {
+      return this.state.globalCountdown;
+    } else if (this.state.clientWithLowestEstimationActive) {
+      return this.state.lowestCountdown;
+    } else {
+      return this.state.highestCountdown;
+    }
+  }
+
+  getCurrentClient() {
     const clients = new ClientCollection(this.props.clients);
-    const clientWithLowestEstimation = clients.clientWithLowestEstimation();
-    const clientWithHighestEstimation = clients.clientWithHighestEstimation();
+
+    if (this.state.clientWithLowestEstimationActive) {
+      return <Client showEstimation {...clients.clientWithLowestEstimation()}/>;
+    } else if (this.state.clientWithHighestEstimationActive) {
+      return <Client showEstimation {...clients.clientWithHighestEstimation()}/>;
+    }
 
     return (
       <div>
-        <div>
-          Countdown: {this.state.globalCountdown}
-          <LinearProgress
-            variant={"determinate"}
-            color={"primary"}
-            value={this.state.globalCountdown * 100 / INITIAL_GLOBAL_COUNTDOWN}
-          />
-        </div>
+        <Client showEstimation {...clients.clientWithLowestEstimation()}/>
+        <Client showEstimation {...clients.clientWithHighestEstimation()}/>
+      </div>
+    );
+  }
 
-        <div>
-          <Client showEstimation {...clientWithLowestEstimation}/>
-          <LinearProgress
-            variant={"determinate"}
-            color={"primary"}
-            value={this.state.lowestCountdown * 100 / INITIAL_LOWEST_COUNTDOWN}
-          />
-        </div>
+  render() {
+    return (
+      <div>
+        <LinearProgress
+          variant={"determinate"}
+          color={"primary"}
+          value={this.getCurrentCountdownValue() * 100 / INITIAL_GLOBAL_COUNTDOWN}
+        />
 
-        <div>
-          <Client showEstimation {...clientWithHighestEstimation}/>
-          <LinearProgress
-            variant={"determinate"}
-            color={"primary"}
-            value={this.state.highestCountdown * 100 / INITIAL_HIGHEST_COUNTDOWN}
-          />
-        </div>
+        {this.getCurrentClient()}
       </div>
     );
   }
@@ -63,12 +69,28 @@ class Arena extends Component {
     const start = createCountdown(this, "globalCountdown", 3);
 
     start.then(() => {
+      this.setState({
+        clientWithLowestEstimationActive: true
+      });
+
       return createCountdown(this, "lowestCountdown", 3);
     }).then(() => {
+      this.setState({
+        clientWithLowestEstimationActive: false
+      });
+
       return createCountdown(this, "globalCountdown", 3);
     }).then(() => {
+      this.setState({
+        clientWithHighestEstimationActive: true
+      });
+
       return createCountdown(this, "highestCountdown", 5);
     }).then(() => {
+      this.setState({
+        clientWithHighestEstimationActive: false
+      });
+
       setTimeout(this.props.redirectToDashboard, 5000);
     });
   }

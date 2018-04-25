@@ -25,33 +25,38 @@ class EstimationExplanation extends Component {
     };
   }
 
-  render() {
-    const clients = new ClientCollection(this.props.clients);
-    const clientWithLowestEstimation = clients.clientWithLowestEstimation();
-    const clientWithHighestEstimation = clients.clientWithHighestEstimation();
+  getCurrentCountdownValue() {
+    if (!this.state.clientWithLowestEstimationActive && !this.state.clientWithHighestEstimationActive) {
+      return this.state.globalCountdown;
+    } else if (this.state.clientWithLowestEstimationActive) {
+      return this.state.lowestCountdown;
+    } else {
+      return this.state.highestCountdown;
+    }
+  }
 
+  getCurrentClient() {
+    const clients = new ClientCollection(this.props.clients);
+
+    if (this.state.clientWithLowestEstimationActive) {
+      return <Client {...clients.clientWithLowestEstimation()}/>;
+    } else if (this.state.clientWithHighestEstimationActive) {
+      return <Client {...clients.clientWithHighestEstimation()}/>;
+    }
+
+    return null;
+  }
+
+  render() {
     return (
       <div>
         <LinearProgress
           variant={"determinate"}
           color={"primary"}
-          value={this.state.globalCountdown * 100 / INITIAL_GLOBAL_COUNTDOWN}
+          value={this.getCurrentCountdownValue() * 100 / INITIAL_GLOBAL_COUNTDOWN}
         />
 
-        {this.state.clientWithLowestEstimationActive && <Client {...clientWithLowestEstimation}/>}
-        <LinearProgress
-          variant={"determinate"}
-          color={"primary"}
-          value={this.state.lowestCountdown * 100 / INITIAL_LOWEST_COUNTDOWN}
-        />
-
-
-        {this.state.clientWithHighestEstimationActive && <Client {...clientWithHighestEstimation}/>}
-        <LinearProgress
-          variant={"determinate"}
-          color={"primary"}
-          value={this.state.highestCountdown * 100 / INITIAL_HIGHEST_COUNTDOWN}
-        />
+        {this.getCurrentClient()}
       </div>
     );
   }
@@ -79,7 +84,7 @@ class EstimationExplanation extends Component {
       return createCountdown(this, "highestCountdown", 5);
     }).then(() => {
       this.setState({
-        clientWithHighestEstimationActive: true
+        clientWithHighestEstimationActive: false
       });
 
       setTimeout(this.props.redirectToEstimationSelection, 5000);
