@@ -39,26 +39,55 @@ class EstimationExplanation extends Component {
     const clients = new ClientCollection(this.props.clients);
 
     if (this.state.clientWithLowestEstimationActive) {
-      return <Client {...clients.clientWithLowestEstimation()}/>;
+      return clients.clientWithLowestEstimation();
     } else if (this.state.clientWithHighestEstimationActive) {
-      return <Client {...clients.clientWithHighestEstimation()}/>;
+      return clients.clientWithHighestEstimation();
     }
 
     return null;
   }
 
-  render() {
+  renderCurrentClient() {
+    return <Client {...this.getCurrentClient()}/>;
+  }
+
+  renderSpeakerView() {
+    const currentClient = this.getCurrentClient();
+    const active = currentClient && currentClient.developer === this.props.developer;
+
     return (
       <div>
+        Speaker-View
+        <br/>
+        {active ? "you are active" : null}
+      </div>
+    );
+  }
+
+  renderAudienceView() {
+    return (
+      <div>
+        Audience-View
+        <br/>
         <LinearProgress
           variant={"determinate"}
           color={"primary"}
           value={this.getCurrentCountdownValue() * 100 / INITIAL_GLOBAL_COUNTDOWN}
         />
 
-        {this.getCurrentClient()}
+        {this.renderCurrentClient()}
       </div>
     );
+  }
+
+  render() {
+    const clients = new ClientCollection(this.props.clients).filterClientsWithHighestAndLowestEstimation();
+
+    if (clients.hasDeveloper(this.props.developer)) {
+      return this.renderSpeakerView();
+    } else {
+      return this.renderAudienceView();
+    }
   }
 
   componentDidMount() {
@@ -93,6 +122,7 @@ class EstimationExplanation extends Component {
 }
 
 const mapStateToProps = state => ({
+  developer: state.developer,
   clients: state.clients
 });
 
