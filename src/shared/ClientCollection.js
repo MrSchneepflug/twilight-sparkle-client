@@ -38,6 +38,17 @@ class ClientCollection {
   findClientByEstimation(estimation) {
     return find(this.clients, client => client.estimation === estimation);
   }
+
+  hasDeveloper(developer) {
+    return find(this.clients, client => client.developer === developer) !== undefined;
+  }
+
+  filterClientsWithHighestAndLowestEstimation() {
+    return new ClientCollection([
+      this.clientWithLowestEstimation(),
+      this.clientWithHighestEstimation()
+    ]);
+  }
 }
 
 export default ClientCollection;
